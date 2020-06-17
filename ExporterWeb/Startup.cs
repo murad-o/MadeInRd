@@ -42,7 +42,7 @@ namespace ExporterWeb
             catch (FileNotFoundException e)
             {
                 throw new FileNotFoundException(
-                    $"Please create \"{PathToAppSettingsSecret}\". Read README.md, settings section for help",
+                    $"Please create \"{PathToAppSettingsSecret}\". In README.md read the setup section for help",
                     e
                 );
             }

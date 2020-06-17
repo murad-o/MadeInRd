@@ -1,13 +1,19 @@
+using ExporterWeb.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace ExporterWeb
 {
     public class Startup
     {
+        private const string DbConnectionString = "ExportersDbConnection";
+        private const string PathToAppSettingsSecret = "appsettings.Secrets.json";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -18,7 +24,28 @@ namespace ExporterWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IConfigurationRoot secretConfig = GetSecretConfig();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(secretConfig.GetConnectionString(DbConnectionString)));
             services.AddRazorPages();
+        }
+
+        private static IConfigurationRoot GetSecretConfig()
+        {
+            try
+            {
+                return new ConfigurationBuilder()
+                    .AddJsonFile(PathToAppSettingsSecret)
+                    .Build();
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new FileNotFoundException(
+                    $"Please create \"{PathToAppSettingsSecret}\". Read README.md, settings section for help",
+                    e
+                );
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

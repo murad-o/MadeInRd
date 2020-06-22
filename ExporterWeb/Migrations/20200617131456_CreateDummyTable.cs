@@ -1,4 +1,4 @@
-﻿using ExporterWeb.Model;
+﻿using ExporterWeb.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExporterWeb.Migrations

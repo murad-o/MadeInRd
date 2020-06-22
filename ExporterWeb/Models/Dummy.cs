@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ExporterWeb.Model
+namespace ExporterWeb.Models
 {
     public class Dummy
     {

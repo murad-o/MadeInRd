@@ -1,6 +1,7 @@
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,9 @@ namespace ExporterWeb
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(secretConfig.GetConnectionString(DbConnectionString)));
+
+            services.AddDefaultIdentity<IdentityUser>(options => 
+                options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
         }
 

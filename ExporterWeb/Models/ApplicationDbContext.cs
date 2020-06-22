@@ -11,5 +11,6 @@ namespace ExporterWeb.Models
         }
 
         public DbSet<Dummy>? Dummies { get; set; }
+        public DbSet<FieldOfActivity>? FieldsOfActivity { get; set; }
     }
 }

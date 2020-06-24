@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ExporterWeb.Models
 {
@@ -32,9 +28,11 @@ namespace ExporterWeb.Models
         [MaxLength(15)]
         public string OGRN_IP { get; set; } = "";
 
+        [Key]
         [Required]
+        [ForeignKey(nameof(User))]
         public string UserId { get; set; } = "";
-        public IdentityUser? User { get; set; }
+        public User? User { get; set; }
 
         [Required]
         public int FieldOfActivityId { get; set; }

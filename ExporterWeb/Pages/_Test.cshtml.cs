@@ -1,10 +1,12 @@
 ﻿using ExporterWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ExporterWeb.Pages
 {
+    [AllowAnonymous]
     public class _TestModel : PageModel
     {
         private readonly ApplicationDbContext _dbContext;

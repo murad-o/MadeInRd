@@ -6,6 +6,13 @@ namespace ExporterWeb.Models
 {
     public class User : IdentityUser
     {
+        public User()
+        {
+        }
+        public User(string userName) : base(userName)
+        {
+        }
+
         [Required]
         public string FirstName { get; set; } = "";
 

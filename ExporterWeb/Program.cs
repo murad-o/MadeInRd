@@ -7,7 +7,11 @@ namespace ExporterWeb
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args).Build();
+#if RELEASE
+            FixtureUtils.PopulateDatabase(host);
+#endif
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

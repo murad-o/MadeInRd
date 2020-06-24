@@ -1,4 +1,6 @@
-﻿using ExporterWeb.Models;
+﻿using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -7,15 +9,20 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
     public class CreateModel : PageModel
     {
-        private readonly ExporterWeb.Models.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public CreateModel(ExporterWeb.Models.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!await IsAuthorized())
+                return Forbid();
+
             return Page();
         }
 
@@ -27,14 +34,22 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
+
+            if (!await IsAuthorized())
+                return Forbid();
 
             _context.FieldsOfActivity!.Add(FieldOfActivity!);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        private async Task<bool> IsAuthorized()
+        {
+            var result = await _authorizationService.AuthorizeAsync(
+                            User, FieldOfActivity, AuthorizationOperations.Create);
+            return result.Succeeded;
         }
     }
 }

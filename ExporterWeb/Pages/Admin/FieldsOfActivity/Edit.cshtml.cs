@@ -1,4 +1,6 @@
-﻿using ExporterWeb.Models;
+﻿using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +11,13 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
     public class EditModel : PageModel
     {
-        private readonly ExporterWeb.Models.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public EditModel(ExporterWeb.Models.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
         [BindProperty]
@@ -32,6 +36,12 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             {
                 return NotFound();
             }
+
+            if (!await IsAuthorized())
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
@@ -40,9 +50,10 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
+
+            if (!await IsAuthorized())
+                return Forbid();
 
             _context.Attach(FieldOfActivity).State = EntityState.Modified;
 
@@ -68,6 +79,13 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         private bool FieldOfActivityExists(int id)
         {
             return _context.FieldsOfActivity.Any(e => e.Id == id);
+        }
+
+        private async Task<bool> IsAuthorized()
+        {
+            var result = await _authorizationService.AuthorizeAsync(
+                            User, FieldOfActivity, AuthorizationOperations.Update);
+            return result.Succeeded;
         }
     }
 }

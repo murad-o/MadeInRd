@@ -1,7 +1,10 @@
+using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +34,20 @@ namespace ExporterWeb
                 options.UseSqlServer(secretConfig.GetConnectionString(DbConnectionString)));
 
             services.AddDefaultIdentity<User>(options =>
-                options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+                    options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+
+            services.AddControllers(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+            services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
         }
 
         private static IConfigurationRoot GetSecretConfig()

@@ -40,7 +40,7 @@ namespace ExporterWeb.Migrations
                     CommonExporterId = table.Column<string>(nullable: false),
                     Language = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     ContactPersonFirstName = table.Column<string>(nullable: false),
                     ContactPersonSecondName = table.Column<string>(nullable: false),
                     ContactPersonPatronymic = table.Column<string>(nullable: true),

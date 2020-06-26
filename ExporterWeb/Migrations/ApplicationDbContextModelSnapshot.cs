@@ -44,7 +44,7 @@ namespace ExporterWeb.Migrations
 
                     b.HasIndex("FieldOfActivityId");
 
-                    b.ToTable("CommonExporter");
+                    b.ToTable("CommonExporters");
                 });
 
             modelBuilder.Entity("ExporterWeb.Models.Dummy", b =>
@@ -130,7 +130,7 @@ namespace ExporterWeb.Migrations
 
                     b.HasKey("CommonExporterId", "Language");
 
-                    b.ToTable("LanguageExporter");
+                    b.ToTable("LanguageExporters");
                 });
 
             modelBuilder.Entity("ExporterWeb.Models.User", b =>

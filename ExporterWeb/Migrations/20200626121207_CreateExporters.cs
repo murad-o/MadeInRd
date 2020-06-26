@@ -7,7 +7,7 @@ namespace ExporterWeb.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CommonExporter",
+                name: "CommonExporters",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -18,15 +18,15 @@ namespace ExporterWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommonExporter", x => x.UserId);
+                    table.PrimaryKey("PK_CommonExporters", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_CommonExporter_FieldsOfActivity_FieldOfActivityId",
+                        name: "FK_CommonExporters_FieldsOfActivity_FieldOfActivityId",
                         column: x => x.FieldOfActivityId,
                         principalTable: "FieldsOfActivity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommonExporter_AspNetUsers_UserId",
+                        name: "FK_CommonExporters_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -34,7 +34,7 @@ namespace ExporterWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LanguageExporter",
+                name: "LanguageExporters",
                 columns: table => new
                 {
                     CommonExporterId = table.Column<string>(nullable: false),
@@ -54,28 +54,28 @@ namespace ExporterWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LanguageExporter", x => new { x.CommonExporterId, x.Language });
+                    table.PrimaryKey("PK_LanguageExporters", x => new { x.CommonExporterId, x.Language });
                     table.ForeignKey(
-                        name: "FK_LanguageExporter_CommonExporter_CommonExporterId",
+                        name: "FK_LanguageExporters_CommonExporters_CommonExporterId",
                         column: x => x.CommonExporterId,
-                        principalTable: "CommonExporter",
+                        principalTable: "CommonExporters",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommonExporter_FieldOfActivityId",
-                table: "CommonExporter",
+                name: "IX_CommonExporters_FieldOfActivityId",
+                table: "CommonExporters",
                 column: "FieldOfActivityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LanguageExporter");
+                name: "LanguageExporters");
 
             migrationBuilder.DropTable(
-                name: "CommonExporter");
+                name: "CommonExporters");
         }
     }
 }

@@ -1,0 +1,91 @@
+﻿@page
+@model ExporterWeb.Pages.Exporters.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>LanguageExporter</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LanguageExporter.CommonExporterId" />
+            <input type="hidden" asp-for="LanguageExporter.Language" />
+            <div class="form-group">
+                <label asp-for="LanguageExporter.Name" class="control-label"></label>
+                <input asp-for="LanguageExporter.Name" class="form-control" />
+                <span asp-validation-for="LanguageExporter.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.Description" class="control-label"></label>
+                <input asp-for="LanguageExporter.Description" class="form-control" />
+                <span asp-validation-for="LanguageExporter.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.ContactPersonFirstName" class="control-label"></label>
+                <input asp-for="LanguageExporter.ContactPersonFirstName" class="form-control" />
+                <span asp-validation-for="LanguageExporter.ContactPersonFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.ContactPersonSecondName" class="control-label"></label>
+                <input asp-for="LanguageExporter.ContactPersonSecondName" class="form-control" />
+                <span asp-validation-for="LanguageExporter.ContactPersonSecondName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.ContactPersonPatronymic" class="control-label"></label>
+                <input asp-for="LanguageExporter.ContactPersonPatronymic" class="form-control" />
+                <span asp-validation-for="LanguageExporter.ContactPersonPatronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.DirectorFirstName" class="control-label"></label>
+                <input asp-for="LanguageExporter.DirectorFirstName" class="form-control" />
+                <span asp-validation-for="LanguageExporter.DirectorFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.DirectorSecondName" class="control-label"></label>
+                <input asp-for="LanguageExporter.DirectorSecondName" class="form-control" />
+                <span asp-validation-for="LanguageExporter.DirectorSecondName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.DirectorPatronymic" class="control-label"></label>
+                <input asp-for="LanguageExporter.DirectorPatronymic" class="form-control" />
+                <span asp-validation-for="LanguageExporter.DirectorPatronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.WorkingTime" class="control-label"></label>
+                <input asp-for="LanguageExporter.WorkingTime" class="form-control" />
+                <span asp-validation-for="LanguageExporter.WorkingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.Address" class="control-label"></label>
+                <input asp-for="LanguageExporter.Address" class="form-control" />
+                <span asp-validation-for="LanguageExporter.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageExporter.Website" class="control-label"></label>
+                <input asp-for="LanguageExporter.Website" class="form-control" />
+                <span asp-validation-for="LanguageExporter.Website" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="LanguageExporter.Approved" /> @Html.DisplayNameFor(model => model.LanguageExporter.Approved)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

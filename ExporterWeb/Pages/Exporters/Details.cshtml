@@ -1,0 +1,115 @@
+﻿@page
+@model ExporterWeb.Pages.Exporters.DetailsModel
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+	<h4>LanguageExporter</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.CommonExporter)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.CommonExporter!.UserId)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.CommonExporter!.INN)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.CommonExporter!.INN)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.CommonExporter!.OGRN_IP)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.CommonExporter!.OGRN_IP)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.CommonExporter!.FieldOfActivity!.Name)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.CommonExporter!.FieldOfActivity!.Name)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.Name)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.Name)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.Description)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.Description)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.ContactPersonFirstName)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.ContactPersonFirstName)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.ContactPersonSecondName)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.ContactPersonSecondName)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.ContactPersonPatronymic)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.ContactPersonPatronymic)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.DirectorFirstName)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.DirectorFirstName)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.DirectorSecondName)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.DirectorSecondName)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.DirectorPatronymic)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.DirectorPatronymic)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.WorkingTime)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.WorkingTime)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.Address)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.Address)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.Website)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.Website)
+		</dd>
+		<dt class="col-sm-3">
+			@Html.DisplayNameFor(model => model.LanguageExporter.Approved)
+		</dt>
+		<dd class="col-sm-9">
+			@Html.DisplayFor(model => model.LanguageExporter.Approved)
+		</dd>
+	</dl>
+</div>
+<div>
+	<a asp-page="./Edit" asp-route-id="@Model.LanguageExporter.CommonExporterId" asp-route-language="@Model.LanguageExporter.Language">Edit</a>
+	<a asp-page="./Index" asp-route-language="@Model.LanguageExporter.Language">Back to List</a>
+</div>

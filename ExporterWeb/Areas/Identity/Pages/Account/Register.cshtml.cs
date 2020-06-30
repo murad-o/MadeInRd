@@ -19,40 +19,45 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        private const string DefaultLanguage = "ru";
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
-
-        [BindProperty]
-        public InputModel? Input { get; set; }
 
         public string? ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme>? ExternalLogins { get; set; }
 
+        public IList<FieldOfActivity> FieldsOfActivity
+        {
+            get
+            {
+                if (_fieldsOfActivity is null)
+                    _fieldsOfActivity = _context.FieldsOfActivity.ToList();
+                return _fieldsOfActivity;
+            }
+        }
+        private IList<FieldOfActivity>? _fieldsOfActivity;
+
         public class InputModel
         {
-            [Required]
-            public string FirstName { get; set; } = "";
-
-            [Required]
-            public string SecondName { get; set; } = "";
-
-            public string? Patronymic { get; set; }
-
+            // User form 
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -68,6 +73,36 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; } = "";
+
+            // CommonExporter form
+            [Required]
+            [MaxLength(12)]
+            public string INN { get; set; } = "";
+
+            [Required]
+            [MaxLength(15)]
+            public string OGRN_IP { get; set; } = "";
+
+            [Required]
+            public int FieldOfActivityId { get; set; }
+
+            // LanguageExporter form
+            [Required]
+            public string Name { get; set; } = "";
+
+            public string? Description { get; set; }
+
+            [Required]
+            public string ContactPersonFirstName { get; set; } = "";
+            [Required]
+            public string ContactPersonSecondName { get; set; } = "";
+            public string? ContactPersonPatronymic { get; set; }
+
+            [Required]
+            public string DirectorFirstName { get; set; } = "";
+            [Required]
+            public string DirectorSecondName { get; set; } = "";
+            public string? DirectorPatronymic { get; set; }
         }
 
         public async Task OnGetAsync(string? returnUrl)
@@ -78,37 +113,62 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new User
                 {
-                    UserName = Input!.Email,
+                    UserName = Input.Email,
                     Email = Input.Email,
-                    FirstName = Input.FirstName,
-                    SecondName = Input.SecondName,
-                    Patronymic = Input.Patronymic
+                    FirstName = Input.ContactPersonFirstName,
+                    SecondName = Input.ContactPersonSecondName,
+                    Patronymic = Input.ContactPersonPatronymic,
                 };
+                var languageExporter = new LanguageExporter
+                {
+                    CommonExporter = new CommonExporter
+                    {
+                        INN = Input.INN,
+                        OGRN_IP = Input.OGRN_IP,
+                        FieldOfActivityId = Input.FieldOfActivityId
+                    },
+                    Language = DefaultLanguage,
+                    Name = Input.Name,
+                    Description = Input.Description,
+                    ContactPersonFirstName = Input.ContactPersonFirstName,
+                    ContactPersonSecondName = Input.ContactPersonSecondName,
+                    ContactPersonPatronymic = Input.ContactPersonPatronymic,
+                    DirectorFirstName = Input.DirectorFirstName,
+                    DirectorSecondName = Input.DirectorSecondName,
+                    DirectorPatronymic = Input.DirectorPatronymic,
+                };
+
+                _context.Database.BeginTransaction();
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                languageExporter.CommonExporter!.UserId = user.Id;
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    await _context.LanguageExporters!.AddAsync(languageExporter);
+                    await _context.SaveChangesAsync();
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId = user.Id, code, returnUrl },
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    _context.Database.CommitTransaction();
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                     }
                     else
                     {
@@ -125,5 +185,9 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+#nullable disable
+        [BindProperty]
+        public InputModel Input { get; set; }
     }
 }

@@ -1,12 +1,16 @@
+using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -145,12 +149,23 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 };
 
                 _context.Database.BeginTransaction();
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var userCreateResult = await _userManager.CreateAsync(user, Input.Password);
                 languageExporter.CommonExporter!.UserId = user.Id;
-                
-                if (result.Succeeded)
+
+                if (userCreateResult.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    var exportersRole = Constants.ExportersRole;
+                    var roleAddResult = await _userManager.AddToRoleAsync(user, exportersRole);
+
+                    if (!roleAddResult.Succeeded)
+                    {
+                        _logger.LogWarning($"Role {exportersRole} can't be added to user {user.UserName}");
+                        var errorMessages = roleAddResult.Errors.Select(e => $"{e.Code}: {e.Description}");
+                        _logger.LogWarning("Errors:\n" + string.Join("\n", errorMessages));
+                        return StatusCode(StatusCodes.Status500InternalServerError);
+                    }
 
                     await _context.LanguageExporters!.AddAsync(languageExporter);
                     await _context.SaveChangesAsync();
@@ -176,7 +191,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
+
+                foreach (var error in userCreateResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }

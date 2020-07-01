@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace ExporterWeb
 {
     public static class FixtureUtils
@@ -47,11 +48,14 @@ namespace ExporterWeb
         {
             var options = serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>();
             using var context = new ApplicationDbContext(options);
+
             var admin = await EnsureUser(serviceProvider, "admin@example.com", password);
-            await EnsureRole(serviceProvider, admin, Constants.AdministratorsRole);
+            await EnsureRole(serviceProvider, Constants.AdministratorsRole, admin);
 
             var manager = await EnsureUser(serviceProvider, "manager@example.com", password);
-            await EnsureRole(serviceProvider, manager, Constants.ManagersRole);
+            await EnsureRole(serviceProvider, Constants.ManagersRole, manager);
+
+            await EnsureRole(serviceProvider, Constants.ExportersRole, null);
         }
 
         private static async Task<User> EnsureUser(IServiceProvider serviceProvider, string email, string password)
@@ -77,7 +81,7 @@ namespace ExporterWeb
             return user;
         }
 
-        private static async Task EnsureRole(IServiceProvider serviceProvider, User user, string role)
+        private static async Task EnsureRole(IServiceProvider serviceProvider, string role, User? user)
         {
             var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
 
@@ -91,9 +95,11 @@ namespace ExporterWeb
                 await roleManager.CreateAsync(new IdentityRole(role));
             }
 
-            var userManager = serviceProvider.GetService<UserManager<User>>();
-
-            await userManager.AddToRoleAsync(user, role);
+            if (user is { })
+            {
+                var userManager = serviceProvider.GetService<UserManager<User>>();
+                await userManager.AddToRoleAsync(user, role);
+            }
         }
     }
 }

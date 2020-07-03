@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace ExporterWeb
 {
     public static class FixtureUtils
     {
+        private const string DbKeyConfig = "db";
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         public static void PopulateDatabase(IHost host)
@@ -26,12 +29,8 @@ namespace ExporterWeb
                 context.Database.Migrate();
 
                 var config = host.Services.GetRequiredService<IConfiguration>();
-                //string password = config["AdministratorPassword"];
-                // TODO: fetch password from some secret after
-                // investigation of the best way to store them
-                string password = "1234qwE!";
-
-                SeedData.Initialize(services, password).Wait();
+                var dbSection = config.GetSection(DbKeyConfig);
+                SeedData.Initialize(services, dbSection).Wait();
             }
             catch (Exception ex)
             {
@@ -44,18 +43,23 @@ namespace ExporterWeb
 
     static class SeedData
     {
-        public static async Task Initialize(IServiceProvider serviceProvider, string password)
+        private const string AdministratorsKeyConfig = "administrators";
+        private const string ManagersKeyConfig = "managers";
+
+        public static async Task Initialize(IServiceProvider serviceProvider, IConfigurationSection dbConfig)
         {
+            var administrators = dbConfig.GetSection(AdministratorsKeyConfig).GetChildren();
+            var managers = dbConfig.GetSection(ManagersKeyConfig).GetChildren();
+
             var options = serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>();
             using var context = new ApplicationDbContext(options);
 
-            var admin = await EnsureUser(serviceProvider, "admin@example.com", password);
-            await EnsureRole(serviceProvider, Constants.AdministratorsRole, admin);
+            await EnsureRole(serviceProvider, Constants.AdministratorsRole);
+            await EnsureRole(serviceProvider, Constants.ManagersRole);
+            await EnsureRole(serviceProvider, Constants.ExportersRole);
 
-            var manager = await EnsureUser(serviceProvider, "manager@example.com", password);
-            await EnsureRole(serviceProvider, Constants.ManagersRole, manager);
-
-            await EnsureRole(serviceProvider, Constants.ExportersRole, null);
+            await EnsureUsersAreInRole(serviceProvider, administrators, Constants.AdministratorsRole);
+            await EnsureUsersAreInRole(serviceProvider, managers, Constants.ManagersRole);
         }
 
         private static async Task<User> EnsureUser(IServiceProvider serviceProvider, string email, string password)
@@ -63,7 +67,7 @@ namespace ExporterWeb
             var userManager = serviceProvider.GetService<UserManager<User>>();
 
             var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
+            if (user is null)
             {
                 user = new User(email)
                 {
@@ -81,25 +85,33 @@ namespace ExporterWeb
             return user;
         }
 
-        private static async Task EnsureRole(IServiceProvider serviceProvider, string role, User? user)
+        private static async Task EnsureRole(IServiceProvider serviceProvider, string role)
         {
             var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
-
-            if (roleManager == null)
-            {
-                throw new Exception("roleManager is null");
-            }
-
             if (!await roleManager.RoleExistsAsync(role))
-            {
                 await roleManager.CreateAsync(new IdentityRole(role));
-            }
+        }
 
-            if (user is { })
+        private static async Task EnsureUsersAreInRole(
+            IServiceProvider serviceProvider,
+            IEnumerable<IConfigurationSection> users,
+            string role)
+        {
+            foreach (var data in users)
             {
-                var userManager = serviceProvider.GetService<UserManager<User>>();
-                await userManager.AddToRoleAsync(user, role);
+                var email = data.Key;
+                var password = data.Value;
+                var user = await EnsureUser(serviceProvider, email, password);
+                await EnsureUserIsInRole(serviceProvider, user, role);
             }
+        }
+
+        private static async Task EnsureUserIsInRole(IServiceProvider serviceProvider, User user, string role)
+        {
+            var userManager = serviceProvider.GetService<UserManager<User>>();
+            var usersInThatRole = await userManager.GetUsersInRoleAsync(role);
+            if (!usersInThatRole.Contains(user))
+                await userManager.AddToRoleAsync(user, role);
         }
     }
 }

@@ -10,14 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IO;
 
 namespace ExporterWeb
 {
     public class Startup
     {
         private const string DbConnectionString = "ExportersDbConnection";
-        private const string PathToAppSettingsSecret = "appsettings.Secrets.json";
 
         public Startup(IConfiguration configuration)
         {
@@ -29,10 +27,9 @@ namespace ExporterWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IConfigurationRoot secretConfig = GetSecretConfig();
-
+            var connectionString = Configuration.GetConnectionString(DbConnectionString);
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(secretConfig.GetConnectionString(DbConnectionString)));
+                options.UseSqlServer(connectionString));
 
             services.AddDefaultIdentity<User>(options =>
                     options.SignIn.RequireConfirmedAccount = true)
@@ -54,23 +51,6 @@ namespace ExporterWeb
             services.AddScoped<IAuthorizationHandler, ExporterOwnerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
-        }
-
-        private static IConfigurationRoot GetSecretConfig()
-        {
-            try
-            {
-                return new ConfigurationBuilder()
-                    .AddJsonFile(PathToAppSettingsSecret)
-                    .Build();
-            }
-            catch (FileNotFoundException e)
-            {
-                throw new FileNotFoundException(
-                    $"Please create \"{PathToAppSettingsSecret}\". In README.md read the setup section for help",
-                    e
-                );
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

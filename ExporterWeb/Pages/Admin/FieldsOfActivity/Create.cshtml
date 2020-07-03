@@ -13,14 +13,14 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @for (int i = 0; i < Model.FieldOfActivityNames.Count; i++)
-            {
+            @for (int i = 0; i < Model.LocalizedNames.Count; i++)
+			{
                 <div class="form-group">
-                    <label asp-for="@Model.FieldOfActivityNames[i].Language" class="control-label">@Model.FieldOfActivityNames[i].Language:</label>
-                    <input type="hidden" asp-for="@Model.FieldOfActivityNames[i].Language" />
-                    <label asp-for="@Model.FieldOfActivityNames[i].Name" class="control-label"></label>
-                    <input asp-for="@Model.FieldOfActivityNames[i].Name" class="form-control" />
-                    <span asp-validation-for="@Model.FieldOfActivityNames[i].Name" class="text-danger"></span>
+                    <label asp-for="@Model.LocalizedNames[i].Language" class="control-label">@Model.LocalizedNames[i].Language:</label>
+                    <input type="hidden" asp-for="@Model.LocalizedNames[i].Language" />
+                    <label asp-for="@Model.LocalizedNames[i].Name" class="control-label"></label>
+                    <input asp-for="@Model.LocalizedNames[i].Name" class="form-control" />
+                    <span asp-validation-for="@Model.LocalizedNames[i].Name" class="text-danger"></span>
                 </div>
             }
             <div class="form-group">

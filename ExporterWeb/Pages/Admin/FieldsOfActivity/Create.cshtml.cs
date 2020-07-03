@@ -1,13 +1,13 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly IAuthorizationService _authorizationService;
@@ -33,6 +33,20 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            string? nameForDefaultLanguage = null;
+            foreach (var fieldOFActivityName in LocalizedNames)
+            {
+                FieldOfActivity!.Name[fieldOFActivityName.Language] = fieldOFActivityName.Name;
+                if (fieldOFActivityName.Language == Languages.DefaultLanguage)
+                    nameForDefaultLanguage = fieldOFActivityName.Name;
+            }
+
+            if (nameForDefaultLanguage is null)
+            {
+                ModelState.AddModelError(string.Empty, "Name for default language is required");
+                return Page();
+            }
+
             if (!ModelState.IsValid)
                 return Page();
 

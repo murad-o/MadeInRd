@@ -14,11 +14,16 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="FieldOfActivity!.Id" />
-            <div class="form-group">
-                <label asp-for="FieldOfActivity!.Name" class="control-label"></label>
-                <input asp-for="FieldOfActivity!.Name" class="form-control" />
-                <span asp-validation-for="FieldOfActivity!.Name" class="text-danger"></span>
-            </div>
+            @for (int i = 0; i < Model.FieldOfActivityNames.Count; i++)
+            {
+                <div class="form-group">
+                    <label asp-for="@Model.FieldOfActivityNames[i].Language" class="control-label">@Model.FieldOfActivityNames[i].Language:</label>
+                    <input type="hidden" asp-for="@Model.FieldOfActivityNames[i].Language" />
+                    <label asp-for="@Model.FieldOfActivityNames[i].Name" class="control-label"></label>
+                    <input asp-for="@Model.FieldOfActivityNames[i].Name" class="form-control" />
+                    <span asp-validation-for="@Model.FieldOfActivityNames[i].Name" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

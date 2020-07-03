@@ -1,4 +1,5 @@
 using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -8,9 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,7 +22,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private const string DefaultLanguage = "ru";
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -137,7 +135,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                         OGRN_IP = Input.OGRN_IP,
                         FieldOfActivityId = Input.FieldOfActivityId
                     },
-                    Language = DefaultLanguage,
+                    Language = Languages.DefaultLanguage,
                     Name = Input.Name,
                     Description = Input.Description,
                     ContactPersonFirstName = Input.ContactPersonFirstName,

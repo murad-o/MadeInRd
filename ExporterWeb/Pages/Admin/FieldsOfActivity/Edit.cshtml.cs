@@ -2,14 +2,14 @@
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly IAuthorizationService _authorizationService;
@@ -25,23 +25,18 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
+            if (id is null)
                 return NotFound();
-            }
 
-            FieldOfActivity = await _context.FieldsOfActivity.FirstOrDefaultAsync(m => m.Id == id);
+            FieldOfActivity = await _context.FieldsOfActivity!.FirstOrDefaultAsync(f => f.Id == id);
 
-            if (FieldOfActivity == null)
-            {
+            if (FieldOfActivity is null)
                 return NotFound();
-            }
 
             if (!await IsAuthorized())
-            {
                 return Forbid();
-            }
 
+            FillFieldOfActivityNames(FieldOfActivity);
             return Page();
         }
 
@@ -55,6 +50,11 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             if (!await IsAuthorized())
                 return Forbid();
 
+            foreach (var fieldOFActivityName in LocalizedNames)
+            {
+                FieldOfActivity!.Name[fieldOFActivityName.Language] = fieldOFActivityName.Name;
+            }
+
             _context.Attach(FieldOfActivity).State = EntityState.Modified;
 
             try
@@ -64,13 +64,9 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             catch (DbUpdateConcurrencyException)
             {
                 if (!FieldOfActivityExists(FieldOfActivity!.Id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return RedirectToPage("./Index");

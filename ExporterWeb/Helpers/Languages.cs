@@ -9,5 +9,7 @@ namespace ExporterWeb.Helpers
             "ru",
             "en",
         };
+
+        public const string DefaultLanguage = "ru";
     }
 }

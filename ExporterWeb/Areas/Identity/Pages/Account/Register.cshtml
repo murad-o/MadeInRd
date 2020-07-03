@@ -57,7 +57,7 @@
             <div class="form-group">
                 <label asp-for="Input.FieldOfActivityId">FieldOfActivity name</label>
                 <select asp-for="Input.FieldOfActivityId" class="form-control"
-                        asp-items="@(new SelectList(Model.FieldsOfActivity, nameof(FieldOfActivity.Id), nameof(FieldOfActivity.Name)))">
+                        asp-items="@(new SelectList(Model.FieldsOfActivity.Select(f => new { f.Id, LocalizedName = f.Name[Languages.DefaultLanguage] }), nameof(FieldOfActivity.Id), "LocalizedName"))">
                 </select>
                 <span asp-validation-for="Input.FieldOfActivityId" class="text-danger"></span>
             </div>

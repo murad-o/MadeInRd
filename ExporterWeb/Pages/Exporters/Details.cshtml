@@ -1,5 +1,6 @@
 ﻿@page
 @model ExporterWeb.Pages.Exporters.DetailsModel
+@using ExporterWeb.Helpers
 
 @{
 	ViewData["Title"] = "Details";
@@ -30,10 +31,10 @@
 			@Html.DisplayFor(model => model.LanguageExporter.CommonExporter!.OGRN_IP)
 		</dd>
 		<dt class="col-sm-3">
-			@Html.DisplayNameFor(model => model.LanguageExporter.CommonExporter!.FieldOfActivity!.Name)
+			Field of Activity
 		</dt>
 		<dd class="col-sm-9">
-			@Html.DisplayFor(model => model.LanguageExporter.CommonExporter!.FieldOfActivity!.Name)
+			@Model.LanguageExporter.CommonExporter!.FieldOfActivity!.Name[Model.Language!]
 		</dd>
 		<dt class="col-sm-3">
 			@Html.DisplayNameFor(model => model.LanguageExporter.Name)

@@ -1,4 +1,6 @@
-﻿using ExporterWeb.Models;
+﻿using ExporterWeb.Helpers;
+using ExporterWeb.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,11 +17,14 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             _context = context;
         }
 
-        public IList<FieldOfActivity>? FieldOfActivity { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string Language { get; set; } = Languages.DefaultLanguage;
+
+        public IList<FieldOfActivity>? FieldsOfActivity { get; set; }
 
         public async Task OnGetAsync()
         {
-            FieldOfActivity = await _context.FieldsOfActivity.ToListAsync();
+            FieldsOfActivity = await _context.FieldsOfActivity.ToListAsync();
         }
     }
 }

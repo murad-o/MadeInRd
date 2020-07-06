@@ -2,6 +2,7 @@
 using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,15 @@ namespace ExporterWeb.Pages.Exporters
         private readonly ApplicationDbContext _context;
         private readonly IAuthorizationService _authorizationService;
         private readonly ILogger<EditModel> _logger;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(ApplicationDbContext context, IAuthorizationService authorizationService, ILogger<EditModel> logger)
+        public EditModel(ApplicationDbContext context, IAuthorizationService authorizationService,
+            ILogger<EditModel> logger, UserManager<User> userManager)
         {
             _context = context;
             _authorizationService = authorizationService;
             _logger = logger;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
@@ -50,6 +54,7 @@ namespace ExporterWeb.Pages.Exporters
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            Init(_userManager);
             if (!ModelState.IsValid || !Languages.WhiteList.Contains(LanguageExporter.Language))
                 return Page();
 

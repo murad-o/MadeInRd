@@ -13,10 +13,10 @@ namespace ExporterWeb.Models
 
         public string? Description { get; set; }
 
-        public string LanguageExporterId { get; set; } = "";
-        public string Language { get; set; } = "";
-        [Required]
         // Foreign key from Fluent API
+        public string Language { get; set; } = "";
+
+        public string LanguageExporterId { get; set; } = "";
         public LanguageExporter? LanguageExporter { get; set; }
 
         [Required]

@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ExporterWeb.Pages.Exporters
+namespace ExporterWeb.Pages.Products
 {
     [AllowAnonymous]
     public class DetailsModel : BasePageModel
@@ -20,29 +21,29 @@ namespace ExporterWeb.Pages.Exporters
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id is null)
                 return NotFound();
             Init(_userManager);
 
-            IQueryable<LanguageExporter> exporters = _context.LanguageExporters
-                .Include(e => e.CommonExporter)
-                .Include(e => e.CommonExporter!.FieldOfActivity);
+            IQueryable<Product> products = _context.Products
+                .Include(p => p.FieldOfActivity)
+                .Include(p => p.LanguageExporter);
 
             if (!IsAdminOrManager)
-                exporters = exporters.Where(p => p.Approved || p.CommonExporterId == UserId);
+                products = products.Where(p => p.LanguageExporter!.Approved || p.LanguageExporterId == UserId);
 
-            LanguageExporter = await exporters
-                .FirstOrDefaultAsync(m => m.CommonExporterId == id && m.Language == Language);
+            Product = await products
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (LanguageExporter is null)
+            if (Product is null)
                 return NotFound();
 
             return Page();
         }
 
 #nullable disable
-        public LanguageExporter LanguageExporter { get; set; }
+        public Product Product { get; set; }
     }
 }

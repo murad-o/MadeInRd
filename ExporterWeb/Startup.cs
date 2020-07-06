@@ -49,6 +49,7 @@ namespace ExporterWeb
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
             services.AddScoped<IAuthorizationHandler, ExporterOwnerAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
         }

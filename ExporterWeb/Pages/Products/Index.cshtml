@@ -1,0 +1,63 @@
+﻿@page
+@model ExporterWeb.Pages.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].LanguageExporter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].FieldOfActivity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].CreatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-page="/Exporters/Details" asp-route-id="@item.LanguageExporterId" asp-route-language="@item.Language">@item.LanguageExporter!.Name</a>
+                </td>
+                <td>
+                    @item.FieldOfActivity!.Name[Model.Language!]
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    @if (Model.CanCRUD(item))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+         }
+    </tbody>
+</table>

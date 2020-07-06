@@ -26,7 +26,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index" asp-route-language="ru">Exporters</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">Exporters</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Products/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">Products</a>
                         </li>
                     </ul>
                 </div>

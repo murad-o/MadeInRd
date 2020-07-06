@@ -33,3 +33,19 @@ Then you can switch back to the DEBUG mode and run the application as usual.
 After you have built and run, go to `https://localhost:PORT/_test` to see the result.
 
 `PORT` may be found in `ExporterWeb/Properties/launchSettings.json`, in the `sslPort` key
+
+# Contribute
+
+#### Commit message style
+- Start your commit message with an infinitive verb.
+- Always capitalize your sentence
+
+Example: `"Add button for changing theme"`
+
+#### Git Hooks
+To make sure you haven't broken the application, use Git Hooks inside `.githooks/`
+
+To do that, create a symbolik link for the pre-commit file. Being in the repository, run
+```bash
+ln -s ../../.githooks/pre-commit .git/hooks/pre-commit
+```

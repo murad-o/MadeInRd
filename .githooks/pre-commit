@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Set alias dotnet
+if ! command -v "dotnet" > /dev/null; then
+    if command -v "dotnet.exe" > /dev/null; then
+        echo "'dotnet' not found, trying 'dotnet.exe'"
+        alias dotnet=dotnet.exe
+    else
+        echo "Neither 'dotnet' nor 'dotnet.exe' found. Make sure you have it installed"
+        exit 1
+    fi
+fi
+
+dotnet build
+build_result=$?
+echo "========================"
+if [ ! $build_result ]; then
+    echo "Can't build the project. If it's a WIP commit, use --no-verify or -n"
+    exit 1
+fi

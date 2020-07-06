@@ -18,3 +18,11 @@ if [ ! $build_result ]; then
     echo "Can't build the project. If it's a WIP commit, use --no-verify or -n"
     exit 1
 fi
+
+dotnet test --filter DisplayName~ExporterWeb.Test.IntegrationTests.BasicTests
+test_result=$?
+echo "========================"
+if [ ! $test_result ]; then
+    echo "Error happened during running the basic tests"
+    exit 1
+fi

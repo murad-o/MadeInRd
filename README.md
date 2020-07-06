@@ -18,8 +18,8 @@ For example, in `ExporterWeb/`, run
 dotnet user-secrets set "ConnectionStrings:ExportersDbConnection" "Server=(localdb)\\MSSQLLocalDB;Database=MyExporterDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"
 
 dotnet user-secrets set "db:administrators:admin@example.com" "1234qwE!"
-dotnet user-secrets set "db:managers:manager1@example.com": "1234qwE!"
-dotnet user-secrets set "db:managers:manager2@example.com": "1234qwE!"
+dotnet user-secrets set "db:managers:manager1@example.com" "1234qwE!"
+dotnet user-secrets set "db:managers:manager2@example.com" "1234qwE!"
 ```
 This command will add the connection string to your local database `MyExporterDatabase` and properties to create 1 administrator and 2 managers. You can create as many administrators/managers as you want adding them in this way.
 

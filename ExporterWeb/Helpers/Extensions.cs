@@ -1,6 +1,4 @@
-﻿using ExporterWeb.Areas.Identity.Authorization;
-using ExporterWeb.Models;
-using System.Security.Claims;
+﻿using ExporterWeb.Models;
 
 namespace ExporterWeb.Helpers
 {

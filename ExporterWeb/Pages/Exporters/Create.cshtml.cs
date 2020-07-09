@@ -14,16 +14,14 @@ namespace ExporterWeb.Pages.Exporters
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService _authorizationService;
         private readonly UserManager<User> _userManager;
 
-        public CreateModel(ApplicationDbContext context,
-            IAuthorizationService authorizationService,
+        public CreateModel(ApplicationDbContext context, IAuthorizationService authorizationService,
             UserManager<User> userManager)
         {
             _context = context;
-            _authorizationService = authorizationService;
             _userManager = userManager;
+            AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -41,13 +39,6 @@ namespace ExporterWeb.Pages.Exporters
             return Page();
         }
 
-        private async Task<bool> IsAuthorized()
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                User, LanguageExporter, AuthorizationOperations.Create);
-            return result.Succeeded;
-        }
-
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -55,7 +46,7 @@ namespace ExporterWeb.Pages.Exporters
             if (!ModelState.IsValid || !Languages.WhiteList.Contains(LanguageExporter.Language))
                 return Page();
 
-            if (await IsAuthorized())
+            if (await IsAuthorized(LanguageExporter, AuthorizationOperations.Create))
             {
                 // If the user is a regular person, mark it as pending
                 if (!User.IsInRole(Constants.AdministratorsRole) &&

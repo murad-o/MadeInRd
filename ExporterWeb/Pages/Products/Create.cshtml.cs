@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,17 +18,14 @@ namespace ExporterWeb.Pages.Products
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<CreateModel> _logger;
-        private readonly IAuthorizationService _authorizationService;
 
-        public CreateModel(ApplicationDbContext context,
-            UserManager<User> userManager,
-            ILogger<CreateModel> logger,
-            IAuthorizationService authorizationService)
+        public CreateModel(ApplicationDbContext context, UserManager<User> userManager,
+            ILogger<CreateModel> logger, IAuthorizationService authorizationService)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
-            _authorizationService = authorizationService;
+            AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -60,7 +56,7 @@ namespace ExporterWeb.Pages.Products
             if (!ModelState.IsValid)
                 return Page();
 
-            if (!await IsAuthorized(Product))
+            if (!await IsAuthorized(Product, AuthorizationOperations.Create))
             {
                 string message = $"User {UserId} tries to create product with LanguageExporterId {Product.LanguageExporterId}";
                 _logger.LogWarning(message);
@@ -73,13 +69,6 @@ namespace ExporterWeb.Pages.Products
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-        }
-
-        private async Task<bool> IsAuthorized(Product product)
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                User, product, AuthorizationOperations.Create);
-            return result.Succeeded;
         }
 
 #nullable disable

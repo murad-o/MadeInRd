@@ -12,14 +12,14 @@ namespace ExporterWeb.Pages.Exporters
     public class DeleteModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService _authorizationService;
         private readonly ILogger<EditModel> _logger;
 
-        public DeleteModel(ApplicationDbContext context, IAuthorizationService authorizationService, ILogger<EditModel> logger)
+        public DeleteModel(ApplicationDbContext context, IAuthorizationService authorizationService,
+            ILogger<EditModel> logger)
         {
             _context = context;
-            _authorizationService = authorizationService;
             _logger = logger;
+            AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
@@ -34,7 +34,7 @@ namespace ExporterWeb.Pages.Exporters
             if (LanguageExporter is null)
                 return NotFound();
 
-            if (!await IsAuthorized(LanguageExporter))
+            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Delete))
             {
                 _logger.LogInformation($"User {UserId} tries to delete exporter {id} ({Language})");
                 return Forbid();
@@ -54,7 +54,7 @@ namespace ExporterWeb.Pages.Exporters
             if (LanguageExporter is null)
                 return NotFound();
 
-            if (!await IsAuthorized(LanguageExporter))
+            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Delete))
             {
                 _logger.LogInformation($"User {UserId} failed to delete exporter {id} ({Language})");
                 return Forbid();
@@ -64,13 +64,6 @@ namespace ExporterWeb.Pages.Exporters
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index", new { Language });
-        }
-
-        private async Task<bool> IsAuthorized(LanguageExporter languageExporter)
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                User, languageExporter, AuthorizationOperations.Delete);
-            return result.Succeeded;
         }
 
 #nullable disable

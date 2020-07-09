@@ -22,7 +22,7 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
         private protected void FillFieldOfActivityNames(FieldOfActivity fieldOfActivity)
         {
-            foreach(var localizedName in LocalizedNames)
+            foreach (var localizedName in LocalizedNames)
             {
                 localizedName.Name = fieldOfActivity.Name[localizedName.Language];
             }

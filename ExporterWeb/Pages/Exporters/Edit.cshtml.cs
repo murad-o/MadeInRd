@@ -15,7 +15,6 @@ namespace ExporterWeb.Pages.Exporters
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService _authorizationService;
         private readonly ILogger<EditModel> _logger;
         private readonly UserManager<User> _userManager;
 
@@ -23,9 +22,9 @@ namespace ExporterWeb.Pages.Exporters
             ILogger<EditModel> logger, UserManager<User> userManager)
         {
             _context = context;
-            _authorizationService = authorizationService;
             _logger = logger;
             _userManager = userManager;
+            AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
@@ -40,7 +39,7 @@ namespace ExporterWeb.Pages.Exporters
             if (LanguageExporter is null)
                 return NotFound();
 
-            if (!await IsAuthorized(LanguageExporter))
+            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Update))
             {
                 _logger.LogInformation($"User {UserId} tries to edit exporter {id} ({Language})");
                 return Forbid();
@@ -59,7 +58,7 @@ namespace ExporterWeb.Pages.Exporters
                 return Page();
 
             string id = LanguageExporter.CommonExporterId;
-            if (!await IsAuthorized(LanguageExporter))
+            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Update))
             {
                 _logger.LogInformation($"User {UserId} failed to edit exporter {id} ({Language})");
                 return Forbid();
@@ -67,9 +66,8 @@ namespace ExporterWeb.Pages.Exporters
 
             // If the user is a regular person, mark it as pending
             if (!IsAdminOrManager)
-            {
                 LanguageExporter.Approved = false;
-            }
+
             _context.Attach(LanguageExporter).State = EntityState.Modified;
 
             try
@@ -87,17 +85,8 @@ namespace ExporterWeb.Pages.Exporters
             return RedirectToPage("./Details", new { id, Language });
         }
 
-        private bool LanguageExporterExists(string id)
-        {
-            return _context.LanguageExporters.Any(e => e.CommonExporterId == id);
-        }
-
-        private async Task<bool> IsAuthorized(LanguageExporter languageExporter)
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                User, languageExporter, AuthorizationOperations.Update);
-            return result.Succeeded;
-        }
+        private bool LanguageExporterExists(string id) =>
+            _context.LanguageExporters.Any(e => e.CommonExporterId == id);
 
 #nullable disable
         [BindProperty]

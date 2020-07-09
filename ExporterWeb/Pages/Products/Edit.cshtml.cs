@@ -17,17 +17,14 @@ namespace ExporterWeb.Pages.Products
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<EditModel> _logger;
-        private readonly IAuthorizationService _authorizationService;
 
-        public EditModel(ApplicationDbContext context,
-            UserManager<User> userManager,
-            ILogger<EditModel> logger,
-            IAuthorizationService authorizationService)
+        public EditModel(ApplicationDbContext context, UserManager<User> userManager,
+            ILogger<EditModel> logger, IAuthorizationService authorizationService)
         {
             _context = context;
             _userManager = userManager;
             _logger = logger;
-            _authorizationService = authorizationService;
+            AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -44,7 +41,7 @@ namespace ExporterWeb.Pages.Products
                 return NotFound();
 
             Init(_userManager);
-            if (!await IsAuthorized(Product))
+            if (!await IsAuthorized(Product, AuthorizationOperations.Update))
             {
                 _logger.LogInformation($"User {UserId} tries to edit product {Product.Id}");
                 return Forbid();
@@ -69,17 +66,18 @@ namespace ExporterWeb.Pages.Products
         {
             if (!ModelState.IsValid)
                 return Page();
-            
+
             Init(_userManager);
 
             if (!IsAdminOrManager)
             {
                 var origin = await _context.Products!.FirstAsync(p => p.Id == Product.Id);
                 Product.LanguageExporterId = origin.LanguageExporterId;
+                Product.CreatedAt = origin.CreatedAt;
                 _context.Entry(origin).State = EntityState.Detached;
             }
 
-            if (!await IsAuthorized(Product))
+            if (!await IsAuthorized(Product, AuthorizationOperations.Update))
             {
                 string message = $"User {UserId} tries to edit product {Product.Id}";
                 _logger.LogWarning(message);
@@ -109,13 +107,6 @@ namespace ExporterWeb.Pages.Products
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
-        }
-
-        private async Task<bool> IsAuthorized(Product product)
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                User, product, AuthorizationOperations.Update);
-            return result.Succeeded;
         }
 
 #nullable disable

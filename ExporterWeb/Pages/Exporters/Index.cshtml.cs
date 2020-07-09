@@ -40,11 +40,11 @@ namespace ExporterWeb.Pages.Exporters
             exporters = ShowOnlyMyExporters
                 ? exporters.Where(e => e.CommonExporterId == UserId)
                 : exporters.Where(e => e.Language == Language);
+
             if (!IsAdminOrManager)
-            {
                 exporters = exporters
                     .Where(e => e.Approved || e.CommonExporterId == UserId);
-            }
+
             if (!string.IsNullOrWhiteSpace(Search))
             {
                 string normalizedSearch = Search.ToLower();
@@ -53,7 +53,7 @@ namespace ExporterWeb.Pages.Exporters
                         e.Name.ToLower().Contains(normalizedSearch) ||
                         e.Description != null && e.Description.ToLower().Contains(normalizedSearch));
             }
-                
+
             LanguageExporters = await exporters.ToListAsync();
         }
     }

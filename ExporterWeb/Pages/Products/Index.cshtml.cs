@@ -21,7 +21,6 @@ namespace ExporterWeb.Pages.Products
             _userManager = userManager;
         }
 
-
         public async Task OnGetAsync()
         {
             Init(_userManager);

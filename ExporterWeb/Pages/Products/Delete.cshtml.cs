@@ -3,7 +3,6 @@ using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -14,18 +13,15 @@ namespace ExporterWeb.Pages.Products
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
-        private readonly IAuthorizationService _authorizationService;
         private readonly ILogger<EditModel> _logger;
 
-        public DeleteModel(ApplicationDbContext context,
-            UserManager<User> userManager,
-            IAuthorizationService authorizationService,
-            ILogger<EditModel> logger)
+        public DeleteModel(ApplicationDbContext context, UserManager<User> userManager,
+            ILogger<EditModel> logger, IAuthorizationService authorizationService)
         {
             _context = context;
             _userManager = userManager;
-            _authorizationService = authorizationService;
             _logger = logger;
+            AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -41,7 +37,7 @@ namespace ExporterWeb.Pages.Products
                 return NotFound();
 
             Init(_userManager);
-            if (!await IsAuthorized(Product))
+            if (!await IsAuthorized(Product, AuthorizationOperations.Delete))
             {
                 _logger.LogInformation($"User {UserId} tries to delete product {Product.Id}");
                 return Forbid();
@@ -60,7 +56,7 @@ namespace ExporterWeb.Pages.Products
                 return NotFound();
 
             Init(_userManager);
-            if (!await IsAuthorized(Product!))
+            if (!await IsAuthorized(Product!, AuthorizationOperations.Delete))
             {
                 string message = $"User {UserId} tries to delete product {Product.Id}";
                 _logger.LogWarning(message);
@@ -71,13 +67,6 @@ namespace ExporterWeb.Pages.Products
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-        }
-
-        private async Task<bool> IsAuthorized(Product product)
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                User, product, AuthorizationOperations.Delete);
-            return result.Succeeded;
         }
 
 #nullable disable

@@ -7,22 +7,18 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
+    [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService _authorizationService;
 
-        public CreateModel(ApplicationDbContext context, IAuthorizationService authorizationService)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
-            _authorizationService = authorizationService;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
-            if (!await IsAuthorized())
-                return Forbid();
-
             return Page();
         }
 
@@ -50,20 +46,10 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             if (!ModelState.IsValid)
                 return Page();
 
-            if (!await IsAuthorized())
-                return Forbid();
-
             _context.FieldsOfActivity!.Add(FieldOfActivity!);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-        }
-
-        private async Task<bool> IsAuthorized()
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                            User, FieldOfActivity, AuthorizationOperations.Create);
-            return result.Succeeded;
         }
     }
 }

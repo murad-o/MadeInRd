@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
+    [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService _authorizationService;
 
-        public EditModel(ApplicationDbContext context, IAuthorizationService authorizationService)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
-            _authorizationService = authorizationService;
         }
 
         [BindProperty]
@@ -32,9 +31,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             if (FieldOfActivity is null)
                 return NotFound();
 
-            if (!await IsAuthorized())
-                return Forbid();
-
             FillFieldOfActivityNames(FieldOfActivity);
             return Page();
         }
@@ -45,9 +41,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         {
             if (!ModelState.IsValid)
                 return Page();
-
-            if (!await IsAuthorized())
-                return Forbid();
 
             foreach (var fieldOFActivityName in LocalizedNames)
             {
@@ -74,13 +67,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         private bool FieldOfActivityExists(int id)
         {
             return _context.FieldsOfActivity.Any(e => e.Id == id);
-        }
-
-        private async Task<bool> IsAuthorized()
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                            User, FieldOfActivity, AuthorizationOperations.Update);
-            return result.Succeeded;
         }
     }
 }

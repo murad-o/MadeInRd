@@ -20,9 +20,7 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             FieldOfActivity = await _context.FieldsOfActivity.FirstOrDefaultAsync(m => m.Id == id);
 

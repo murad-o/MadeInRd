@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
+    [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
     public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAuthorizationService _authorizationService;
 
-        public DeleteModel(ApplicationDbContext context, IAuthorizationService authorizationService)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
-            _authorizationService = authorizationService;
         }
 
         [BindProperty]
@@ -26,9 +25,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         {
             if (id == null)
                 return NotFound();
-
-            if (!await IsAuthorized())
-                return Forbid();
 
             FieldOfActivity = await _context.FieldsOfActivity.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -42,9 +38,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             if (id == null)
                 return NotFound();
 
-            if (!await IsAuthorized())
-                return Forbid();
-
             FieldOfActivity = await _context.FieldsOfActivity!.FindAsync(id);
 
             if (FieldOfActivity != null)
@@ -54,13 +47,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private async Task<bool> IsAuthorized()
-        {
-            var result = await _authorizationService.AuthorizeAsync(
-                            User, FieldOfActivity, AuthorizationOperations.Create);
-            return result.Succeeded;
         }
     }
 }

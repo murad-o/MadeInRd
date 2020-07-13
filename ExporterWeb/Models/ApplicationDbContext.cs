@@ -31,5 +31,6 @@ namespace ExporterWeb.Models
         public DbSet<CommonExporter>? CommonExporters { get; set; }
         public DbSet<LanguageExporter>? LanguageExporters { get; set; }
         public DbSet<Product>? Products { get; set; }
+        public DbSet<NewsModel> News { get; set; }
     }
 }

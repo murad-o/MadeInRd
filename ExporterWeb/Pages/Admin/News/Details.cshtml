@@ -1,0 +1,49 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.News.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>NewsItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.Language)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.Language)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.UserNameOwner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.UserNameOwner)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.NewsItem.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,0 +1,52 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.News.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>NewsItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.Language)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.Language)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsItem.UserNameOwner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NewsItem.UserNameOwner)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="NewsItem.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

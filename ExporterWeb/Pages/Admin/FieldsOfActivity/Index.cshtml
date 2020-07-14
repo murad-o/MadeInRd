@@ -19,13 +19,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FieldsOfActivity![0].Name)
+                @Html.DisplayNameFor(model => model.FieldsOfActivity[0].Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.FieldsOfActivity!) {
+@foreach (var item in Model.FieldsOfActivity) {
         <tr>
             <td>
                 @item.Name[Model.Language]

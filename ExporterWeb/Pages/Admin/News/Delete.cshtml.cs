@@ -35,7 +35,7 @@ namespace ExporterWeb.Pages.Admin.News
             if (id is null)
                 return NotFound();
 
-            NewsItem = await _context.News.FindAsync(id);
+            NewsItem = await _context.News!.FindAsync(id);
 
             if (NewsItem is { })
             {

@@ -18,9 +18,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             _context = context;
         }
 
-        [BindProperty]
-        public FieldOfActivity? FieldOfActivity { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -48,5 +45,9 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
             return RedirectToPage("./Index");
         }
+
+#nullable disable
+        [BindProperty]
+        public FieldOfActivity FieldOfActivity { get; set; }
     }
 }

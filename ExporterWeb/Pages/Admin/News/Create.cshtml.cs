@@ -42,7 +42,7 @@ namespace ExporterWeb.Pages.Admin.News
             NewsItem.UserNameOwner = User.Identity.Name!;
             NewsItem.CreatedAt = DateTime.Now;
 
-            _context.News.Add(NewsItem);
+            _context.News!.Add(NewsItem);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

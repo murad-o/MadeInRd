@@ -18,9 +18,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             _context = context;
         }
 
-        [BindProperty]
-        public FieldOfActivity? FieldOfActivity { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id is null)
@@ -68,5 +65,9 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         {
             return _context.FieldsOfActivity.Any(e => e.Id == id);
         }
+
+#nullable disable
+        [BindProperty]
+        public FieldOfActivity FieldOfActivity { get; set; }
     }
 }

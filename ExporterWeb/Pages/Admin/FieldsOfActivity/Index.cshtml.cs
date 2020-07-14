@@ -23,11 +23,12 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         [BindProperty(SupportsGet = true)]
         public string Language { get; set; } = Languages.DefaultLanguage;
 
-        public IList<FieldOfActivity>? FieldsOfActivity { get; set; }
-
         public async Task OnGetAsync()
         {
             FieldsOfActivity = await _context.FieldsOfActivity.ToListAsync();
         }
+
+#nullable disable
+        public IList<FieldOfActivity> FieldsOfActivity { get; set; }
     }
 }

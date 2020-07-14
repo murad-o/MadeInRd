@@ -37,7 +37,7 @@ namespace ExporterWeb.Pages.Admin.News
             if (!ModelState.IsValid)
                 return Page();
 
-            var newsItemToUpdate = await _context.News.FindAsync(id);
+            var newsItemToUpdate = await _context.News!.FindAsync(id);
             if (newsItemToUpdate is null)
                 return NotFound();
 

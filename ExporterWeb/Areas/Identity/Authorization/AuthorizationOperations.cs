@@ -24,5 +24,6 @@ namespace ExporterWeb.Areas.Identity.Authorization
         public const string ManagersRole = "ExporterManagers";
         public const string AdministratorsRole = "ExporterAdministrators";
         public const string ExportersRole = "Exporters";
+        public const string AnalystsRole = "Analysts";
     }
 }

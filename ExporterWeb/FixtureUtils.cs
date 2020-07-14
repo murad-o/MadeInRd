@@ -45,21 +45,25 @@ namespace ExporterWeb
     {
         private const string AdministratorsKeyConfig = "administrators";
         private const string ManagersKeyConfig = "managers";
+        private const string AnalystsKeyConfig = "analysts";
 
         public static async Task Initialize(IServiceProvider serviceProvider, IConfigurationSection dbConfig)
         {
             var administrators = dbConfig.GetSection(AdministratorsKeyConfig).GetChildren();
             var managers = dbConfig.GetSection(ManagersKeyConfig).GetChildren();
+            var analysts = dbConfig.GetSection(AnalystsKeyConfig).GetChildren();
 
             var options = serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>();
             using var context = new ApplicationDbContext(options);
 
             await EnsureRole(serviceProvider, Constants.AdministratorsRole);
             await EnsureRole(serviceProvider, Constants.ManagersRole);
+            await EnsureRole(serviceProvider, Constants.AnalystsRole);
             await EnsureRole(serviceProvider, Constants.ExportersRole);
 
             await EnsureUsersAreInRole(serviceProvider, administrators, Constants.AdministratorsRole);
             await EnsureUsersAreInRole(serviceProvider, managers, Constants.ManagersRole);
+            await EnsureUsersAreInRole(serviceProvider, analysts, Constants.AnalystsRole);
         }
 
         private static async Task<User> EnsureUser(IServiceProvider serviceProvider, string email, string password)

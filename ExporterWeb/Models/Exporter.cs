@@ -38,7 +38,7 @@ namespace ExporterWeb.Models
         [Required]
         public string Language { get; set; } = "";
 
-        [Required]
+        [Display(Name = "Name"), Required]
         public string Name { get; set; } = "";
 
         public string? Description { get; set; }

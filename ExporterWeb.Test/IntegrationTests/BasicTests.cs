@@ -19,7 +19,7 @@ namespace ExporterWeb.Test.IntegrationTests
         [InlineData("/")]
         [InlineData("/Index")]
         [InlineData("/Exporters")]
-        [InlineData("/Identity/Account/Register")]
+        [InlineData("/Products")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange

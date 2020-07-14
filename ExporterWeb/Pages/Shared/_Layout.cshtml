@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject CommonLocalizationService Localizer
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,22 +22,23 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">@Localizer["Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">@Localizer["Privacy"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">Exporters</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Products/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">Products</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Products/Index">@Localizer["Products"]</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/News/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">News</a>
                         </li>
                     </ul>
                 </div>
+                <vc:culture-switcher />
             </div>
         </nav>
     </header>
@@ -47,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - ExporterWeb - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2020 - ExporterWeb - <a asp-area="" asp-page="/Privacy">@Localizer["Privacy"]</a>
         </div>
     </footer>
 

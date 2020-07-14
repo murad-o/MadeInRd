@@ -1,5 +1,6 @@
 ﻿@page
 @model ExporterWeb.Pages.Products.IndexModel
+@inject CommonLocalizationService CommonLocalizer
 
 @{
     ViewData["Title"] = "Index";
@@ -17,13 +18,13 @@
                 @Html.DisplayNameFor(model => model.Products[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Products[0].Description)
+                @CommonLocalizer["Description"]
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Products[0].LanguageExporter)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Products[0].FieldOfActivity)
+                @CommonLocalizer["FieldOfActivity"]
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Products[0].CreatedAt)

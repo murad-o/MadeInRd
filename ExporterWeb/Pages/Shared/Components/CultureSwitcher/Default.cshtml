@@ -1,0 +1,27 @@
+﻿@model ExporterWeb.Models.CultureSwitcherModel
+
+<div>
+    <form id="culture-switcher">
+        <select name="culture" id="culture-options">
+            @foreach (var culture in Model.SupportedCultures!)
+            {
+                <option value="@culture.Name" selected="@(Model.CurrentUICulture!.Name == culture.Name)">@culture.NativeName</option>
+            }
+        </select>
+    </form>
+</div>
+
+
+<script>
+    var currentCulture = "@Context.Request.RouteValues["culture"]";
+    var segments = location.pathname.split('/');
+    var el = document.getElementById("culture-options");
+    el.addEventListener("change", () => {
+        var selectedCulture = el.value;
+        if (currentCulture.length === 0) {
+            location.pathname = "/" + selectedCulture + location.pathname;
+        } else {
+            location.pathname = location.pathname.replace(currentCulture, selectedCulture)
+        }
+    });
+</script>

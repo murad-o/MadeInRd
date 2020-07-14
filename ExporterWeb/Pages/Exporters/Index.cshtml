@@ -2,98 +2,100 @@
 @using Helpers
 @model ExporterWeb.Pages.Exporters.IndexModel
 @inject Microsoft.AspNetCore.Identity.SignInManager<ExporterWeb.Models.User> SignInManager
+@inject IStringLocalizer<IndexModel> Localizer
+@inject CommonLocalizationService CommonLocalizer
 
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
 <p>
-	<a asp-page="Create" asp-route-language="@Model.Language">Create New</a>
+    <a asp-page="Create">Create New</a>
 </p>
 <p>
-	Also, try to look for different languages:
-	@foreach (var language in ExporterWeb.Helpers.Languages.WhiteList)
-	{
-		if (language == Model.Language && !Model.ShowOnlyMyExporters)
-		{
-			<b>@language</b>
-		}
-		else
-		{
-			<a asp-route-language="@language">@language</a>
-		}
-	}
-	@* TODO: check if User.IsInRole(Constants.ExportersRole); not it is not implemented *@
-	@("|")
-	<a asp-route-language="@Model.Language" asp-route-my="true">Show My Exporters</a>
+    Also, try to look for different languages:
+    @foreach (var language in ExporterWeb.Helpers.Languages.WhiteList)
+    {
+        if (language == Model.Language && !Model.ShowOnlyMyExporters)
+        {
+            <b>@language</b>
+        }
+        else
+        {
+            <a asp-route-language="@language">@language</a>
+        }
+    }
+    @* TODO: check if User.IsInRole(Constants.ExportersRole); not it is not implemented *@
+    @("|")
+    <a asp-route-language="@Model.Language" asp-route-my="true">Show My Exporters</a>
 </p>
+
 <form method="get">
-	<input type="hidden" asp-for="@Model.Language" name="language" />
-	<input type="text" asp-for="@Model.Search" name="q" />
-	<button type="submit" class="btn btn-primary">Search</button>
+    <input type="text" asp-for="@Model.Search" name="q" />
+    <button type="submit" class="btn btn-primary">@CommonLocalizer["Search"]</button>
 </form>
 <table class="table">
-	<thead>
-		<tr>
-			<th></th>
-			<th>
-				@Html.DisplayNameFor(model => model.LanguageExporters[0].Name)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.LanguageExporters[0].CommonExporter!.User!.Email)
-			</th>
-			<th>
-				Field of Activity
-			</th>
-			<th>
-				Contact Person Full Name
-			</th>
-			<th>
-				Director Full Name
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.LanguageExporters[0].Website)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.LanguageExporters[0].Approved)
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model.LanguageExporters)
-		{
-			<tr>
-				<td>
-					@if (Model.CanCRUD(item))
-					{
-						<a asp-page="./Edit" asp-route-id="@item.CommonExporterId" asp-route-language="@item.Language">Edit</a>
-						<a asp-page="./Delete" asp-route-id="@item.CommonExporterId" asp-route-language="@item.Language">Delete</a>
-					}
-				</td>
-				<td>
-					<a asp-page="./Details" asp-route-id="@item.CommonExporterId" asp-route-language="@item.Language">@item.Name</a>
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.CommonExporter!.User!.Email)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.CommonExporter!.FieldOfActivity!.Name)
-				</td>
-				<td>
-					@item.ContactPersonFullName()
-				</td>
-				<td>
-					@item.DirectorFullName()
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Website)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Approved)
-				</td>
-			</tr>
-		}
-	</tbody>
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Localizer["Name"]
+            </th>
+            <th>
+                @CommonLocalizer["Email"]
+            </th>
+            <th>
+                @CommonLocalizer["FieldOfActivity"]
+            </th>
+            <th>
+                @Localizer["Contact Person Full Name"]
+            </th>
+            <th>
+                @Localizer["Director Full Name"]
+            </th>
+            <th>
+                @Localizer["Website"]
+            </th>
+            <th>
+                @Localizer["Approved"]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LanguageExporters)
+        {
+            <tr>
+                <td>
+                    @if (Model.CanCRUD(item))
+                    {
+                        <a asp-page="./Edit" asp-route-language="@Model.Language" asp-route-id="@item.CommonExporterId">Edit</a>
+                        <a asp-page="./Delete" asp-route-language="@Model.Language" asp-route-id="@item.CommonExporterId">Delete</a>
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-language="@Model.Language" asp-route-id="@item.CommonExporterId">@item.Name</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommonExporter!.User!.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommonExporter!.FieldOfActivity!.Name)
+                </td>
+                <td>
+                    @item.ContactPersonFullName()
+                </td>
+                <td>
+                    @item.DirectorFullName()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Website)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approved)
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

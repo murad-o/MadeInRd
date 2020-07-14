@@ -8,7 +8,7 @@ namespace ExporterWeb.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Display(Name = "Name"), Required(ErrorMessage = "Name is required")]
         public string Name { get; set; } = "";
 
         public string? Description { get; set; }

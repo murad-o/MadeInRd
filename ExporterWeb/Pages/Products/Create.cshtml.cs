@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,12 +46,8 @@ namespace ExporterWeb.Pages.Products
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            Init(_userManager);
-
             if (!ModelState.IsValid)
                 return Page();
 
@@ -63,12 +58,19 @@ namespace ExporterWeb.Pages.Products
                 return Forbid();
             }
 
-            Product.CreatedAt = DateTime.Now;
-            // TODO: Disapprove if !IsAdminOrManager
-            _context.Products!.Add(Product);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            var product = new Product();
+            if (await TryUpdateModelAsync(
+                    product,
+                    nameof(Product),
+                    p => p.LanguageExporterId, p => p.Name,
+                    p => p.Description, p => p.Language,
+                    p => p.FieldOfActivityId))
+            {
+                await _context.Products!.AddAsync(product);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            return Page();
         }
 
 #nullable disable

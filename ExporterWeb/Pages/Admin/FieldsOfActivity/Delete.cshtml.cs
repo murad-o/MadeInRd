@@ -20,24 +20,24 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (id is null)
                 return NotFound();
 
             FieldOfActivity = await _context.FieldsOfActivity.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (FieldOfActivity == null)
+            if (FieldOfActivity is null)
                 return NotFound();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
+            if (id is null)
                 return NotFound();
 
             FieldOfActivity = await _context.FieldsOfActivity!.FindAsync(id);
 
-            if (FieldOfActivity != null)
+            if (FieldOfActivity is { })
             {
                 _context.FieldsOfActivity.Remove(FieldOfActivity);
                 await _context.SaveChangesAsync();

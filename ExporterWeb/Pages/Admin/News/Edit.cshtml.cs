@@ -1,10 +1,8 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.News

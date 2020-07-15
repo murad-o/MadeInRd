@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Products
@@ -47,35 +46,16 @@ namespace ExporterWeb.Pages.Products
                 return Forbid();
             }
 
-            if (IsAdminOrManager)
-            {
-                var exporters = await _context.CommonExporters
-                    .Include(nameof(CommonExporter.User))
-                    .ToListAsync();
-                ViewData["CommonExporterList"] = new SelectList(exporters, "UserId", "User.Email");
-            }
             ViewData["FieldOfActivityId"] = new SelectList(_context.FieldsOfActivity, "Id", "Name");
             ViewData["WhiteListLanguages"] = new SelectList(Languages.WhiteList);
 
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
                 return Page();
-
-            Init(_userManager);
-
-            if (!IsAdminOrManager)
-            {
-                var origin = await _context.Products!.FirstAsync(p => p.Id == Product.Id);
-                Product.LanguageExporterId = origin.LanguageExporterId;
-                Product.CreatedAt = origin.CreatedAt;
-                _context.Entry(origin).State = EntityState.Detached;
-            }
 
             if (!await IsAuthorized(Product, AuthorizationOperations.Update))
             {
@@ -83,30 +63,18 @@ namespace ExporterWeb.Pages.Products
                 _logger.LogWarning(message);
                 return Forbid();
             }
-            _context.Attach(Product).State = EntityState.Modified;
 
-            try
+            var product = await _context.Products!.FindAsync(id);
+            if (await TryUpdateModelAsync(
+                    product,
+                    nameof(Product),
+                    p => p.Name, p => p.Description,
+                    p => p.Language, p => p.FieldOfActivityId))
             {
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(Product.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
+            return Page();
         }
 
 #nullable disable

@@ -32,6 +32,7 @@
                 @Html.DisplayNameFor(model => model.News[0].UserNameOwner)
             </th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -53,11 +54,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserNameOwner)
                 </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">@item.Name</a>
+                </td>
                 @if (Model.IsAdminOrManager)
                 {
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                         <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 }

@@ -39,25 +39,35 @@ namespace ExporterWeb.Pages.Exporters
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid || !Languages.WhiteList.Contains(LanguageExporter.Language))
                 return Page();
 
-            if (await IsAuthorized(LanguageExporter, AuthorizationOperations.Create))
+            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Create))
+                return Forbid();
+
+            var languageExporter = new LanguageExporter();
+            if (await TryUpdateModelAsync(
+                    languageExporter,
+                    nameof(LanguageExporter),
+                    l => l.CommonExporterId, l => l.Language, l => l.Name, l => l.Description,
+                    l => l.ContactPersonFirstName, l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
+                    l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
+                    l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
             {
                 // If the user is a regular person, mark it as pending
-                if (!User.IsInRole(Constants.AdministratorsRole) &&
-                    !User.IsInRole(Constants.ManagersRole))
-                {
-                    LanguageExporter.Approved = false;
-                }
-                _context.LanguageExporters!.Add(LanguageExporter);
+                Init(_userManager);
+                if (!IsAdminOrManager)
+                    languageExporter.Approved = false;
+
+                await _context.LanguageExporters!.AddAsync(languageExporter);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Details",
+                    new { id = LanguageExporter.CommonExporterId, language = LanguageExporter.Language });
             }
-            return RedirectToPage("./Details", new { id = LanguageExporter.CommonExporterId, LanguageExporter.Language });
+
+            return Page();
         }
 
 #nullable disable

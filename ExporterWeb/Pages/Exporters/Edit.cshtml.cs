@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Exporters
@@ -49,44 +48,35 @@ namespace ExporterWeb.Pages.Exporters
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string id)
         {
-            Init(_userManager);
             if (!ModelState.IsValid || !Languages.WhiteList.Contains(LanguageExporter.Language))
                 return Page();
 
-            string id = LanguageExporter.CommonExporterId;
             if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Update))
-            {
-                _logger.LogInformation($"User {UserId} failed to edit exporter {id} ({Language})");
                 return Forbid();
-            }
 
-            // If the user is a regular person, mark it as pending
-            if (!IsAdminOrManager)
-                LanguageExporter.Approved = false;
+            var languageExporter = await _context.LanguageExporters
+                .FirstOrDefaultAsync(l => l.CommonExporterId == id && l.Language == LanguageExporter.Language);
 
-            _context.Attach(LanguageExporter).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync(
+                    languageExporter,
+                    nameof(LanguageExporter),
+                    l => l.Name, l => l.Description, l => l.ContactPersonFirstName,
+                    l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
+                    l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
+                    l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
             {
+                // If the user is a regular person, mark it as pending
+                Init(_userManager);
+                if (!IsAdminOrManager)
+                    languageExporter.Approved = false;
+
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Details", new { id, language = Language });
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LanguageExporterExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
-
-            return RedirectToPage("./Details", new { id, Language });
+            return Page();
         }
-
-        private bool LanguageExporterExists(string id) =>
-            _context.LanguageExporters.Any(e => e.CommonExporterId == id);
 
 #nullable disable
         [BindProperty]

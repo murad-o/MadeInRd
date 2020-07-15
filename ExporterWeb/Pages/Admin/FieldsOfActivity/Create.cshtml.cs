@@ -22,11 +22,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
             return Page();
         }
 
-        [BindProperty]
-        public FieldOfActivity? FieldOfActivity { get; set; }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             string? nameForDefaultLanguage = null;
@@ -51,5 +46,9 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
             return RedirectToPage("./Index");
         }
+
+#nullable disable
+        [BindProperty]
+        public FieldOfActivity FieldOfActivity { get; set; }
     }
 }

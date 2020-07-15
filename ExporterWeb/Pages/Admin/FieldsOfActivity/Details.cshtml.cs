@@ -17,15 +17,14 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (id is null)
                 return NotFound();
 
             FieldOfActivity = await _context.FieldsOfActivity.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (FieldOfActivity == null)
-            {
+            if (FieldOfActivity is null)
                 return NotFound();
-            }
+
             return Page();
         }
 

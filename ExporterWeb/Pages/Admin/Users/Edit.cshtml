@@ -1,0 +1,63 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.Users.EditModel
+@using Microsoft.AspNetCore.Identity;
+@using ExporterWeb.Areas.Identity.Authorization
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="User.Id" />
+            <div class="form-group">
+                <label asp-for="User.UserName" class="control-label"></label>
+                <input asp-for="User.UserName" class="form-control" />
+                <span asp-validation-for="User.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.FirstName" class="control-label"></label>
+                <input asp-for="User.FirstName" class="form-control" />
+                <span asp-validation-for="User.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.SecondName" class="control-label"></label>
+                <input asp-for="User.SecondName" class="form-control" />
+                <span asp-validation-for="User.SecondName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Patronymic" class="control-label"></label>
+                <input asp-for="User.Patronymic" class="form-control" />
+                <span asp-validation-for="User.Patronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsManager" /> Manager
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAnalyst" /> Analyst
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

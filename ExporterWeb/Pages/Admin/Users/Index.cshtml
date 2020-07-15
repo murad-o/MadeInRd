@@ -1,0 +1,66 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.Users.IndexModel
+@using Microsoft.AspNetCore.Identity;
+@using ExporterWeb.Areas.Identity.Authorization
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].SecondName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Patronymic)
+            </th>
+            <th>IsManager</th>
+            <th>IsAnalyst</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.SecondName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Patronymic)
+            </td>
+            <td>
+                @await UserManager.IsInRoleAsync(user, Constants.ManagersRole)
+            </td>
+            <td>
+                @await UserManager.IsInRoleAsync(user, Constants.AnalystsRole)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@user.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@user.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@user.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

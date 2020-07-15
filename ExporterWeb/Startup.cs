@@ -46,8 +46,16 @@ namespace ExporterWeb
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            string requireAdministratorRole = "RequireAdministratorRole";
             services.AddRazorPages(options => {
                 options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
+                options.Conventions.AuthorizeFolder("/Admin/Users", requireAdministratorRole);
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(requireAdministratorRole,
+                     policy => policy.RequireRole(Constants.AdministratorsRole));
             });
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");

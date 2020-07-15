@@ -14,7 +14,7 @@ namespace ExporterWeb.Areas.Identity.Authorization
             new OperationAuthorizationRequirement { Name = Constants.DeleteOperationName };
     }
 
-    static class Constants
+    public static class Constants
     {
         public const string CreateOperationName = "Create";
         public const string ReadOperationName = "Read";

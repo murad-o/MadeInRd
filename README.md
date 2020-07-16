@@ -15,7 +15,7 @@ However, you don't have to touch the file. You can add secrets via the `dotnet` 
 
 For example, in `ExporterWeb/`, run
 ```bash
-dotnet user-secrets set "ConnectionStrings:ExportersDbConnection" "Server=(localdb)\\MSSQLLocalDB;Database=MyExporterDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"
+dotnet user-secrets set "ConnectionStrings:ExportersDbConnection" "Host=localhost;Port=5432;Database=ExportersDb;Username=postgres;Password=password"
 
 dotnet user-secrets set "db:administrators:admin@example.com" "1234qwE!"
 dotnet user-secrets set "db:managers:manager1@example.com" "1234qwE!"

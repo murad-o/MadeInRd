@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ExporterWeb.Migrations
 {
-    public partial class CreateIdentityUser : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +40,11 @@ namespace ExporterWeb.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    SecondName = table.Column<string>(nullable: false),
+                    Patronymic = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,11 +52,41 @@ namespace ExporterWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FieldsOfActivity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FieldsOfActivity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Language = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UserNameOwner = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -72,7 +107,7 @@ namespace ExporterWeb.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -152,6 +187,93 @@ namespace ExporterWeb.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CommonExporters",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    INN = table.Column<string>(maxLength: 12, nullable: false),
+                    OGRN_IP = table.Column<string>(maxLength: 15, nullable: false),
+                    LogoPath = table.Column<string>(nullable: true),
+                    FieldOfActivityId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommonExporters", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_CommonExporters_FieldsOfActivity_FieldOfActivityId",
+                        column: x => x.FieldOfActivityId,
+                        principalTable: "FieldsOfActivity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CommonExporters_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LanguageExporters",
+                columns: table => new
+                {
+                    CommonExporterId = table.Column<string>(nullable: false),
+                    Language = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    ContactPersonFirstName = table.Column<string>(nullable: false),
+                    ContactPersonSecondName = table.Column<string>(nullable: false),
+                    ContactPersonPatronymic = table.Column<string>(nullable: true),
+                    DirectorFirstName = table.Column<string>(nullable: false),
+                    DirectorSecondName = table.Column<string>(nullable: false),
+                    DirectorPatronymic = table.Column<string>(nullable: true),
+                    WorkingTime = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Website = table.Column<string>(nullable: true),
+                    Approved = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LanguageExporters", x => new { x.CommonExporterId, x.Language });
+                    table.ForeignKey(
+                        name: "FK_LanguageExporters_CommonExporters_CommonExporterId",
+                        column: x => x.CommonExporterId,
+                        principalTable: "CommonExporters",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Language = table.Column<string>(nullable: false),
+                    LanguageExporterId = table.Column<string>(nullable: false),
+                    FieldOfActivityId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_FieldsOfActivity_FieldOfActivityId",
+                        column: x => x.FieldOfActivityId,
+                        principalTable: "FieldsOfActivity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_LanguageExporters_LanguageExporterId_Language",
+                        columns: x => new { x.LanguageExporterId, x.Language },
+                        principalTable: "LanguageExporters",
+                        principalColumns: new[] { "CommonExporterId", "Language" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -161,8 +283,7 @@ namespace ExporterWeb.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -188,8 +309,22 @@ namespace ExporterWeb.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommonExporters_FieldOfActivityId",
+                table: "CommonExporters",
+                column: "FieldOfActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_FieldOfActivityId",
+                table: "Products",
+                column: "FieldOfActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_LanguageExporterId_Language",
+                table: "Products",
+                columns: new[] { "LanguageExporterId", "Language" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,7 +345,22 @@ namespace ExporterWeb.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "News");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "LanguageExporters");
+
+            migrationBuilder.DropTable(
+                name: "CommonExporters");
+
+            migrationBuilder.DropTable(
+                name: "FieldsOfActivity");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

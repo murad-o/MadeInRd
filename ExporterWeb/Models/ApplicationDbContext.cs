@@ -26,7 +26,6 @@ namespace ExporterWeb.Models
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Dummy>? Dummies { get; set; }
         public DbSet<FieldOfActivity>? FieldsOfActivity { get; set; }
         public DbSet<CommonExporter>? CommonExporters { get; set; }
         public DbSet<LanguageExporter>? LanguageExporters { get; set; }

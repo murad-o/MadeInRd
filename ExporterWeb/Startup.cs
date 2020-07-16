@@ -39,7 +39,7 @@ namespace ExporterWeb
         {
             var connectionString = Configuration.GetConnectionString(DbConnectionString);
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString));
 
             services.AddDefaultIdentity<User>(options =>
                     options.SignIn.RequireConfirmedAccount = true)

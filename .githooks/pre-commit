@@ -20,9 +20,9 @@ if [ ! $build_result ]; then
 fi
 
 dotnet test --filter DisplayName~ExporterWeb.Test.IntegrationTests.BasicTests
-test_result=$?
+test_return_code=$?
 echo "========================"
-if [ ! $test_result ]; then
+if [ $test_return_code != 0 ]; then
     echo "Error happened during running the basic tests"
     exit 1
 fi

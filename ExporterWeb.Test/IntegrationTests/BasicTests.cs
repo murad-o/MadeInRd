@@ -17,9 +17,9 @@ namespace ExporterWeb.Test.IntegrationTests
 
         [Theory]
         [InlineData("/")]
-        [InlineData("/Index")]
         [InlineData("/Exporters")]
         [InlineData("/Products")]
+        [InlineData("/News")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
@@ -49,7 +49,7 @@ namespace ExporterWeb.Test.IntegrationTests
                 });
 
             // Act
-            var response = await client.GetAsync("/Admin/FieldsOfActivity/Index");
+            var response = await client.GetAsync("/Admin/FieldsOfActivity");
 
             // Assert
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);

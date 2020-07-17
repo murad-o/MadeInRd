@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using System.Linq;
 
 namespace ExporterWeb.RouteModelConventions
 {
@@ -6,11 +7,14 @@ namespace ExporterWeb.RouteModelConventions
     {
         public void Apply(PageRouteModel model)
         {
-            var selectorCount = model.Selectors.Count;
-
-            for (var i = 0; i < selectorCount; i++)
+            foreach (var selector in model.Selectors.ToArray())
             {
-                var selector = model.Selectors[i];
+                var template = selector.AttributeRouteModel.Template;
+                if (template.EndsWith("/Index", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    model.Selectors.Remove(selector);
+                    continue;
+                }
 
                 model.Selectors.Add(new SelectorModel
                 {

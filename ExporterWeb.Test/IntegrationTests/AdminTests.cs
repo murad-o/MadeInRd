@@ -15,7 +15,6 @@ namespace ExporterWeb.Test.IntegrationTests
 
         [Theory]
         [InlineData("/Admin/Users")]
-        [InlineData("Admin/Users/Index")]
         [InlineData("/Admin/Users/Create")]
         [InlineData("/Admin/Users/Edit?id=fake")]
         public async Task Get_AdminPageRedirectsAnUnauthenticatedUser(string url)

@@ -24,7 +24,7 @@ namespace ExporterWeb.Pages
         }
 
         [BindProperty(Name = "language", SupportsGet = true)]
-        public string Language { get; set; } = Languages.DefaultLanguage;
+        public string? Language { get; set; } = Languages.DefaultLanguage;
 
         public IAuthorizationService? AuthorizationService { get; set; }
 

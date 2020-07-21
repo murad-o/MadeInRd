@@ -19,8 +19,6 @@ namespace ExporterWeb.Pages.Admin.News
 
         public async Task OnGetAsync()
         {
-            Init(_userManager);
-
             News = await _context.News.ToListAsync();
         }
 

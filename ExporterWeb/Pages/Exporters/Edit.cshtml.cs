@@ -4,7 +4,6 @@ using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -15,14 +14,13 @@ namespace ExporterWeb.Pages.Exporters
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<EditModel> _logger;
-        private readonly UserManager<User> _userManager;
 
         public EditModel(ApplicationDbContext context, IAuthorizationService authorizationService,
             ILogger<EditModel> logger, UserManager<User> userManager)
         {
             _context = context;
             _logger = logger;
-            _userManager = userManager;
+            UserManager = userManager;
             AuthorizationService = authorizationService;
         }
 
@@ -43,8 +41,6 @@ namespace ExporterWeb.Pages.Exporters
                 _logger.LogInformation($"User {UserId} tries to edit exporter {id} ({Language})");
                 return Forbid();
             }
-
-            ViewData["CommonExporterId"] = new SelectList(_context.CommonExporters, "UserId", "UserId");
             return Page();
         }
 
@@ -68,7 +64,6 @@ namespace ExporterWeb.Pages.Exporters
                     l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
             {
                 // If the user is a regular person, mark it as pending
-                Init(_userManager);
                 if (!IsAdminOrManager)
                     languageExporter.Approved = false;
 

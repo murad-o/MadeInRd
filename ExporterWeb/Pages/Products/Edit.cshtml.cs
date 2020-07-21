@@ -14,14 +14,13 @@ namespace ExporterWeb.Pages.Products
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
         private readonly ILogger<EditModel> _logger;
 
         public EditModel(ApplicationDbContext context, UserManager<User> userManager,
             ILogger<EditModel> logger, IAuthorizationService authorizationService)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
             _logger = logger;
             AuthorizationService = authorizationService;
         }
@@ -39,7 +38,6 @@ namespace ExporterWeb.Pages.Products
             if (Product is null)
                 return NotFound();
 
-            Init(_userManager);
             if (!await IsAuthorized(Product, AuthorizationOperations.Update))
             {
                 _logger.LogInformation($"User {UserId} tries to edit product {Product.Id}");

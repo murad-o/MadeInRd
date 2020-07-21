@@ -13,17 +13,15 @@ namespace ExporterWeb.Pages.Products
     public class IndexModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
         public IndexModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
         }
 
         public async Task OnGetAsync()
         {
-            Init(_userManager);
             IQueryable<Product> products = _context.Products
                 .Include(p => p.FieldOfActivity)
                 .Include(p => p.LanguageExporter);
@@ -36,5 +34,8 @@ namespace ExporterWeb.Pages.Products
 
 #nullable disable
         public IList<Product> Products { get; set; } = Array.Empty<Product>();
+
+        public bool CanCRUD(Product product) =>
+            IsAdminOrManager || product.LanguageExporterId == UserId;
     }
 }

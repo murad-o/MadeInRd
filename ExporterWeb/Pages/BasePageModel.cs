@@ -13,24 +13,26 @@ namespace ExporterWeb.Pages
 {
     public class BasePageModel : PageModel
     {
-        public bool IsAdminOrManager { get; set; }
-        [BindProperty(Name = "language", SupportsGet = true)]
-        public string? Language { get; set; } = Languages.DefaultLanguage;
+        Lazy<string> _userId;
+        Lazy<bool> _isAdminOrManager;
 
-        public string? UserId { get; set; }
+        public BasePageModel()
+        {
+            _userId = new Lazy<string>(() => UserManager!.GetUserId(User));
+            _isAdminOrManager = new Lazy<bool>(() =>
+                User.IsInRole(Constants.AdministratorsRole) || User.IsInRole(Constants.ManagersRole));
+        }
+
+        [BindProperty(Name = "language", SupportsGet = true)]
+        public string Language { get; set; } = Languages.DefaultLanguage;
+
         public IAuthorizationService? AuthorizationService { get; set; }
 
-        /// <summary>Initialize the UserId and IsAdminOrManager properties</summary>
-        public void Init(UserManager<User> userManager)
-        {
-            UserId = userManager.GetUserId(User);
-            IsAdminOrManager = User.IsInRole(Constants.AdministratorsRole) || User.IsInRole(Constants.ManagersRole);
-        }
-        public bool CanCRUD(LanguageExporter exporter) =>
-            IsAdminOrManager || exporter.CommonExporterId == UserId;
+        protected UserManager<User>? UserManager { get; set; }
 
-        public bool CanCRUD(Product product) =>
-            IsAdminOrManager || product.LanguageExporterId == UserId;
+        public string UserId => _userId.Value;
+
+        public bool IsAdminOrManager => _isAdminOrManager.Value;
 
         private async Task<bool> IsAuthorized(object resource, OperationAuthorizationRequirement operation)
         {
@@ -42,10 +44,10 @@ namespace ExporterWeb.Pages
             return result.Succeeded;
         }
 
-        protected async Task<bool> IsAuthorized(Product product, OperationAuthorizationRequirement operation) =>
-            await IsAuthorized((object)product, operation);
+        protected async Task<bool> IsAuthorized(LanguageExporter languageExporter,
+            OperationAuthorizationRequirement operation) => await IsAuthorized((object)languageExporter, operation);
 
-        protected async Task<bool> IsAuthorized(LanguageExporter languageExporter, OperationAuthorizationRequirement operation) =>
-            await IsAuthorized((object)languageExporter, operation);
+        protected async Task<bool> IsAuthorized(Product product,
+            OperationAuthorizationRequirement operation) => await IsAuthorized((object)product, operation);
     }
 }

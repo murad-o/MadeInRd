@@ -14,27 +14,23 @@ namespace ExporterWeb.Pages.Exporters
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
         public CreateModel(ApplicationDbContext context, IAuthorizationService authorizationService,
             UserManager<User> userManager)
         {
             _context = context;
-            _userManager = userManager;
             AuthorizationService = authorizationService;
+            UserManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Init(_userManager);
-            // TODO: authorize and add Where(exporters => exporters.UserId == current_user_id)
             var exporters = _context.CommonExporters.Include(nameof(CommonExporter.User));
             if (!IsAdminOrManager)
                 exporters = exporters.Where(e => e.UserId == UserId);
 
             var items = await exporters.ToListAsync();
             ViewData["CommonExporterList"] = new SelectList(items, "UserId", "User.Email");
-            ViewData["CommonExporterFirstId"] = items.FirstOrDefault()?.UserId;
             ViewData["WhiteListLanguages"] = new SelectList(Languages.WhiteList);
             return Page();
         }
@@ -57,7 +53,6 @@ namespace ExporterWeb.Pages.Exporters
                     l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
             {
                 // If the user is a regular person, mark it as pending
-                Init(_userManager);
                 if (!IsAdminOrManager)
                     languageExporter.Approved = false;
 

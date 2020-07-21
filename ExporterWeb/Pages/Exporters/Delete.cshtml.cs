@@ -2,6 +2,7 @@
 using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,11 +16,12 @@ namespace ExporterWeb.Pages.Exporters
         private readonly ILogger<EditModel> _logger;
 
         public DeleteModel(ApplicationDbContext context, IAuthorizationService authorizationService,
-            ILogger<EditModel> logger)
+            ILogger<EditModel> logger, UserManager<User> userManager)
         {
             _context = context;
             _logger = logger;
             AuthorizationService = authorizationService;
+            UserManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync(string id)

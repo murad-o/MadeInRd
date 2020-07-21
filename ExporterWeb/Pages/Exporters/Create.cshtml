@@ -22,7 +22,7 @@
 			}
 			else
 			{
-				<input type="hidden" asp-for="LanguageExporter.CommonExporterId" value="@ViewBag.CommonExporterFirstId" />
+				<input type="hidden" asp-for="LanguageExporter.CommonExporterId" value="@Model.UserId" />
 			}
 			<div class="form-group">
 				<label asp-for="LanguageExporter.Language" class="control-label"></label>

@@ -15,22 +15,19 @@ namespace ExporterWeb.Pages.Products
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
         private readonly ILogger<CreateModel> _logger;
 
         public CreateModel(ApplicationDbContext context, UserManager<User> userManager,
             ILogger<CreateModel> logger, IAuthorizationService authorizationService)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
             _logger = logger;
             AuthorizationService = authorizationService;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Init(_userManager);
-
             var exporters = _context.CommonExporters.Include(nameof(CommonExporter.User));
             if (!IsAdminOrManager)
                 exporters = exporters.Where(e => e.UserId == UserId);

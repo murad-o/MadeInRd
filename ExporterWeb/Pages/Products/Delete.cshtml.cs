@@ -12,14 +12,13 @@ namespace ExporterWeb.Pages.Products
     public class DeleteModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
         private readonly ILogger<EditModel> _logger;
 
         public DeleteModel(ApplicationDbContext context, UserManager<User> userManager,
             ILogger<EditModel> logger, IAuthorizationService authorizationService)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
             _logger = logger;
             AuthorizationService = authorizationService;
         }
@@ -36,7 +35,6 @@ namespace ExporterWeb.Pages.Products
             if (Product is null)
                 return NotFound();
 
-            Init(_userManager);
             if (!await IsAuthorized(Product, AuthorizationOperations.Delete))
             {
                 _logger.LogInformation($"User {UserId} tries to delete product {Product.Id}");
@@ -55,7 +53,6 @@ namespace ExporterWeb.Pages.Products
             if (Product is null)
                 return NotFound();
 
-            Init(_userManager);
             if (!await IsAuthorized(Product!, AuthorizationOperations.Delete))
             {
                 string message = $"User {UserId} tries to delete product {Product.Id}";

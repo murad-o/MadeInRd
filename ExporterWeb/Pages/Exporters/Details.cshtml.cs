@@ -12,19 +12,17 @@ namespace ExporterWeb.Pages.Exporters
     public class DetailsModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
         public DetailsModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id is null)
                 return NotFound();
-            Init(_userManager);
 
             IQueryable<LanguageExporter> exporters = _context.LanguageExporters
                 .Include(e => e.CommonExporter)

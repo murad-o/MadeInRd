@@ -14,12 +14,11 @@ namespace ExporterWeb.Pages.Exporters
     public class IndexModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
         public IndexModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
         }
 
         public IList<LanguageExporter> LanguageExporters { get; set; } = Array.Empty<LanguageExporter>();
@@ -31,7 +30,6 @@ namespace ExporterWeb.Pages.Exporters
 
         public async Task OnGetAsync()
         {
-            Init(_userManager);
             IQueryable<LanguageExporter> exporters = _context.LanguageExporters
                 .Include(l => l.CommonExporter)
                 .Include(l => l.CommonExporter!.FieldOfActivity)
@@ -42,8 +40,7 @@ namespace ExporterWeb.Pages.Exporters
                 : exporters.Where(e => e.Language == Language);
 
             if (!IsAdminOrManager)
-                exporters = exporters
-                    .Where(e => e.Approved || e.CommonExporterId == UserId);
+                exporters = exporters.Where(e => e.Approved || e.CommonExporterId == UserId);
 
             if (!string.IsNullOrWhiteSpace(Search))
             {
@@ -56,5 +53,8 @@ namespace ExporterWeb.Pages.Exporters
 
             LanguageExporters = await exporters.ToListAsync();
         }
+
+        public bool CanCRUD(LanguageExporter exporter) =>
+            IsAdminOrManager || exporter.CommonExporterId == UserId;
     }
 }

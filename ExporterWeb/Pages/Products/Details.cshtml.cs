@@ -12,19 +12,17 @@ namespace ExporterWeb.Pages.Products
     public class DetailsModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
         public DetailsModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-            _userManager = userManager;
+            UserManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id is null)
                 return NotFound();
-            Init(_userManager);
 
             IQueryable<Product> products = _context.Products
                 .Include(p => p.FieldOfActivity)

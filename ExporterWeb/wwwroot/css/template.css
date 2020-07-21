@@ -1,0 +1,62 @@
+﻿header {
+/*    background-color: #010B23;*/
+}
+
+header > * {
+    width: max-content;
+    margin: 0 auto;
+}
+
+.upper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+nav {
+    background-color: antiquewhite;
+}
+.navbar-nav.flex-grow-1 {
+    display: flex;
+}
+.navbar-nav.flex-grow-1 > li {
+    padding: 20px 10px;
+}
+.nav-items-container {
+    display: flex;
+    justify-content: center;
+}
+main {
+    margin-bottom: 100px;
+}
+
+/* About.cshtml */
+.about-portal-image-block {
+    background-image: url(/img/DXL6km_zypU.jpg);
+    height: 558px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.about-portal-image-block > * {
+    color: white;
+    font-size: 150px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.about-text-paragraph {
+    margin: 40px 0;
+}
+.about-text-paragraph > p {
+    font-weight: bold;
+}
+.about-text-paragraph > ul {
+    list-style-type: square;
+    padding-left: 40px;
+}
+.text-about-content {
+    margin: 100px;
+}
+
+

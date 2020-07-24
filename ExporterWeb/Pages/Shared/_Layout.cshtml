@@ -10,15 +10,16 @@
 	@*<link rel="stylesheet" href="~/css/site.css" />*@
 	<link rel="stylesheet" href="~/css/reset.css" />
 	<link rel="stylesheet" href="~/css/template.css" />
+	<link rel="stylesheet" href="~/fonts/Golos text/golostext.css" />
 </head>
 <body>
     <header>
-		<div>
+		<div class="grid">
 			<div class="upper-header">
 				<div>
-					<a class="nav-link text-dark" asp-area="" asp-page="/Index">MADE IN DAG.</a>
+					<a class="main-page-link" asp-area="" asp-page="/Index">MADE IN <span class="blue-highlighted">RD.</span></a>
 				</div>
-				<div>
+				<div class="extra-header-description">
 					Портал внешнеэкономической деятельности<br />
 					Республики Дагестан
 				</div>
@@ -26,61 +27,45 @@
 				<vc:culture-switcher />
 			</div>
 			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-				<div class="container">
-					@* This button sets display:none in mobile mode *@
-					@*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-							aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon">Toggle</span>
-					</button>*@
-					<div class="nav-items-container navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-						<ul class="navbar-nav flex-grow-1">
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="/About">@Localizer["About portal"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["About region"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Branches"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
-							</li>
-
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Support"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Events"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Foreign partners"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Useful"]</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="/Admin/News/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">@Localizer["News"]</a>
-							</li>
-						</ul>
-					</div>
+				@* This button sets display:none in mobile mode *@
+				@*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">Toggle</span>
+				</button>*@
+				<div class="nav-items-container navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+					<partial name="_NavLinksPartial" />
 				</div>
 			</nav>
 		</div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - ExporterWeb - <a asp-area="" asp-page="/Privacy">@Localizer["Privacy"]</a>
-        </div>
+		<div class="upper-footer">
+			@for (int i = 0; i < 2; i++)
+			{
+				<div class="sponsor-item">
+					<img src="~/img/sponsor-rospotrebnadzor.png" />
+					<span></span>
+				</div>
+				<div class="sponsor-item">
+					<img src="~/img/sponsor-my-dagestan.svg" />
+					<span></span>
+				</div>
+			}
+		</div>
+		<div class="lower-footer">
+			<partial name="_NavLinksPartial" />
+			<div>
+				<p>MADE IN RD.</p>
+				<p>
+					Портал внешнеэкономической деятельности<br/>
+					Республики Дагестан
+				</p>
+			</div>
+		</div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

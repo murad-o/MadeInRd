@@ -123,6 +123,18 @@
   <data name="About region" xml:space="preserve">
     <value>О регионе</value>
   </data>
+  <data name="All the branches" xml:space="preserve">
+    <value>Все отрасли</value>
+  </data>
+  <data name="All the events" xml:space="preserve">
+    <value>Все события</value>
+  </data>
+  <data name="All the news" xml:space="preserve">
+    <value>Все новости</value>
+  </data>
+  <data name="Analytics" xml:space="preserve">
+    <value>Аналитика</value>
+  </data>
   <data name="Branches" xml:space="preserve">
     <value>Отрасли</value>
   </data>
@@ -144,11 +156,14 @@
   <data name="Foreign partners" xml:space="preserve">
     <value>Иностранные партнёры</value>
   </data>
+  <data name="Full analytics" xml:space="preserve">
+    <value>Вся аналитика</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Домой</value>
   </data>
   <data name="Home page" xml:space="preserve">
-    <value>Домащняя страница</value>
+    <value>Домашняя страница</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>

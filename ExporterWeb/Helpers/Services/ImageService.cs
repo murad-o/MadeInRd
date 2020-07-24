@@ -40,7 +40,7 @@ namespace ExporterWeb.Helpers.Services
             public string FileName { get; set; }
         }
 
-        private ImageInfo GetImageInfo(ImageType imageType)
+        private static ImageInfo GetImageInfo(ImageType imageType)
         {
             string filename = Guid.NewGuid().ToString();
             return imageType switch
@@ -55,17 +55,16 @@ namespace ExporterWeb.Helpers.Services
             };
         }
 
-        public string GetDirectoryPath(ImageType imageType)
-        {
-            string uploadDir = Path.Combine(_appEnvironment.WebRootPath, "uploads");
-            return imageType switch
+        // Returns wwwroot/THIS_PATH
+        public static string GetWebRelativePath(ImageType imageType)
+            => imageType switch
             {
-                ImageType.NewsLogo => Path.Combine(uploadDir, "news"),
+                ImageType.NewsLogo => Path.Combine("uploads", "news"),
                 _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
             };
-        }
+
         private string GetFullPath(ImageType imageType, string filename)
-            => Path.Combine(GetDirectoryPath(imageType), filename);
+            => Path.Combine(_appEnvironment.WebRootPath, GetWebRelativePath(imageType), filename);
 
         public void Delete(ImageType imageType, string filename)
         {
@@ -73,7 +72,7 @@ namespace ExporterWeb.Helpers.Services
             File.Delete(fullPath);
         }
 
-        private Bitmap Resize(Bitmap source, int width, int height)
+        private static Bitmap Resize(Bitmap source, int width, int height)
         {
             var scale = Math.Max((double)source.Width / width, (double)source.Height / height);
 
@@ -85,7 +84,7 @@ namespace ExporterWeb.Helpers.Services
             return new Bitmap(source, newWidth, newHeight);
         }
 
-        private ImageCodecInfo GetEncoder(ImageFormat format)
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
         {
             return ImageCodecInfo
                 .GetImageDecoders()

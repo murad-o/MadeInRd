@@ -1,5 +1,6 @@
 ﻿@page
 @inject CommonLocalizationService Localizer
+@using Helpers
 @model IndexModel
 @{ ViewData["Title"] = Localizer["Home page"]; }
 
@@ -26,7 +27,7 @@
 				<div class="item news">
 					<a asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">
 						@*<img class="item-logo" src="~/img/news-icon.png" />*@
-						<img class="item-logo" src="~/img/news-icon.png" />
+						<img class="item-logo" src="@newsItem.LogoPath()" />
 					</a>
 					<a class="item-title" asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">@newsItem.Name
 					</a>

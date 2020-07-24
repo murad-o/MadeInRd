@@ -22,5 +22,7 @@ namespace ExporterWeb.Models
 
         [Required]
         public string UserNameOwner { get; set; } = "";
+
+        public string? Logo { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using ExporterWeb.Resources;
 using ExporterWeb.RouteModelConventions;
@@ -95,6 +96,7 @@ namespace ExporterWeb
             services.AddScoped<IAuthorizationHandler, ExporterOwnerAuthorizationHandler>();
             services.AddScoped<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
             services.AddSingleton<CommonLocalizationService>();
+            services.AddSingleton<ImageService>();
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
         }

@@ -1,6 +1,10 @@
 # Ignore ExporterWeb Secrets
 ExporterWeb/appsettings.Secrets.json
 
+# Ignore files in the upload dirs, but track the directories themselves
+ExporterWeb/wwwroot/uploads/*/*
+!ExporterWeb/wwwroot/uploads/*/*.keep
+
 ##################################
 # The content below was downloaded from
 # https://github.com/github/gitignore/blob/18aa6d83774d514da479d73a4beb864cd4220231/VisualStudio.gitignore

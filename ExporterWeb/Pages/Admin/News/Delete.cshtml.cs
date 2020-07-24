@@ -1,4 +1,6 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +13,12 @@ namespace ExporterWeb.Pages.Admin.News
     public class DeleteModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ImageService _imageService;
 
-        public DeleteModel(ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context, ImageService imageService)
         {
             _context = context;
+            _imageService = imageService;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -41,6 +45,8 @@ namespace ExporterWeb.Pages.Admin.News
             {
                 _context.News.Remove(NewsItem);
                 await _context.SaveChangesAsync();
+                if (NewsItem.Logo is { })
+                    _imageService.Delete(ImageType.NewsLogo, NewsItem.Logo);
             }
 
             return RedirectToPage("./Index");

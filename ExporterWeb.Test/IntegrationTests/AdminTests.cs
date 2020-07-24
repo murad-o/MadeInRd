@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -30,9 +31,8 @@ namespace ExporterWeb.Test.IntegrationTests
             var response = await client.GetAsync(url);
 
             // Assert
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-            Assert.Equal("/Identity/Account/Login",
-                response.Headers.Location.LocalPath);
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Headers.Location.LocalPath.Should().Be("/Identity/Account/Login");
         }
     }
 }

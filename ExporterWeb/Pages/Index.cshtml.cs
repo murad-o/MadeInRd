@@ -1,5 +1,7 @@
-﻿using ExporterWeb.Models;
+using ExporterWeb.Helpers;
+using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -24,8 +26,13 @@ namespace ExporterWeb.Pages
         public IList<NewsModel>? News { get; private set; }
         public IList<FieldOfActivity>? FieldsOfActivity { get; private set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            string path = Request.Path.Value.Split('/')[1].ToLower();
+           
+            if (path.Length > 0 && !Languages.WhiteList.Contains(path))
+                return NotFound();
+
             News = await _context.News
                 .OrderByDescending(n => n.CreatedAt)
                 .Take(8)
@@ -34,6 +41,8 @@ namespace ExporterWeb.Pages
             FieldsOfActivity = await _context.FieldsOfActivity
                 .Take(8)
                 .ToListAsync();
+
+            return Page();
         }
     }
 }

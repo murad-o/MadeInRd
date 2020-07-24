@@ -21,19 +21,17 @@
 			<a class="link" asp-page="/Admin/News/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">@Localizer["All the news"]</a>
 		</div>
 		<div class="many-items">
-			@for (int i = 0; i < 8; i++) @* Temporary, just to see the first 8 news *@
+			@foreach (var newsItem in Model.News!)
 			{
-				@foreach (var newsItem in Model.News!.Take(1))  @* TODO: remove .Take(1)*@
-				{
-					<div class="item news">
-						<a asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">
-							<img class="item-logo" src="~/img/news-icon.png" />
-						</a>
-						<a class="item-title" asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">@newsItem.Name
-						</a>
-						<span class="item-date">@newsItem.CreatedAt.ToLongDateString()</span>
-					</div>
-				}
+				<div class="item news">
+					<a asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">
+						@*<img class="item-logo" src="~/img/news-icon.png" />*@
+						<img class="item-logo" src="~/img/news-icon.png" />
+					</a>
+					<a class="item-title" asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">@newsItem.Name
+					</a>
+					<span class="item-date">@newsItem.CreatedAt.ToLongDateString()</span>
+				</div>
 			}
 		</div>
 	</div>

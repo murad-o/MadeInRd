@@ -11,6 +11,7 @@ namespace ExporterWeb.Helpers
                 languageExporter.ContactPersonSecondName,
                 languageExporter.ContactPersonPatronymic);
         }
+
         public static string DirectorFullName(this LanguageExporter languageExporter)
         {
             return ConstructFullName(

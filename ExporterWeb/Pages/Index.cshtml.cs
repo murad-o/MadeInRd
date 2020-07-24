@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +35,7 @@ namespace ExporterWeb.Pages
                 return NotFound();
 
             News = await _context.News
+                .Where(n => n.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
                 .OrderByDescending(n => n.CreatedAt)
                 .Take(8)
                 .ToListAsync();

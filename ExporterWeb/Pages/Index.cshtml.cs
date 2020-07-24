@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ExporterWeb.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -14,9 +16,14 @@ namespace ExporterWeb.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            string path = Request.Path.Value.Split('/')[1].ToLower();
+           
+            if (path.Length > 0 && !Languages.WhiteList.Contains(path))
+                return NotFound();
 
+            return Page();
         }
     }
 }

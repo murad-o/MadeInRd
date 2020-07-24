@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,7 +20,6 @@ namespace ExporterWeb.Test.IntegrationTests
         [InlineData("/")]
         [InlineData("/Exporters")]
         [InlineData("/Products")]
-        [InlineData("/News")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
@@ -34,8 +34,7 @@ namespace ExporterWeb.Test.IntegrationTests
 
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
-            Assert.Equal("text/html; charset=utf-8",
-                response.Content.Headers.ContentType.ToString());
+            response.Content.Headers.ContentType.ToString().Should().Be("text/html; charset=utf-8");
         }
 
         [Fact]
@@ -52,9 +51,21 @@ namespace ExporterWeb.Test.IntegrationTests
             var response = await client.GetAsync("/Admin/FieldsOfActivity");
 
             // Assert
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-            Assert.Equal("/Identity/Account/Login",
-                response.Headers.Location.LocalPath);
+            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Headers.Location.LocalPath.Should().Be("/Identity/Account/Login");
+        }
+
+        [Fact]
+        public async Task Get_PageDoesNotExistReturnNotFound()
+        {
+            // Arrange
+            var client = _factory.CreateClient(new WebApplicationFactoryClientOptions());
+
+            // Act
+            var response = await client.GetAsync("/Events");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }

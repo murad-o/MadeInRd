@@ -1,4 +1,6 @@
-﻿using ExporterWeb.Models;
+﻿using ExporterWeb.Helpers.Services;
+using ExporterWeb.Models;
+using System.IO;
 
 namespace ExporterWeb.Helpers
 {
@@ -26,6 +28,13 @@ namespace ExporterWeb.Helpers
                 ? string.Empty
                 : " " + patronymic;
             return $"{firstName} {secondName}{patronymicSpaced}";
+        }
+
+        public static string? LogoPath(this NewsModel news)
+        {
+            if (news.Logo is null)
+                return "/img/news-icon.png";
+            return Path.Combine("/", ImageService.GetWebRelativePath(ImageType.NewsLogo), news.Logo).Replace('\\', '/');
         }
     }
 }

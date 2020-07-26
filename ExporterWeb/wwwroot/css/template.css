@@ -1,0 +1,263 @@
+﻿html {
+    height: 100%;
+    font-family: Golos text;
+    font-size: 14px;
+}
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
+.grid {
+    width: 1080px;
+    margin: 0 auto;
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+header, header select, footer {
+    background-color: #010B23;
+}
+header *, footer * {
+    color: white;
+}
+
+header > * {
+    width: max-content;
+    margin: 0 auto;
+}
+
+footer {
+    height: 464px;
+}
+
+.upper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+header .navbar-nav, footer .navbar-nav {
+    display: flex;
+}
+footer > .upper-footer {
+    display: flex;
+    justify-content: center;
+    height: 150px;
+}
+footer > .lower-footer {
+    height: calc(100% - 150px); /* footer - .upper-footer */
+    display: flex;
+    justify-content: space-around;
+}
+footer .navbar-nav {
+    height: 100%;
+}
+footer .nav-item {
+    width: 300px;
+}
+
+.main-page-link {
+    font-weight: bold;
+    font-size: 2rem;
+}
+.blue-highlighted {
+    color: #075bb8;
+}
+
+.extra-website-description {
+    color: #9E9E9E;
+}
+
+nav {
+/*    background-color: gray;*/
+}
+footer .navbar-nav {
+    flex-flow: column wrap;
+}
+.navbar-nav > * {
+    text-transform: uppercase;
+}
+.navbar-nav a {
+    margin: 0 10px;
+    padding: 20px 0px;
+    display: block;
+}
+.nav-items-container {
+    display: flex;
+    justify-content: center;
+}
+main {
+    padding-bottom: 100px;
+}
+.sponsor-item {
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    font-size: .75rem;
+}
+
+.index-image-block, .about-portal-image-block {
+    height: 558px;
+}
+
+/* /Index.cshtml */
+.index-image-block {
+    background: linear-gradient(0deg, #010B23, #010B23);
+    font-size: 3rem;
+    font-weight: bold;
+}
+.index-image-block > .grid {
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.index-image-block > .grid > * {
+    position: relative;
+    z-index: 1;
+}
+.index-image-block > .grid::after {
+    content: "";
+    background-image: url(/img/dagestan-emblem.svg);
+    background-repeat: no-repeat;
+    background-position: right top;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+}
+.index-image-text {
+    color: white;
+    width: 800px;
+    font-size: 4rem;
+}
+
+.title-of-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.index-content-block {
+    padding: 80px 0;
+}
+.index-content-block:nth-child(even) {
+    background: #F2F8FF;
+}
+.index-content-block .title {
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.index-content-block .link {
+    font-size: 1.5rem;
+    text-decoration-line: underline;
+    color: #1D87FE;
+}
+.index-content-block .many-items {
+    display: grid;
+    grid-template-columns: repeat(4, 240px);
+/*    grid-auto-rows: 200px;*/
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.index-content-block .many-items > .item {
+    transition: .1s;
+    display: grid;
+    grid-template-rows: auto 50px 30px;
+    margin-bottom: 20px;
+}
+.index-content-block .many-items > .item:hover {
+    box-shadow: 0px 0 9px 5px #2d2222;
+}
+.index-content-block .many-items > .item.news > :first-child {
+    height: 200px;
+}
+.index-content-block .many-items > .item.news .item-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: black;
+    display: block;
+/*    margin: 30px 0;*/
+}
+.index-content-block .many-items > .item.branch {
+    display: grid;
+    grid-template-rows: 60% 1fr;
+    justify-content: center;
+    align-items: center;
+}
+.index-content-block .many-items > .item.branch .item-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+/*    color: white;*/  /*turn it on after making images*/
+    grid-row: 2;
+    grid-column: 1;
+    padding: 0 10px;
+    z-index: 1;
+}
+.index-content-block .many-items > .item > .item-date {
+    color: #ADADAD;
+}
+.item .item-logo {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+.item.branch .item-logo {
+    grid-row: 1 / 3;
+    grid-column: 1;
+    opacity: 0.5;
+}
+
+/* /About.cshtml */
+.about-portal-image-block {
+    background-image: url(/img/DXL6km_zypU.jpg);
+    background-position: center;
+}
+.about-portal-image-block > * {
+    width: 100%;
+    height: 100%;
+    background: rgba(1, 11, 35, .3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.about-portal-image-text {
+    color: white;
+    font-size: 150px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.about-text-content {
+    font-size: 1.4rem;
+    line-height: 200%;
+}
+.about-text-content > :first-child {
+    box-shadow: 5px 0px 0px black inset;
+    font-weight: bold;
+    margin-top: 90px;
+}
+.about-text-block {
+    margin: 60px 0;
+    padding-left: 42px;
+}
+.about-text-block > p {
+    font-weight: bold;
+}
+.about-text-block > ul {
+    list-style-type: square;
+    padding-left: 40px;
+}
+.about-text-block > ul > li {
+    margin-top: 1.5em;
+}
+

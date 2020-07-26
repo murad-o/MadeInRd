@@ -1,11 +1,88 @@
 ﻿@page
-@inject IStringLocalizer<IndexModel> Localizer
+@inject CommonLocalizationService Localizer
+@using Helpers
 @model IndexModel
-@{
-    ViewData["Title"] = Localizer["Home page"];
-}
+@{ ViewData["Title"] = Localizer["Home page"]; }
 
-<div class="text-center">
-    <h1 class="display-4">@Localizer["Welcome"]</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="index-image-block">
+	<div class="grid">
+		<div class="index-image-text">
+			В КАТАЛОГЕ ПОРТАЛА -
+			БОЛЕЕ <span class="blue-highlighted">400 ПРЕДПРИЯТИЙ</span>,
+			2000 ТОВАРОВ И УСЛУГ
+		</div>
+		@*<img src="~/img/dagestan-emblem.svg" />*@
+	</div>
+</div>
+
+<div class="index-content-block">
+	<div class="grid">
+		<div class="title-of-block">
+			<div class="title">@Localizer["News"]</div>
+			<a class="link" asp-page="/Admin/News/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">@Localizer["All the news"]</a>
+		</div>
+		<div class="many-items">
+			@foreach (var newsItem in Model.News!)
+			{
+				<div class="item news">
+					<a asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">
+						@*<img class="item-logo" src="~/img/news-icon.png" />*@
+						<img class="item-logo" src="@newsItem.LogoPath()" />
+					</a>
+					<a class="item-title" asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">@newsItem.Name
+					</a>
+					<span class="item-date">@newsItem.CreatedAt.ToLongDateString()</span>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+<div class="index-content-block">
+	<div class="grid">
+		<div class="title-of-block">
+			<div class="title">@Localizer["Branches"]</div>
+			<a class="link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["All the branches"]</a>
+		</div>
+		<div class="many-items">
+			@foreach (var fieldItem in Model.FieldsOfActivity!)
+			{
+				<a class="item branch" href="#">
+					<img class="item-logo" src="~/img/news-icon.png" />
+					<span class="item-title">@fieldItem.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</span>
+				</a>
+			}
+		</div>
+	</div>
+</div>
+
+<div class="index-content-block">
+	<div class="grid">
+		<div class="title-of-block">
+			<div class="title">@Localizer["Events"]</div>
+			<a class="link">@Localizer["All the events"]</a>
+		</div>
+		<div class="many-items">
+			@for (int i = 0; i < 4; i++)
+			{
+				<div class="item events">
+					<img class="item-logo" src="~/img/news-icon.png" />
+					<span class="item-title">Title of the Branch</span>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+<div class="index-content-block">
+	<div class="grid">
+		<div class="title-of-block">
+			<div class="title">@Localizer["Analytics"]</div>
+			<a class="link">@Localizer["Full analytics"]</a>
+		</div>
+		<div>
+			<hr />
+			Some analytics
+		</div>
+	</div>
 </div>

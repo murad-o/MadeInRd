@@ -1,0 +1,34 @@
+﻿@inject CommonLocalizationService Localizer
+
+<ul class="navbar-nav flex-grow-1">
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="/About">@Localizer["About portal"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["About region"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Branches"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Support"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Events"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Foreign partners"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Useful"]</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-page="/Admin/News/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">@Localizer["News"]</a>
+	</li>
+</ul>

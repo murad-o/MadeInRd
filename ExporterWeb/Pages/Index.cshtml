@@ -60,14 +60,16 @@
 	<div class="grid">
 		<div class="title-of-block">
 			<div class="title">@Localizer["Events"]</div>
-			<a class="link">@Localizer["All the events"]</a>
+			<a class="link" asp-page="/Events/Index">@Localizer["All the events"]</a>
 		</div>
 		<div class="many-items">
-			@for (int i = 0; i < 4; i++)
+			@foreach (var eventItem in Model.Events!)
 			{
 				<div class="item events">
-					<img class="item-logo" src="~/img/news-icon.png" />
-					<span class="item-title">Title of the Branch</span>
+                    <a asp-page="/Events/Details" asp-route-id="@eventItem.Id">
+                        <img class="item-logo" src="@eventItem.LogoPath()" />
+                    </a>
+					<span class="item-title">@eventItem.Name</span>
 				</div>
 			}
 		</div>

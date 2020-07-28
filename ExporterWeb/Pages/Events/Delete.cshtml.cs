@@ -4,13 +4,14 @@ using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace ExporterWeb.Pages.Admin.News
+namespace ExporterWeb.Pages.Events
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
-    public class DeleteModel : BasePageModel
+    public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly ImageService _imageService;
@@ -21,14 +22,15 @@ namespace ExporterWeb.Pages.Admin.News
             _imageService = imageService;
         }
 
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (id is null)
                 return NotFound();
 
-            NewsItem = await _context.News.FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (NewsItem is null)
+            if (Event is null)
                 return NotFound();
 
             return Page();
@@ -39,14 +41,14 @@ namespace ExporterWeb.Pages.Admin.News
             if (id is null)
                 return NotFound();
 
-            NewsItem = await _context.News!.FindAsync(id);
+            Event = await _context.Events!.FindAsync(id);
 
-            if (NewsItem is { })
+            if (Event is { })
             {
-                _context.News.Remove(NewsItem);
+                _context.Events.Remove(Event);
                 await _context.SaveChangesAsync();
-                if (NewsItem.Logo is { })
-                    _imageService.Delete(ImageTypes.NewsLogo, NewsItem.Logo);
+                if (Event.Logo is { })
+                    _imageService.Delete(ImageTypes.EventLogo, Event.Logo);
             }
 
             return RedirectToPage("./Index");
@@ -54,6 +56,6 @@ namespace ExporterWeb.Pages.Admin.News
 
 #nullable disable
         [BindProperty]
-        public NewsModel NewsItem { get; set; }
+        public Event Event { get; set; }
     }
 }

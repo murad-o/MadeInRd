@@ -3,21 +3,20 @@ using ExporterWeb.Helpers;
 using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
-namespace ExporterWeb.Pages.Admin.News
+namespace ExporterWeb.Pages.Events
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
-    public class CreateModel : BasePageModel
+    public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly ImageService _imageService;
 
-        public CreateModel(ApplicationDbContext context, IWebHostEnvironment appEnvironment, ImageService imageService)
+        public CreateModel(ApplicationDbContext context, ImageService imageService)
         {
             _context = context;
             _imageService = imageService;
@@ -25,43 +24,46 @@ namespace ExporterWeb.Pages.Admin.News
 
         public IActionResult OnGet()
         {
-            ViewData["WhiteListLanguages"] = new SelectList(Languages.WhiteList);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile? logo)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            var newsItem = new NewsModel { UserNameOwner = User.Identity.Name! };
+            var @event = new Event { UserNameOwner = User.Identity.Name! };
 
-            if (logo is { })
-                newsItem.Logo = _imageService.Save(ImageTypes.NewsLogo, logo);
+            if (Logo is { })
+                @event.Logo = _imageService.Save(ImageTypes.EventLogo, Logo);
 
             if (await TryUpdateModelAsync(
-                    newsItem,
-                    nameof(NewsItem),
-                    n => n.Name, n => n.Description, n => n.Language))
+                    @event,
+                    nameof(Event),
+                    e => e.Name, e => e.Description, e => e.Language, e => e.StartsAt, e => e.EndsAt))
             {
-                await _context.News!.AddAsync(newsItem);
+                await _context.Events!.AddAsync(@event);
                 try
                 {
                     await _context.SaveChangesAsync();
                 }
                 catch
                 {
-                    if (logo is { })
-                        _imageService.Delete(ImageTypes.NewsLogo, newsItem.Logo!);
+                    if (Logo is { })
+                        _imageService.Delete(ImageTypes.EventLogo, @event.Logo!);
                     throw;
                 }
                 return RedirectToPage("./Index");
             }
+
             return Page();
         }
 
 #nullable disable
         [BindProperty]
-        public NewsModel NewsItem { get; set; }
+        public Event Event { get; set; }
+
+        [BindProperty]
+        public IFormFile Logo { get; set; }
     }
 }

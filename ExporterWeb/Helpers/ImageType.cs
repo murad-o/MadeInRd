@@ -1,7 +1,8 @@
 ﻿namespace ExporterWeb.Helpers
 {
-    public enum ImageType
+    public enum ImageTypes
     {
         NewsLogo,
+        EventLogo,
     }
 }

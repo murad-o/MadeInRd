@@ -34,7 +34,14 @@ namespace ExporterWeb.Helpers
         {
             if (news.Logo is null)
                 return "/img/news-icon.png";
-            return Path.Combine("/", ImageService.GetWebRelativePath(ImageType.NewsLogo), news.Logo).Replace('\\', '/');
+            return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.NewsLogo), news.Logo).Replace('\\', '/');
+        }
+
+        public static string? LogoPath(this Event @event)
+        {
+            if (@event.Logo is null)
+                return "/img/news-icon.png";
+            return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.EventLogo), @event.Logo).Replace('\\', '/');
         }
     }
 }

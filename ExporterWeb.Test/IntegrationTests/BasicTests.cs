@@ -62,7 +62,7 @@ namespace ExporterWeb.Test.IntegrationTests
             var client = _factory.CreateClient(new WebApplicationFactoryClientOptions());
 
             // Act
-            var response = await client.GetAsync("/Events");
+            var response = await client.GetAsync("/PageDoesNotExist");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);

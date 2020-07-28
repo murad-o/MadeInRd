@@ -12,13 +12,14 @@ namespace ExporterWeb.Helpers.Services
     {
         private readonly IWebHostEnvironment _appEnvironment;
         private const long QualityLevel = 80L;
+        private const string JpegExtension = ".jpg";
 
         public ImageService(IWebHostEnvironment appEnvironment)
         {
             _appEnvironment = appEnvironment;
         }
 
-        public string Save(ImageType imageType, IFormFile file)
+        public string Save(ImageTypes imageType, IFormFile file)
         {
             var imageInfo = GetImageInfo(imageType);
             using Stream stream = file.OpenReadStream();
@@ -40,33 +41,35 @@ namespace ExporterWeb.Helpers.Services
             public string FileName { get; set; }
         }
 
-        private static ImageInfo GetImageInfo(ImageType imageType)
+        private static ImageInfo GetImageInfo(ImageTypes imageType) => imageType switch
         {
-            string filename = Guid.NewGuid().ToString();
-            return imageType switch
+            ImageTypes.NewsLogo => new ImageInfo
             {
-                ImageType.NewsLogo => new ImageInfo
-                {
-                    Size = new Size(1000, 1000),
-                    ImageCodec = GetEncoder(ImageFormat.Jpeg),
-                    FileName = filename + ".jpg",
-                },
-                _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
-            };
-        }
+                Size = new Size(1000, 1000),
+                ImageCodec = GetEncoder(ImageFormat.Jpeg),
+                FileName = Guid.NewGuid() + JpegExtension,
+            },
+            ImageTypes.EventLogo => new ImageInfo
+            {
+                Size = new Size(1000, 1000),
+                ImageCodec = GetEncoder(ImageFormat.Jpeg),
+                FileName = Guid.NewGuid() + JpegExtension,
+            },
+            _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
+        };
 
         // Returns wwwroot/THIS_PATH
-        public static string GetWebRelativePath(ImageType imageType)
-            => imageType switch
-            {
-                ImageType.NewsLogo => Path.Combine("uploads", "news"),
-                _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
-            };
+        public static string GetWebRelativePath(ImageTypes imageType) => imageType switch
+        {
+            ImageTypes.NewsLogo => Path.Combine("uploads", "news"),
+            ImageTypes.EventLogo => Path.Combine("uploads", "events"),
+            _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
+        };
 
-        private string GetFullPath(ImageType imageType, string filename)
+        private string GetFullPath(ImageTypes imageType, string filename)
             => Path.Combine(_appEnvironment.WebRootPath, GetWebRelativePath(imageType), filename);
 
-        public void Delete(ImageType imageType, string filename)
+        public void Delete(ImageTypes imageType, string filename)
         {
             var fullPath = GetFullPath(imageType, filename);
             File.Delete(fullPath);

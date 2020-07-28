@@ -26,6 +26,7 @@ namespace ExporterWeb.Pages
 
         public IList<NewsModel>? News { get; private set; }
         public IList<FieldOfActivity>? FieldsOfActivity { get; private set; }
+        public IList<Event>? Events { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -42,6 +43,12 @@ namespace ExporterWeb.Pages
 
             FieldsOfActivity = await _context.FieldsOfActivity
                 .Take(8)
+                .ToListAsync();
+
+            Events = await _context.Events
+                .Where(n => n.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
+                .OrderByDescending(n => n.CreatedAt)
+                .Take(4)
                 .ToListAsync();
 
             return Page();

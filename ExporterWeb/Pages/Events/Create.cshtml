@@ -1,0 +1,59 @@
+﻿@page
+@model ExporterWeb.Pages.Events.CreateModel
+@using ExporterWeb.Helpers
+ 
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Event</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Event.UserNameOwner" value="@User.Identity.Name" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Event.Name" class="control-label"></label>
+                <input asp-for="Event.Name" class="form-control" />
+                <span asp-validation-for="Event.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.Description" class="control-label"></label>
+                <input asp-for="Event.Description" class="form-control" />
+                <span asp-validation-for="Event.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.Language" class="control-label"></label>
+                <select asp-for="Event.Language" class="form-control" asp-items="new SelectList(Languages.WhiteList)"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.StartsAt" class="control-label"></label>
+                <input asp-for="Event.StartsAt" class="form-control" />
+                <span asp-validation-for="Event.StartsAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.EndsAt" class="control-label"></label>
+                <input asp-for="Event.EndsAt" class="form-control" />
+                <span asp-validation-for="Event.EndsAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Upload logo</label>
+                <input class="form-control-file" type="file" name="logo" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

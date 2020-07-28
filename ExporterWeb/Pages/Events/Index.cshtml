@@ -1,0 +1,63 @@
+﻿@page
+@model ExporterWeb.Pages.Events.IndexModel
+@inject CommonLocalizationService CommonLocalizer
+@inject IStringLocalizer<IndexModel> Localizer
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (Model.IsAdminOrManager)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @CommonLocalizer["Name"]
+            </th>
+            <th>
+                @CommonLocalizer["Description"]
+            </th>
+            <th>
+                @Localizer["StartsAt"]
+            </th>
+            <th>
+                @Localizer["EndsAt"]
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Events) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartsAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndsAt)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id">@CommonLocalizer["Details"]</a> |
+            </td>
+            @if (Model.IsAdminOrManager)
+            {
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            }
+        </tr>
+}
+    </tbody>
+</table>

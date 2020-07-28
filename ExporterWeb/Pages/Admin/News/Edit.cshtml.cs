@@ -46,7 +46,7 @@ namespace ExporterWeb.Pages.Admin.News
 
             var oldLogo = newsItemToUpdate.Logo;
             if (logo is { })
-                newsItemToUpdate.Logo = _imageService.Save(ImageType.NewsLogo, logo);
+                newsItemToUpdate.Logo = _imageService.Save(ImageTypes.NewsLogo, logo);
 
             if (await TryUpdateModelAsync(
                     newsItemToUpdate,
@@ -57,12 +57,12 @@ namespace ExporterWeb.Pages.Admin.News
                 {
                     await _context.SaveChangesAsync();
                     if (oldLogo is { })
-                        _imageService.Delete(ImageType.NewsLogo, oldLogo);
+                        _imageService.Delete(ImageTypes.NewsLogo, oldLogo);
                 }
                 catch
                 {
                     if (logo is { })
-                        _imageService.Delete(ImageType.NewsLogo, newsItemToUpdate.Logo!);
+                        _imageService.Delete(ImageTypes.NewsLogo, newsItemToUpdate.Logo!);
                     throw;
                 }
             }
@@ -73,7 +73,7 @@ namespace ExporterWeb.Pages.Admin.News
         public async Task<IActionResult> OnPostDeleteImage(int id)
         {
             NewsModel newsItem = await _context.News!.FindAsync(id);
-            _imageService.Delete(ImageType.NewsLogo, newsItem.Logo!);
+            _imageService.Delete(ImageTypes.NewsLogo, newsItem.Logo!);
             newsItem.Logo = null;
             await _context.SaveChangesAsync();
             return StatusCode(StatusCodes.Status204NoContent);

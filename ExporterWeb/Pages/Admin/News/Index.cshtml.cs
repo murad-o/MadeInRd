@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Admin.News
@@ -19,7 +21,9 @@ namespace ExporterWeb.Pages.Admin.News
 
         public async Task OnGetAsync()
         {
-            News = await _context.News.ToListAsync();
+            News = await _context.News
+                .Where(e => e.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
+                .ToListAsync();
         }
 
 #nullable disable

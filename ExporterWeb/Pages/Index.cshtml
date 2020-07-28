@@ -19,7 +19,7 @@
 	<div class="grid">
 		<div class="title-of-block">
 			<div class="title">@Localizer["News"]</div>
-			<a class="link" asp-page="/Admin/News/Index" asp-route-language="@ExporterWeb.Helpers.Languages.DefaultLanguage">@Localizer["All the news"]</a>
+			<a class="link" asp-page="/Admin/News/Index">@Localizer["All the news"]</a>
 		</div>
 		<div class="many-items">
 			@foreach (var newsItem in Model.News!)

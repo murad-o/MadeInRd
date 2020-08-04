@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Linq;
 
-namespace ExporterWeb.RouteModelConventions
+namespace ExporterWeb.Helpers.RouteModelConventions
 {
     public class CultureTemplatePageRouteModelConvention : IPageRouteModelConvention
     {

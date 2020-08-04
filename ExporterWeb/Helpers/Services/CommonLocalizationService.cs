@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Localization;
 using System.Reflection;
 
-namespace ExporterWeb.Services
+namespace ExporterWeb.Helpers.Services
 {
     public class CommonLocalizationService
     {

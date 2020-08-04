@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ExporterWeb.Pages.Admin.News
+namespace ExporterWeb.Pages.News
 {
     public class IndexModel : BasePageModel
     {

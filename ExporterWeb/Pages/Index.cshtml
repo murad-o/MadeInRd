@@ -19,17 +19,17 @@
 	<div class="grid">
 		<div class="title-of-block">
 			<div class="title">@Localizer["News"]</div>
-			<a class="link" asp-page="/Admin/News/Index">@Localizer["All the news"]</a>
+			<a class="link" asp-page="/News/Index">@Localizer["All the news"]</a>
 		</div>
 		<div class="many-items">
 			@foreach (var newsItem in Model.News!)
 			{
 				<div class="item news">
-					<a asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">
+					<a asp-page="/News/Details" asp-route-id="@newsItem.Id">
 						@*<img class="item-logo" src="~/img/news-icon.png" />*@
 						<img class="item-logo" src="@newsItem.LogoPath()" />
 					</a>
-					<a class="item-title" asp-page="/Admin/News/Details" asp-route-id="@newsItem.Id">@newsItem.Name
+					<a class="item-title" asp-page="/News/Details" asp-route-id="@newsItem.Id">@newsItem.Name
 					</a>
 					<span class="item-date">@newsItem.CreatedAt.ToLongDateString()</span>
 				</div>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace ExporterWeb.Pages.Admin.News
+namespace ExporterWeb.Pages.News
 {
     public class DetailsModel : PageModel
     {

@@ -1,11 +1,18 @@
-﻿@model ExporterWeb.Models.CultureSwitcherModel
+﻿@using Microsoft.AspNetCore.Builder;
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> LocOps
+
+@{
+    var currentCulture = CultureInfo.CurrentCulture;
+    var supportedCultures = LocOps.Value.SupportedUICultures;
+}
 
 <div>
     <form id="culture-switcher">
         <select name="culture" id="culture-options">
-            @foreach (var culture in Model.SupportedCultures!)
+            @foreach (var culture in supportedCultures)
             {
-                <option value="@culture.Name" selected="@(Model.CurrentUICulture!.Name == culture.Name)">@culture.NativeName</option>
+                <option value="@culture.Name" selected="@(currentCulture.Name == culture.Name)">@culture.NativeName</option>
             }
         </select>
     </form>

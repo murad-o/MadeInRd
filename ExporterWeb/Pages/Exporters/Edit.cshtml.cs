@@ -1,7 +1,9 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +16,17 @@ namespace ExporterWeb.Pages.Exporters
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<EditModel> _logger;
+        private readonly ImageService _imageService;
 
-        public EditModel(ApplicationDbContext context, IAuthorizationService authorizationService,
-            ILogger<EditModel> logger, UserManager<User> userManager)
+        public EditModel(ApplicationDbContext context,
+            IAuthorizationService authorizationService,
+            ILogger<EditModel> logger,
+            UserManager<User> userManager,
+            ImageService imageService)
         {
             _context = context;
             _logger = logger;
+            _imageService = imageService;
             UserManager = userManager;
             AuthorizationService = authorizationService;
         }
@@ -55,6 +62,10 @@ namespace ExporterWeb.Pages.Exporters
             var languageExporter = await _context.LanguageExporters
                 .FirstOrDefaultAsync(l => l.CommonExporterId == id && l.Language == LanguageExporter.Language);
 
+            var oldLogo = languageExporter.Logo;
+            if (Logo is { })
+                languageExporter.Logo = _imageService.Save(ImageTypes.ExporterLogo, Logo);
+
             if (await TryUpdateModelAsync(
                     languageExporter,
                     nameof(LanguageExporter),
@@ -67,14 +78,38 @@ namespace ExporterWeb.Pages.Exporters
                 if (!IsAdminOrManager)
                     languageExporter.Approved = false;
 
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    if (oldLogo is { } && Logo is { })
+                        _imageService.Delete(ImageTypes.ExporterLogo, oldLogo);
+                }
+                catch
+                {
+                    if (Logo is { })
+                        _imageService.Delete(ImageTypes.ExporterLogo, languageExporter.Logo!);
+                }
                 return RedirectToPage("./Details", new { id, language = Language });
             }
             return Page();
         }
 
+        public async Task<IActionResult> OnPostDeleteImage(string id, string language)
+        {
+            var exporter = await _context.LanguageExporters!
+                .FirstOrDefaultAsync(exp => exp.CommonExporterId == id && exp.Language == language);
+
+            _imageService.Delete(ImageTypes.ExporterLogo, exporter.Logo!);
+            exporter.Logo = null;
+            await _context.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+
 #nullable disable
         [BindProperty]
         public LanguageExporter LanguageExporter { get; set; }
+
+        [BindProperty]
+        public IFormFile Logo { get; set; }
     }
 }

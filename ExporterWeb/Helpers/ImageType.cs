@@ -4,5 +4,6 @@
     {
         NewsLogo,
         EventLogo,
+        ExporterLogo,
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +15,17 @@ namespace ExporterWeb.Pages.Exporters
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<EditModel> _logger;
+        private readonly ImageService _imageService;
 
-        public DeleteModel(ApplicationDbContext context, IAuthorizationService authorizationService,
-            ILogger<EditModel> logger, UserManager<User> userManager)
+        public DeleteModel(ApplicationDbContext context,
+            IAuthorizationService authorizationService,
+            ILogger<EditModel> logger,
+            UserManager<User> userManager,
+            ImageService imageService)
         {
             _context = context;
             _logger = logger;
+            _imageService = imageService;
             AuthorizationService = authorizationService;
             UserManager = userManager;
         }
@@ -64,6 +70,9 @@ namespace ExporterWeb.Pages.Exporters
 
             _context.LanguageExporters.Remove(LanguageExporter);
             await _context.SaveChangesAsync();
+
+            if (LanguageExporter.Logo is { })
+                _imageService.Delete(ImageTypes.ExporterLogo, LanguageExporter.Logo);
 
             return RedirectToPage("./Index", new { Language });
         }

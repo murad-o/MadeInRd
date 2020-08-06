@@ -1,7 +1,9 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,11 +16,15 @@ namespace ExporterWeb.Pages.Exporters
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ImageService _imageService;
 
-        public CreateModel(ApplicationDbContext context, IAuthorizationService authorizationService,
-            UserManager<User> userManager)
+        public CreateModel(ApplicationDbContext context,
+            IAuthorizationService authorizationService,
+            UserManager<User> userManager,
+            ImageService imageService)
         {
             _context = context;
+            _imageService = imageService;
             AuthorizationService = authorizationService;
             UserManager = userManager;
         }
@@ -44,6 +50,10 @@ namespace ExporterWeb.Pages.Exporters
                 return Forbid();
 
             var languageExporter = new LanguageExporter();
+
+            if (Logo is { })
+                languageExporter.Logo = _imageService.Save(ImageTypes.ExporterLogo, Logo);
+
             if (await TryUpdateModelAsync(
                     languageExporter,
                     nameof(LanguageExporter),
@@ -57,7 +67,15 @@ namespace ExporterWeb.Pages.Exporters
                     languageExporter.Approved = false;
 
                 await _context.LanguageExporters!.AddAsync(languageExporter);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch
+                {
+                    if (Logo is { })
+                        _imageService.Delete(ImageTypes.ExporterLogo, languageExporter.Logo!);
+                }
                 return RedirectToPage("./Details",
                     new { id = LanguageExporter.CommonExporterId, language = LanguageExporter.Language });
             }
@@ -68,5 +86,8 @@ namespace ExporterWeb.Pages.Exporters
 #nullable disable
         [BindProperty]
         public LanguageExporter LanguageExporter { get; set; }
+
+        [BindProperty]
+        public IFormFile Logo { get; set; }
     }
 }

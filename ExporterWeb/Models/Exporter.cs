@@ -20,8 +20,6 @@ namespace ExporterWeb.Models
         [MaxLength(15)]
         public string OGRN_IP { get; set; } = "";
 
-        public string? LogoPath { get; set; }
-
         [Required]
         public int FieldOfActivityId { get; set; }
         public FieldOfActivity? FieldOfActivity { get; set; }
@@ -60,6 +58,8 @@ namespace ExporterWeb.Models
         public string? Address { get; set; }
 
         public string? Website { get; set; }
+
+        public string? Logo { get; set; }
 
         [Required]
         public bool Approved { get; set; }

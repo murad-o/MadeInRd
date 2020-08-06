@@ -1,9 +1,17 @@
 ﻿@page
+@using Helpers
 @model ExporterWeb.Pages.Exporters.EditModel
 
 @{
     ViewData["Title"] = "Edit";
 }
+
+<style>
+    #edit-img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+</style>
 
 <h1>Edit</h1>
 
@@ -11,7 +19,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="LanguageExporter.CommonExporterId" />
             <input type="hidden" asp-for="LanguageExporter.Language" />
@@ -76,9 +84,49 @@
                 </label>
             </div>
             <div class="form-group">
+                <label>Upload file</label>
+                <input class="form-control-file" type="file" name="logo" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <div>
+            <img id="edit-img" src="@Model.LanguageExporter.LogoPath()" />
+        </div>
+        @if (Model.LanguageExporter.Logo is { })
+        {
+            <form method="post" id="delete-image-form">
+                <div class="form-group">
+                    <button type="submit" asp-page-handler="DeleteImage">Удалить текущее изображение</button>
+                </div>
+            </form>
+        }
+        <script>
+            (() => {
+                const deleteImageForm = document.getElementById("delete-image-form");
+                if (!deleteImageForm)
+                    return;
+
+                deleteImageForm.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    if (!confirm('Удалить изображение?'))
+                        return;
+                    const url = new URL(this.action);
+                    url.searchParams.append('handler', 'deleteimage');
+                    const result = await fetch(url, {
+                        method: 'post',
+                        body: new FormData(this),
+                    });
+                    if (result.ok) {
+                        document.getElementById("edit-img").src = "/img/news-icon.png";
+                        this.style.display = "none";
+                    } else {
+                        alert('Неизвестная ошибка' + result.statusText);
+                    }
+                });
+            })();
+        </script>
     </div>
 </div>
 

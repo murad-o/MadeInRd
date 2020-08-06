@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Products
 {
+    [ValidateModel]
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -45,9 +46,6 @@ namespace ExporterWeb.Pages.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             if (!await IsAuthorized(Product, AuthorizationOperations.Create))
             {
                 string message = $"User {UserId} tries to create product with LanguageExporterId {Product.LanguageExporterId}";

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace ExporterWeb.Pages.News
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
+    [ValidateModel]
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -31,9 +32,6 @@ namespace ExporterWeb.Pages.News
 
         public async Task<IActionResult> OnPostAsync(IFormFile? logo)
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             var newsItem = new NewsModel { UserNameOwner = User.Identity.Name! };
 
             if (logo is { })

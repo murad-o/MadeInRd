@@ -1,4 +1,5 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
+    [ValidateModel]
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -36,9 +38,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             foreach (var fieldOFActivityName in LocalizedNames)
             {
                 FieldOfActivity!.Name[fieldOFActivityName.Language] = fieldOFActivityName.Name;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace ExporterWeb.Pages.News
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
+    [ValidateModel]
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -37,9 +38,6 @@ namespace ExporterWeb.Pages.News
 
         public async Task<IActionResult> OnPostAsync(int id, IFormFile? logo)
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             var newsItemToUpdate = await _context.News!.FindAsync(id);
             if (newsItemToUpdate is null)
                 return NotFound();

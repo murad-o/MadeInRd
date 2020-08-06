@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace ExporterWeb.Pages.Events
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
+    [ValidateModel]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -29,9 +30,6 @@ namespace ExporterWeb.Pages.Events
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             var @event = new Event { UserNameOwner = User.Identity.Name! };
 
             if (Logo is { })

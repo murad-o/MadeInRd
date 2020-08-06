@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
+    [ValidateModel]
     public class CreateModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -37,9 +38,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
                 ModelState.AddModelError(string.Empty, "Name for default language is required");
                 return Page();
             }
-
-            if (!ModelState.IsValid)
-                return Page();
 
             _context.FieldsOfActivity!.Add(FieldOfActivity!);
             await _context.SaveChangesAsync();

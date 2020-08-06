@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace ExporterWeb.Pages.Events
 {
     [Authorize(Roles = Constants.AdministratorsRole + ", " + Constants.ManagersRole)]
+    [ValidateModel]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -38,9 +39,6 @@ namespace ExporterWeb.Pages.Events
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             var eventToUpdate = await _context.Events!.FindAsync(id);
 
             if (eventToUpdate is null) 

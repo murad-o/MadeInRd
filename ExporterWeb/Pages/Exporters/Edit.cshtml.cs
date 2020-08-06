@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Exporters
 {
+    [ValidateModel]
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -53,7 +54,7 @@ namespace ExporterWeb.Pages.Exporters
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            if (!ModelState.IsValid || !Languages.WhiteList.Contains(LanguageExporter.Language))
+            if (!Languages.WhiteList.Contains(LanguageExporter.Language))
                 return Page();
 
             if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Update))

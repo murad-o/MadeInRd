@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Products
 {
+    [ValidateModel]
     public class EditModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
@@ -52,9 +53,6 @@ namespace ExporterWeb.Pages.Products
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
-                return Page();
-
             if (!await IsAuthorized(Product, AuthorizationOperations.Update))
             {
                 string message = $"User {UserId} tries to edit product {Product.Id}";

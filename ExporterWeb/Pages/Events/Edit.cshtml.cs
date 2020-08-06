@@ -56,7 +56,7 @@ namespace ExporterWeb.Pages.Events
                 try
                 {
                     await _context.SaveChangesAsync();
-                    if (oldLogo is { })
+                    if (oldLogo is { } && Logo is { })
                         _imageService.Delete(ImageTypes.EventLogo, oldLogo);
                 }
                 catch

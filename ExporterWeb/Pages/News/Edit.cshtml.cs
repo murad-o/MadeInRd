@@ -36,15 +36,15 @@ namespace ExporterWeb.Pages.News
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id, IFormFile? logo)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             var newsItemToUpdate = await _context.News!.FindAsync(id);
             if (newsItemToUpdate is null)
                 return NotFound();
 
             var oldLogo = newsItemToUpdate.Logo;
-            if (logo is { })
-                newsItemToUpdate.Logo = _imageService.Save(ImageTypes.NewsLogo, logo);
+            if (Logo is { })
+                newsItemToUpdate.Logo = _imageService.Save(ImageTypes.NewsLogo, Logo);
 
             if (await TryUpdateModelAsync(
                     newsItemToUpdate,
@@ -54,12 +54,12 @@ namespace ExporterWeb.Pages.News
                 try
                 {
                     await _context.SaveChangesAsync();
-                    if (oldLogo is { })
+                    if (oldLogo is { } && Logo is { })
                         _imageService.Delete(ImageTypes.NewsLogo, oldLogo);
                 }
                 catch
                 {
-                    if (logo is { })
+                    if (Logo is { })
                         _imageService.Delete(ImageTypes.NewsLogo, newsItemToUpdate.Logo!);
                     throw;
                 }
@@ -80,5 +80,8 @@ namespace ExporterWeb.Pages.News
 #nullable disable
         [BindProperty]
         public NewsModel NewsItem { get; set; }
+
+        [BindProperty]
+        public IFormFile Logo { get; set; }
     }
 }

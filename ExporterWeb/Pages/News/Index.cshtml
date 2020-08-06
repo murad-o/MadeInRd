@@ -3,9 +3,9 @@
 
 @{
     ViewData["Title"] = "Index";
+    var news = Model.News;
 }
 
-<h1>Index</h1>
 @if (Model.IsAdminOrManager)
 {
     <p>
@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.News)
+        @foreach (var item in news)
         {
             <tr>
                 <td>
@@ -61,4 +61,14 @@
             </tr>
         }
     </tbody>
+
 </table>
+
+<div class="pagination">
+    <a asp-page="./Index" asp-route-pageNumber="1">&laquo;</a>
+    @for (var i = 1; i <= news.PageCount; i++)
+    {
+        <a class="@(i == news.PageNumber ? "active" : "")" asp-page="./Index" asp-route-pageNumber="@i">@i</a>
+    }
+    <a asp-page="./Index" asp-route-pageNumber="@news.PageCount">&raquo;</a>
+</div>

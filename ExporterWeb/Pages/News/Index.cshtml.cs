@@ -1,32 +1,28 @@
 ﻿using ExporterWeb.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace ExporterWeb.Pages.News
 {
     public class IndexModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<User> _userManager;
 
-        public IndexModel(ApplicationDbContext context, UserManager<User> userManager)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int pageNumber = 1)
         {
             News = await _context.News
                 .Where(e => e.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
-                .ToListAsync();
+                .ToPagedListAsync(pageNumber, pageSize: 6);
         }
 
 #nullable disable
-        public IList<NewsModel> News { get; set; }
+        public IPagedList<NewsModel> News { get; set; }
     }
 }

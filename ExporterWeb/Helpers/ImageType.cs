@@ -5,5 +5,6 @@
         NewsLogo,
         EventLogo,
         ExporterLogo,
+        ProductLogo,
     }
 }

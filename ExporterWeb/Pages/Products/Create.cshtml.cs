@@ -1,7 +1,9 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,13 +19,18 @@ namespace ExporterWeb.Pages.Products
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<CreateModel> _logger;
+        private readonly ImageService _imageService;
 
-        public CreateModel(ApplicationDbContext context, UserManager<User> userManager,
-            ILogger<CreateModel> logger, IAuthorizationService authorizationService)
+        public CreateModel(ApplicationDbContext context,
+            UserManager<User> userManager,
+            ILogger<CreateModel> logger,
+            IAuthorizationService authorizationService,
+            ImageService imageService)
         {
             _context = context;
             UserManager = userManager;
             _logger = logger;
+            _imageService = imageService;
             AuthorizationService = authorizationService;
         }
 
@@ -54,6 +61,10 @@ namespace ExporterWeb.Pages.Products
             }
 
             var product = new Product();
+
+            if (Logo is { })
+                product.Logo = _imageService.Save(ImageTypes.ProductLogo, Logo);
+
             if (await TryUpdateModelAsync(
                     product,
                     nameof(Product),
@@ -62,7 +73,16 @@ namespace ExporterWeb.Pages.Products
                     p => p.FieldOfActivityId))
             {
                 await _context.Products!.AddAsync(product);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch
+                {
+                    if (Logo is { })
+                        _imageService.Delete(ImageTypes.ProductLogo, product.Logo!);
+                    throw;
+                }
                 return RedirectToPage("./Index");
             }
             return Page();
@@ -71,5 +91,8 @@ namespace ExporterWeb.Pages.Products
 #nullable disable
         [BindProperty]
         public Product Product { get; set; }
+
+        [BindProperty]
+        public IFormFile Logo { get; set; }
     }
 }

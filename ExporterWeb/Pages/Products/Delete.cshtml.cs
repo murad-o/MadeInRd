@@ -1,4 +1,6 @@
 ﻿using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,13 +15,18 @@ namespace ExporterWeb.Pages.Products
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<EditModel> _logger;
+        private readonly ImageService _imageService;
 
-        public DeleteModel(ApplicationDbContext context, UserManager<User> userManager,
-            ILogger<EditModel> logger, IAuthorizationService authorizationService)
+        public DeleteModel(ApplicationDbContext context,
+            UserManager<User> userManager,
+            ILogger<EditModel> logger,
+            IAuthorizationService authorizationService,
+            ImageService imageService)
         {
             _context = context;
             UserManager = userManager;
             _logger = logger;
+            _imageService = imageService;
             AuthorizationService = authorizationService;
         }
 
@@ -62,6 +69,9 @@ namespace ExporterWeb.Pages.Products
 
             _context.Products.Remove(Product);
             await _context.SaveChangesAsync();
+
+            if (Product.Logo is { })
+                _imageService.Delete(ImageTypes.ProductLogo, Product.Logo);
 
             return RedirectToPage("./Index");
         }

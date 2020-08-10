@@ -51,5 +51,13 @@ namespace ExporterWeb.Helpers
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.ExporterLogo),
                 exporter.Logo).Replace('\\', '/');
         }
+
+        public static string LogoPath(this Product product)
+        {
+            if (product.Logo is null)
+                return "/img/news-icon.png";
+            return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.ProductLogo),
+                product.Logo).Replace('\\', '/');
+        }
     }
 }

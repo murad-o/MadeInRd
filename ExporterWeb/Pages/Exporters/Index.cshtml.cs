@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace ExporterWeb.Pages.Exporters
 {
@@ -21,14 +20,8 @@ namespace ExporterWeb.Pages.Exporters
             UserManager = userManager;
         }
 
-        public IList<LanguageExporter> LanguageExporters { get; set; } = Array.Empty<LanguageExporter>();
 
-        [BindProperty(Name = "my", SupportsGet = true)]
-        public bool ShowOnlyMyExporters { get; set; }
-        [BindProperty(Name = "q", SupportsGet = true)]
-        public string? Search { get; set; }
-
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int pageNumber = 1)
         {
             IQueryable<LanguageExporter> exporters = _context.LanguageExporters
                 .Include(l => l.CommonExporter)
@@ -51,10 +44,18 @@ namespace ExporterWeb.Pages.Exporters
                         e.Description != null && e.Description.ToLower().Contains(normalizedSearch));
             }
 
-            LanguageExporters = await exporters.ToListAsync();
+            LanguageExporters = await exporters.ToPagedListAsync(pageNumber, pageSize: 8);
         }
 
         public bool CanCRUD(LanguageExporter exporter) =>
             IsAdminOrManager || exporter.CommonExporterId == UserId;
+
+#nullable disable
+        public IPagedList<LanguageExporter> LanguageExporters { get; set; }
+
+        [BindProperty(Name = "my", SupportsGet = true)]
+        public bool ShowOnlyMyExporters { get; set; }
+        [BindProperty(Name = "q", SupportsGet = true)]
+        public string Search { get; set; }
     }
 }

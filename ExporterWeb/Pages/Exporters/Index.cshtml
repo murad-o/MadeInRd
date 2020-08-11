@@ -7,6 +7,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var exporters = Model.LanguageExporters;
 }
 
 <h1>Index</h1>
@@ -64,7 +65,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.LanguageExporters)
+        @foreach (var item in exporters)
         {
             <tr>
                 <td>
@@ -99,3 +100,5 @@
         }
     </tbody>
 </table>
+
+@await  Html.PartialAsync("_Pagination", exporters)

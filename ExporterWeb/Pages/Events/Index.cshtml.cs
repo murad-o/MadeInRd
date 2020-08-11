@@ -1,9 +1,8 @@
 ﻿using ExporterWeb.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace ExporterWeb.Pages.Events
 {
@@ -16,14 +15,14 @@ namespace ExporterWeb.Pages.Events
             _context = context;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int pageNumber = 1)
         {
             Events = await _context.Events
                 .Where(e => e.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
-                .ToListAsync();
+                .ToPagedListAsync(pageNumber, pageSize: 6);
         }
 
 #nullable disable
-        public IList<Event> Events { get;set; }
+        public IPagedList<Event> Events { get; set; }
     }
 }

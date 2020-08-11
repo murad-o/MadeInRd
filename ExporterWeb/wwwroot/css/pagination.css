@@ -9,7 +9,7 @@
     text-decoration: none;
 }
 
-.pagination a.active {
+.pagination a.current {
     background-color: #4CAF50;
     color: white;
 }

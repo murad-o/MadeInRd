@@ -5,6 +5,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var events = Model.Events;
 }
 
 @if (Model.IsAdminOrManager)
@@ -33,7 +34,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Events) {
+        @foreach (var item in events)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -58,6 +60,8 @@
                 </td>
             }
         </tr>
-}
+        }
     </tbody>
 </table>
+
+@await  Html.PartialAsync("_Pagination", events)

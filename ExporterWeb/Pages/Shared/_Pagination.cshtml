@@ -1,0 +1,13 @@
+@model X.PagedList.IPagedList<object>
+
+@if (Model.TotalItemCount > Model.PageSize)
+{
+    <div class="pagination">
+        <a asp-page="./Index" asp-route-pageNumber="1">&laquo;</a>
+        @for (var i = 1; i <= Model.PageCount; i++)
+        {
+            <a class="@(i == Model.PageNumber ? "current" : "")" asp-page="./Index" asp-route-pageNumber="@i">@i</a>
+        }
+        <a asp-page="./Index" asp-route-pageNumber="@Model.PageCount">&raquo;</a>
+    </div>
+}

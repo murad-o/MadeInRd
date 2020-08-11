@@ -64,11 +64,4 @@
 
 </table>
 
-<div class="pagination">
-    <a asp-page="./Index" asp-route-pageNumber="1">&laquo;</a>
-    @for (var i = 1; i <= news.PageCount; i++)
-    {
-        <a class="@(i == news.PageNumber ? "active" : "")" asp-page="./Index" asp-route-pageNumber="@i">@i</a>
-    }
-    <a asp-page="./Index" asp-route-pageNumber="@news.PageCount">&raquo;</a>
-</div>
+@await  Html.PartialAsync("_Pagination", news)

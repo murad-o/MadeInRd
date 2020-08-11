@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace ExporterWeb.Pages.Products
 {
@@ -20,7 +19,7 @@ namespace ExporterWeb.Pages.Products
             UserManager = userManager;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int pageNumber = 1)
         {
             IQueryable<Product> products = _context.Products
                 .Include(p => p.FieldOfActivity)
@@ -29,11 +28,11 @@ namespace ExporterWeb.Pages.Products
             if (!IsAdminOrManager)
                 products = products.Where(p => p.LanguageExporter!.Approved || p.LanguageExporterId == UserId);
 
-            Products = await products.ToListAsync();
+            Products = await products.ToPagedListAsync(pageNumber, pageSize: 8);
         }
 
 #nullable disable
-        public IList<Product> Products { get; set; } = Array.Empty<Product>();
+        public IPagedList<Product> Products { get; set; }
 
         public bool CanCRUD(Product product) =>
             IsAdminOrManager || product.LanguageExporterId == UserId;

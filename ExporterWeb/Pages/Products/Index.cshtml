@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var products = Model.Products;
 }
 
 <h1>Index</h1>
@@ -33,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Products) {
+        @foreach (var item in products) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
@@ -62,3 +63,5 @@
          }
     </tbody>
 </table>
+
+@await Html.PartialAsync("_Pagination", products)

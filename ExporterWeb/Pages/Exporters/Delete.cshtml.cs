@@ -42,13 +42,12 @@ namespace ExporterWeb.Pages.Exporters
             if (LanguageExporter is null)
                 return NotFound();
 
-            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Delete))
-            {
-                _logger.LogInformation($"User {UserId} tries to delete exporter {id} ({Language})");
-                return Forbid();
-            }
+            if (await IsAuthorized(LanguageExporter, AuthorizationOperations.Delete))
+                return Page();
+            
+            _logger.LogInformation($"User {UserId} tries to delete exporter {id} ({Language})");
+            return Forbid();
 
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

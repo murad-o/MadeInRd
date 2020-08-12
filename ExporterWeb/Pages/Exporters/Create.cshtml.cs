@@ -55,33 +55,32 @@ namespace ExporterWeb.Pages.Exporters
             if (Logo is { })
                 languageExporter.Logo = _imageService.Save(ImageTypes.ExporterLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    languageExporter,
-                    nameof(LanguageExporter),
-                    l => l.CommonExporterId, l => l.Language, l => l.Name, l => l.Description,
-                    l => l.ContactPersonFirstName, l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
-                    l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
-                    l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
+            if (!await TryUpdateModelAsync(
+                languageExporter,
+                nameof(LanguageExporter),
+                l => l.CommonExporterId, l => l.Language, l => l.Name, l => l.Description,
+                l => l.ContactPersonFirstName, l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
+                l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
+                l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
+                return Page();
+            
+            // If the user is a regular person, mark it as pending
+            if (!IsAdminOrManager)
+                languageExporter.Approved = false;
+
+            await _context.LanguageExporters!.AddAsync(languageExporter);
+            try
             {
-                // If the user is a regular person, mark it as pending
-                if (!IsAdminOrManager)
-                    languageExporter.Approved = false;
-
-                await _context.LanguageExporters!.AddAsync(languageExporter);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.ExporterLogo, languageExporter.Logo!);
-                }
-                return RedirectToPage("./Details",
-                    new { id = LanguageExporter.CommonExporterId, language = LanguageExporter.Language });
+                await _context.SaveChangesAsync();
             }
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.ExporterLogo, languageExporter.Logo!);
+            }
+            return RedirectToPage("./Details",
+                new { id = LanguageExporter.CommonExporterId, language = LanguageExporter.Language });
 
-            return Page();
         }
 
 #nullable disable

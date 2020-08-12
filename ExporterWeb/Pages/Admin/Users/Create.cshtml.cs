@@ -24,25 +24,23 @@ namespace ExporterWeb.Pages.Admin.Users
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {
-                var user = new User(UserName);
-                var result = await _userManager.CreateAsync(user, Password);
+            if (!ModelState.IsValid)
+                return Page();
+            
+            var user = new User(UserName);
+            var result = await _userManager.CreateAsync(user, Password);
 
-                if (result.Succeeded)
-                {
-                    if (IsManager)
-                        await _userManager.AddToRoleAsync(user, Constants.ManagersRole);
-                    if (IsAnalyst)
-                        await _userManager.AddToRoleAsync(user, Constants.AnalystsRole);
-                    return RedirectToPage("./Index");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                        ModelState.AddModelError(string.Empty, error.Description);
-                }
+            if (result.Succeeded)
+            {
+                if (IsManager)
+                    await _userManager.AddToRoleAsync(user, Constants.ManagersRole);
+                if (IsAnalyst)
+                    await _userManager.AddToRoleAsync(user, Constants.AnalystsRole);
+                return RedirectToPage("./Index");
             }
+
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
 
             return Page();
         }

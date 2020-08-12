@@ -6,15 +6,12 @@ namespace ExporterWeb.Helpers.Services
 {
     public class CommonLocalizationService
     {
-        private readonly IStringLocalizer localizer;
+        private readonly IStringLocalizer _localizer;
         public CommonLocalizationService(IStringLocalizerFactory factory)
         {
-            localizer = factory.Create(nameof(CommonResources), Assembly.GetExecutingAssembly().GetName().Name);
+            _localizer = factory.Create(nameof(CommonResources), Assembly.GetExecutingAssembly().GetName().Name);
         }
 
-        public string this[string key]
-        {
-            get => localizer[key];
-        }
+        public string this[string key] => _localizer[key];
     }
 }

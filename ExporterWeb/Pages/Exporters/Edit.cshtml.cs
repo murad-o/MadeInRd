@@ -44,12 +44,11 @@ namespace ExporterWeb.Pages.Exporters
             if (LanguageExporter is null)
                 return NotFound();
 
-            if (!await IsAuthorized(LanguageExporter, AuthorizationOperations.Update))
-            {
-                _logger.LogInformation($"User {UserId} tries to edit exporter {id} ({Language})");
-                return Forbid();
-            }
-            return Page();
+            if (await IsAuthorized(LanguageExporter, AuthorizationOperations.Update))
+                return Page();
+            
+            _logger.LogInformation($"User {UserId} tries to edit exporter {id} ({Language})");
+            return Forbid();
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
@@ -67,32 +66,31 @@ namespace ExporterWeb.Pages.Exporters
             if (Logo is { })
                 languageExporter.Logo = _imageService.Save(ImageTypes.ExporterLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    languageExporter,
-                    nameof(LanguageExporter),
-                    l => l.Name, l => l.Description, l => l.ContactPersonFirstName,
-                    l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
-                    l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
-                    l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
-            {
-                // If the user is a regular person, mark it as pending
-                if (!IsAdminOrManager)
-                    languageExporter.Approved = false;
+            if (!await TryUpdateModelAsync(
+                languageExporter,
+                nameof(LanguageExporter),
+                l => l.Name, l => l.Description, l => l.ContactPersonFirstName,
+                l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
+                l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
+                l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
+                return Page();
+            
+            // If the user is a regular person, mark it as pending
+            if (!IsAdminOrManager)
+                languageExporter.Approved = false;
 
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    if (oldLogo is { } && Logo is { })
-                        _imageService.Delete(ImageTypes.ExporterLogo, oldLogo);
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.ExporterLogo, languageExporter.Logo!);
-                }
-                return RedirectToPage("./Details", new { id, language = Language });
+            try
+            {
+                await _context.SaveChangesAsync();
+                if (oldLogo is { } && Logo is { })
+                    _imageService.Delete(ImageTypes.ExporterLogo, oldLogo);
             }
-            return Page();
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.ExporterLogo, languageExporter.Logo!);
+            }
+            return RedirectToPage("./Details", new { id, language = Language });
         }
 
         public async Task<IActionResult> OnPostDeleteImage(string id, string language)

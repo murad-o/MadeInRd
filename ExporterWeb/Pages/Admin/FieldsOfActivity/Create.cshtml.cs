@@ -39,7 +39,7 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
                 return Page();
             }
 
-            _context.FieldsOfActivity!.Add(FieldOfActivity!);
+            await _context.FieldsOfActivity!.AddAsync(FieldOfActivity!);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
@@ -47,6 +47,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
 #nullable disable
         [BindProperty]
-        public FieldOfActivity FieldOfActivity { get; set; }
+        FieldOfActivity FieldOfActivity { get; set; }
     }
 }

@@ -73,27 +73,26 @@ namespace ExporterWeb.Pages.Products
             if (Logo is { })
                 product.Logo = _imageService.Save(ImageTypes.ProductLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    product,
-                    nameof(Product),
-                    p => p.Name, p => p.Description,
-                    p => p.Language, p => p.FieldOfActivityId))
+            if (!await TryUpdateModelAsync(
+                product,
+                nameof(Product),
+                p => p.Name, p => p.Description,
+                p => p.Language, p => p.FieldOfActivityId))
+                return Page();
+            
+            try
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    if (oldLogo is { } && Logo is { })
-                        _imageService.Delete(ImageTypes.ProductLogo, oldLogo);
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.ProductLogo, product.Logo!);
-                }
-
-                return RedirectToPage("./Index");
+                await _context.SaveChangesAsync();
+                if (oldLogo is { } && Logo is { })
+                    _imageService.Delete(ImageTypes.ProductLogo, oldLogo);
             }
-            return Page();
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.ProductLogo, product.Logo!);
+            }
+
+            return RedirectToPage("./Index");
         }
 
         public async Task<IActionResult> OnPostDeleteImage(int id)

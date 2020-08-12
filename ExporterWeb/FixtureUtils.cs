@@ -54,7 +54,7 @@ namespace ExporterWeb
             var analysts = dbConfig.GetSection(AnalystsKeyConfig).GetChildren();
 
             var options = serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>();
-            using var context = new ApplicationDbContext(options);
+            await using var context = new ApplicationDbContext(options);
 
             await EnsureRole(serviceProvider, Constants.AdministratorsRole);
             await EnsureRole(serviceProvider, Constants.ManagersRole);
@@ -71,19 +71,21 @@ namespace ExporterWeb
             var userManager = serviceProvider.GetService<UserManager<User>>();
 
             var user = await userManager.FindByEmailAsync(email);
-            if (user is null)
+
+            if (user is {})
+                return user;
+
+            user = new User(email)
             {
-                user = new User(email)
-                {
-                    Email = email,
-                    EmailConfirmed = true
-                };
-                var result = await userManager.CreateAsync(user, password);
-                if (!result.Succeeded)
-                {
-                    var message = string.Join(", ", result.Errors.Select(e => e.Code + " " + e.Description));
-                    throw new Exception($"Errors when creating a user {email}: {message}");
-                }
+                Email = email,
+                EmailConfirmed = true
+            };
+
+            var result = await userManager.CreateAsync(user, password);
+            if (!result.Succeeded)
+            {
+                var message = string.Join(", ", result.Errors.Select(e => e.Code + " " + e.Description));
+                throw new Exception($"Errors when creating a user {email}: {message}");
             }
 
             return user;

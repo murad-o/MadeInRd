@@ -30,36 +30,37 @@ namespace ExporterWeb.Pages.News
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile? logo)
+        public async Task<IActionResult> OnPostAsync()
         {
             var newsItem = new NewsModel { UserNameOwner = User.Identity.Name! };
 
-            if (logo is { })
-                newsItem.Logo = _imageService.Save(ImageTypes.NewsLogo, logo);
+            if (Logo is { })
+                newsItem.Logo = _imageService.Save(ImageTypes.NewsLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    newsItem,
-                    nameof(NewsItem),
-                    n => n.Name, n => n.Description, n => n.Language))
+            if (!await TryUpdateModelAsync(
+                newsItem,
+                nameof(NewsItem),
+                n => n.Name, n => n.Description, n => n.Language))
+                return Page();
+            
+            await _context.News!.AddAsync(newsItem);
+            try
             {
-                await _context.News!.AddAsync(newsItem);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch
-                {
-                    if (logo is { })
-                        _imageService.Delete(ImageTypes.NewsLogo, newsItem.Logo!);
-                    throw;
-                }
-                return RedirectToPage("./Index");
+                await _context.SaveChangesAsync();
             }
-            return Page();
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.NewsLogo, newsItem.Logo!);
+                throw;
+            }
+            return RedirectToPage("./Index");
         }
 
 #nullable disable
         [BindProperty]
         public NewsModel NewsItem { get; set; }
+        [BindProperty]
+        public IFormFile Logo { get; set; }
     }
 }

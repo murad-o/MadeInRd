@@ -41,13 +41,13 @@ namespace ExporterWeb.Pages.News
 
             NewsItem = await _context.News!.FindAsync(id);
 
-            if (NewsItem is { })
-            {
-                _context.News.Remove(NewsItem);
-                await _context.SaveChangesAsync();
-                if (NewsItem.Logo is { })
-                    _imageService.Delete(ImageTypes.NewsLogo, NewsItem.Logo);
-            }
+            if (NewsItem is null) 
+                return RedirectToPage("./Index");
+            
+            _context.News.Remove(NewsItem);
+            await _context.SaveChangesAsync();
+            if (NewsItem.Logo is { })
+                _imageService.Delete(ImageTypes.NewsLogo, NewsItem.Logo);
 
             return RedirectToPage("./Index");
         }

@@ -43,14 +43,14 @@ namespace ExporterWeb.Pages.Events
 
             Event = await _context.Events!.FindAsync(id);
 
-            if (Event is { })
-            {
-                _context.Events.Remove(Event);
-                await _context.SaveChangesAsync();
-                if (Event.Logo is { })
-                    _imageService.Delete(ImageTypes.EventLogo, Event.Logo);
-            }
-
+            if (Event is null)
+                return NotFound();
+            
+            _context.Events.Remove(Event);
+            await _context.SaveChangesAsync();
+            if (Event.Logo is { })
+                _imageService.Delete(ImageTypes.EventLogo, Event.Logo);
+            
             return RedirectToPage("./Index");
         }
 

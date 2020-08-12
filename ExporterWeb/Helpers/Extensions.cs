@@ -22,7 +22,7 @@ namespace ExporterWeb.Helpers
                 languageExporter.DirectorPatronymic);
         }
 
-        internal static string ConstructFullName(string firstName, string secondName, string? patronymic)
+        private static string ConstructFullName(string firstName, string secondName, string? patronymic)
         {
             string patronymicSpaced = patronymic is null
                 ? string.Empty
@@ -30,21 +30,21 @@ namespace ExporterWeb.Helpers
             return $"{firstName} {secondName}{patronymicSpaced}";
         }
 
-        public static string? LogoPath(this NewsModel news)
+        public static string LogoPath(this NewsModel news)
         {
             if (news.Logo is null)
                 return "/img/news-icon.png";
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.NewsLogo), news.Logo).Replace('\\', '/');
         }
 
-        public static string? LogoPath(this Event @event)
+        public static string LogoPath(this Event @event)
         {
             if (@event.Logo is null)
                 return "/img/news-icon.png";
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.EventLogo), @event.Logo).Replace('\\', '/');
         }
 
-        public static string? LogoPath(this LanguageExporter exporter)
+        public static string LogoPath(this LanguageExporter exporter)
         {
             if (exporter.Logo is null)
                 return "/img/news-icon.png";

@@ -35,26 +35,25 @@ namespace ExporterWeb.Pages.Events
             if (Logo is { })
                 @event.Logo = _imageService.Save(ImageTypes.EventLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    @event,
-                    nameof(Event),
-                    e => e.Name, e => e.Description, e => e.Language, e => e.StartsAt, e => e.EndsAt))
+            if (!await TryUpdateModelAsync(
+                @event,
+                nameof(Event),
+                e => e.Name, e => e.Description, e => e.Language, e => e.StartsAt, e => e.EndsAt))
+                return Page();
+            
+            await _context.Events!.AddAsync(@event);
+            try
             {
-                await _context.Events!.AddAsync(@event);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.EventLogo, @event.Logo!);
-                    throw;
-                }
-                return RedirectToPage("./Index");
+                await _context.SaveChangesAsync();
             }
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.EventLogo, @event.Logo!);
+                throw;
+            }
+            return RedirectToPage("./Index");
 
-            return Page();
         }
 
 #nullable disable

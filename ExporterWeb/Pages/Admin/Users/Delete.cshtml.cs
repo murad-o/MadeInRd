@@ -50,6 +50,6 @@ namespace ExporterWeb.Pages.Admin.Users
 
 #nullable disable
         [BindProperty]
-        new public User User { get; set; }
+        public new User User { get; set; }
     }
 }

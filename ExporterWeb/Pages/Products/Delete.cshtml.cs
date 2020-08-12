@@ -42,13 +42,11 @@ namespace ExporterWeb.Pages.Products
             if (Product is null)
                 return NotFound();
 
-            if (!await IsAuthorized(Product, AuthorizationOperations.Delete))
-            {
-                _logger.LogInformation($"User {UserId} tries to delete product {Product.Id}");
-                return Forbid();
-            }
-
-            return Page();
+            if (await IsAuthorized(Product, AuthorizationOperations.Delete))
+                return Page();
+            
+            _logger.LogInformation($"User {UserId} tries to delete product {Product.Id}");
+            return Forbid();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)

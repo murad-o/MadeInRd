@@ -48,23 +48,22 @@ namespace ExporterWeb.Pages.Events
             if (Logo is { })
                 eventToUpdate.Logo = _imageService.Save(ImageTypes.EventLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    eventToUpdate,
-                    "Event",
-                    e => e.Name, e => e.Description, e => e.Language, e => e.StartsAt, e => e.EndsAt))
+            if (!await TryUpdateModelAsync(
+                eventToUpdate,
+                "Event",
+                e => e.Name, e => e.Description, e => e.Language, e => e.StartsAt, e => e.EndsAt))
+                return RedirectToPage("./Index");
+            try
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    if (oldLogo is { } && Logo is { })
-                        _imageService.Delete(ImageTypes.EventLogo, oldLogo);
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.EventLogo, eventToUpdate.Logo!);
-                    throw;
-                }
+                await _context.SaveChangesAsync();
+                if (oldLogo is { } && Logo is { })
+                    _imageService.Delete(ImageTypes.EventLogo, oldLogo);
+            }
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.EventLogo, eventToUpdate.Logo!);
+                throw;
             }
 
             return RedirectToPage("./Index");

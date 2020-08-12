@@ -46,23 +46,23 @@ namespace ExporterWeb.Pages.News
             if (Logo is { })
                 newsItemToUpdate.Logo = _imageService.Save(ImageTypes.NewsLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    newsItemToUpdate,
-                    "NewsItem",
-                    n => n.Name, n => n.Description, n => n.Language))
+            if (!await TryUpdateModelAsync(
+                newsItemToUpdate,
+                "NewsItem",
+                n => n.Name, n => n.Description, n => n.Language))
+                return RedirectToPage("./Index");
+            
+            try
             {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    if (oldLogo is { } && Logo is { })
-                        _imageService.Delete(ImageTypes.NewsLogo, oldLogo);
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.NewsLogo, newsItemToUpdate.Logo!);
-                    throw;
-                }
+                await _context.SaveChangesAsync();
+                if (oldLogo is { } && Logo is { })
+                    _imageService.Delete(ImageTypes.NewsLogo, oldLogo);
+            }
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.NewsLogo, newsItemToUpdate.Logo!);
+                throw;
             }
 
             return RedirectToPage("./Index");

@@ -25,14 +25,16 @@ namespace ExporterWeb.Helpers.Services
             using Stream stream = file.OpenReadStream();
             using Bitmap image = Resize(new Bitmap(stream), imageInfo.Size.Width, imageInfo.Size.Height);
 
-            EncoderParameters encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, QualityLevel);
+            EncoderParameters encoderParameters = new EncoderParameters(1)
+            {
+                Param = {[0] = new EncoderParameter(Encoder.Quality, QualityLevel)}
+            };
+            
             string fullName = GetFullPath(imageType, imageInfo.FileName);
 
             image.Save(fullName, imageInfo.ImageCodec, encoderParameters);
             return imageInfo.FileName;
         }
-
 
         private struct ImageInfo
         {

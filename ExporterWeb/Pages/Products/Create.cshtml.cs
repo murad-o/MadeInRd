@@ -65,27 +65,26 @@ namespace ExporterWeb.Pages.Products
             if (Logo is { })
                 product.Logo = _imageService.Save(ImageTypes.ProductLogo, Logo);
 
-            if (await TryUpdateModelAsync(
-                    product,
-                    nameof(Product),
-                    p => p.LanguageExporterId, p => p.Name,
-                    p => p.Description, p => p.Language,
-                    p => p.FieldOfActivityId))
+            if (!await TryUpdateModelAsync(
+                product,
+                nameof(Product),
+                p => p.LanguageExporterId, p => p.Name,
+                p => p.Description, p => p.Language,
+                p => p.FieldOfActivityId))
+                return Page();
+            
+            await _context.Products!.AddAsync(product);
+            try
             {
-                await _context.Products!.AddAsync(product);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch
-                {
-                    if (Logo is { })
-                        _imageService.Delete(ImageTypes.ProductLogo, product.Logo!);
-                    throw;
-                }
-                return RedirectToPage("./Index");
+                await _context.SaveChangesAsync();
             }
-            return Page();
+            catch
+            {
+                if (Logo is { })
+                    _imageService.Delete(ImageTypes.ProductLogo, product.Logo!);
+                throw;
+            }
+            return RedirectToPage("./Index");
         }
 
 #nullable disable

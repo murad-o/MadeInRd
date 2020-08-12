@@ -28,6 +28,6 @@ namespace ExporterWeb.Pages.Admin.Users
             return Page();
         }
 #nullable disable
-        new public User User { get; set; }
+        public new User User { get; set; }
     }
 }

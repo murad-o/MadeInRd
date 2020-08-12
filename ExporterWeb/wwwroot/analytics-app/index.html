@@ -1,0 +1,15 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/vue@next"></script>
+
+<div id="statistics-app">
+	<div v-if="loaded">
+		Data: {{data.length}}
+		<ul>
+			<li v-for="datum in data">
+				Item: {{datum}}
+			</li>
+		</ul>
+	</div>
+	<div v-else>Loading...</div>
+</div>
+
+<script src="index.js"></script>

@@ -47,6 +47,6 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
 
 #nullable disable
         [BindProperty]
-        FieldOfActivity FieldOfActivity { get; set; }
+        public FieldOfActivity FieldOfActivity { get; set; }
     }
 }

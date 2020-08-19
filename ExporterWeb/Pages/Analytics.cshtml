@@ -1,8 +1,11 @@
 ﻿@page
 @model ExporterWeb.Pages.AnalyticsModel
 @{
-    ViewData["Title"] = "Analytics";
+	ViewData["Title"] = "Analytics";
+	string originApi = "http://localhost:8080"; // TODO: get this value from the secrets
 }
 
 <h1>Analytics</h1>
-<iframe src="~/analytics-app/index.html"></iframe>
+
+<input id="origin-api" type="hidden" value="@originApi" />
+<iframe src="~/analytics-app/index.html" style="width: 100%; height: 800px;"></iframe>

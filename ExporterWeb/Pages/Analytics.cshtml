@@ -1,8 +1,10 @@
 ﻿@page
 @model ExporterWeb.Pages.AnalyticsModel
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
 @{
-	ViewData["Title"] = "Analytics";
-	string originApi = "http://localhost:8080"; // TODO: get this value from the secrets
+    ViewData["Title"] = "Analytics";
+    string originApi = Configuration.GetSection("AnalyticsAppOrigin").Value;
 }
 
 <h1>Analytics</h1>

@@ -21,8 +21,14 @@ dotnet user-secrets set "db:administrators:admin@example.com" "1234qwE!"
 dotnet user-secrets set "db:managers:manager1@example.com" "1234qwE!"
 dotnet user-secrets set "db:managers:manager2@example.com" "1234qwE!"
 dotnet user-secrets set "db:analysts:analyst1@example.com" "1234qwE!"
+
+dotnet user-secrets set "AnalyticsAppOrigin" "https://localhost:8443"
 ```
-This command will add the connection string to your local database `MyExporterDatabase` and properties to create 1 administrator and 2 managers. You can create as many administrators/managers as you want adding them in this way.
+
+This command will add the connection string to your local database `MyExporterDatabase` and properties to create 1 administrator and 2 managers.
+You can create as many administrators/managers as you want adding them in this way.
+
+Also, the setting with the key `"AnalyticsAppOrigin"` and a value of the format `"https://<YOUR_DOMAIN>:<PORT>"` will add an origin that the Analytics App will work with.
 
 # Run
 

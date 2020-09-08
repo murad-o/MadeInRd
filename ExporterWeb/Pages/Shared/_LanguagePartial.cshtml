@@ -7,14 +7,17 @@
     var supportedCultures = LocOps.Value.SupportedUICultures;
 }
 
-<div>
+<div class="culture-switcher">
     <form id="culture-switcher">
-        <select name="culture" id="culture-options">
+        <select name="culture" class="culture-switcher__select" id="culture-options">
             @foreach (var culture in supportedCultures)
             {
-                <option value="@culture.Name" selected="@(currentCulture.Name == culture.Name)">@culture.NativeName</option>
+                <option value="@culture.Name" selected="@(currentCulture.Name == culture.Name)">@culture.TwoLetterISOLanguageName</option>
             }
         </select>
+        <svg class="culture-switcher__img" width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 1L7.78788 8L1 0.999999" stroke="white" />
+        </svg>
     </form>
 </div>
 

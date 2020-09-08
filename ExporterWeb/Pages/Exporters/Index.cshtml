@@ -10,7 +10,7 @@
     var exporters = Model.LanguageExporters;
 }
 
-<h1>Index</h1>
+<!--<h1>Index</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -27,9 +27,9 @@
         {
             <a asp-route-language="@language">@language</a>
         }
-    }
+    }-->
     @* TODO: check if User.IsInRole(Constants.ExportersRole); not it is not implemented *@
-    @("|")
+    <!--@("|")
     <a asp-route-language="@Model.Language" asp-route-my="true">Show My Exporters</a>
 </p>
 
@@ -101,4 +101,4 @@
     </tbody>
 </table>
 
-@await  Html.PartialAsync("_Pagination", exporters)
+@await  Html.PartialAsync("_Pagination", exporters)-->

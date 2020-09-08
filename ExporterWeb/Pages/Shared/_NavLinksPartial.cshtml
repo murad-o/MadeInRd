@@ -1,34 +1,25 @@
 ﻿@inject CommonLocalizationService Localizer
 
-<ul class="navbar-nav flex-grow-1">
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="/About">@Localizer["About portal"]</a>
+<ul class="menu__list">
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/About">@Localizer["About portal"]</a>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["About region"]</a>
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/About">@Localizer["About region"]</a>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Branches"]</a>
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["Industries"]</a>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Support"]</a>
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/Events/Index">@Localizer["Events"]</a>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="/Events/Index">@Localizer["Events"]</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Foreign partners"]</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="#">@Localizer["Useful"]</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link text-dark" asp-area="" asp-page="/News/Index">@Localizer["News"]</a>
+	<li class="menu__item">
+		<a class="menu__link" asp-page="/News/Index">@Localizer["News"]</a>
 	</li>
 </ul>

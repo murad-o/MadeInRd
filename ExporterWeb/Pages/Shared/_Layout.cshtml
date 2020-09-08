@@ -5,74 +5,102 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ExporterWeb</title>
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/reset.css" />
     <link rel="stylesheet" href="~/css/template.css" />
     <link rel="stylesheet" href="~/fonts/Golos text/golostext.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/pagination.css" />
-</head>
+</head> 
 <body>
-    <header>
-		<div class="grid">
-			<div class="upper-header">
-				<div>
-					<a class="main-page-link" asp-area="" asp-page="/Index">MADE IN <span class="blue-highlighted">RD.</span></a>
-				</div>
-				<div class="extra-website-description">
-					Портал внешнеэкономической деятельности<br />
-					Республики Дагестан
-				</div>
-				<partial name="_LoginPartial" />
-                <partial name="_LanguagePartial" />
-			</div>
-			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-				@* This button sets display:none in mobile mode *@
-				@*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">Toggle</span>
-				</button>*@
-				<div class="nav-items-container navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<partial name="_NavLinksPartial" />
-				</div>
-			</nav>
-		</div>
-    </header>
-    <main role="main">
-        @RenderBody()
-    </main>
+    <div>
+        <header class="header">
+            <div class="container">
+                <div class="header__search-body">
+                    <form>
+                        <input type="text" class="header__search-input" placeholder="Искать на сайте">
+                        <button type="submit" class="header__search-btn">Найти</button>
+                    </form>
+                </div>
+                <div class="header__row">
+                    <div class="header__logo">
+                        <a class="main-page-link" asp-area="" asp-page="/Index">MADE IN <span>RD.</span></a>
+                    </div>
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
+                    <div class="header__body">
+                        <div class="mobile-search">
+                            <form action="">
+                                <input class="mobile-search__input" type="text" placeholder="Поиск">
+                                <button class="mobile-search__btn" type="submit">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="header__body-top">
+                            <button type="button" class="header__show-search-body">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                            <a class="header__account-link" asp-page="/Account/Manage/Index">Личный кабинет</a>
+                            <partial name="_LanguagePartial" />
+                        </div>
+                        <nav class="header__menu">
+                            <partial name="_NavLinksPartial" />
+                        </nav>
+                    </div>
+                </div>
+                
+            </div>
 
-    <footer class="border-top footer text-muted">
-		<div class="upper-footer">
-			@for (int i = 0; i < 2; i++)
-			{
-				<div class="sponsor-item">
-					<img src="~/img/sponsor-rospotrebnadzor.png" />
-					<span></span>
-				</div>
-				<div class="sponsor-item">
-					<img src="~/img/sponsor-my-dagestan.svg" />
-					<span></span>
-				</div>
-			}
-		</div>
-		<div class="lower-footer">
-			<partial name="_NavLinksPartial" />
-			<div>
-				<a class="main-page-link" href="/ru/index">MADE IN <span class="blue-highlighted">RD.</span></a>
-				<p class="extra-website-description">
-					Портал внешнеэкономической деятельности<br/>
-					Республики Дагестан
-				</p>
-			</div>
-		</div>
-    </footer>
+        </header>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @RenderSection("Scripts", required: false)
+        @*<div class="temporary-content"></div>*@
+
+        <div class="wrapper">
+            @RenderBody()
+        </div>
+
+        @* <footer class="footer">
+            <div class="container">
+                <div class="upper-footer">
+                    
+                </div>
+            </div>
+        </footer> *@
+
+        @* <footer>
+            <div class="grid">
+                <div class="upper-footer">
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <div class="sponsor-item">
+                            <img src="~/img/sponsor-rospotrebnadzor.png" />
+                            <span></span>
+                        </div>
+                        <div class="sponsor-item">
+                            <img src="~/img/sponsor-my-dagestan.svg" />
+                            <span></span>
+                        </div>
+                    }
+                </div>
+                <div class="lower-footer">
+                    <partial name="_NavLinksPartial" />
+                    <div>
+                        <a class="main-page-link" href="/ru/index">MADE IN <span class="blue-highlighted">RD.</span></a>
+                        <p class="extra-website-description">
+                            Портал внешнеэкономической деятельности<br/>
+                            Республики Дагестан
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer> *@
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        @RenderSection("Scripts", required: false)
+    </div>
 </body>
 </html>

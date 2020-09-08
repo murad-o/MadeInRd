@@ -135,9 +135,6 @@
   <data name="Analytics" xml:space="preserve">
     <value>Аналитика</value>
   </data>
-  <data name="Branches" xml:space="preserve">
-    <value>Отрасли</value>
-  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
@@ -167,6 +164,9 @@
   </data>
   <data name="Home page" xml:space="preserve">
     <value>Домашняя страница</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>Отрасли</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>

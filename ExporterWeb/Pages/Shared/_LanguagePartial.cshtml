@@ -8,8 +8,8 @@
 }
 
 <div class="culture-switcher">
-    <form id="culture-switcher">
-        <select name="culture" class="culture-switcher__select" id="culture-options">
+    <form>
+        <select name="culture" class="culture-switcher__select">
             @foreach (var culture in supportedCultures)
             {
                 <option value="@culture.Name" selected="@(currentCulture.Name == culture.Name)">@culture.TwoLetterISOLanguageName</option>
@@ -25,13 +25,14 @@
 <script>
     var currentCulture = "@Context.Request.RouteValues["culture"]";
     var segments = location.pathname.split('/');
-    var el = document.getElementById("culture-options");
-    el.addEventListener("change", () => {
-        var selectedCulture = el.value;
-        if (currentCulture.length === 0) {
-            location.pathname = "/" + selectedCulture + location.pathname;
-        } else {
-            location.pathname = location.pathname.replace(currentCulture, selectedCulture)
-        }
-    });
+    document.querySelectorAll(".culture-switcher__select").forEach(item => {
+        item.addEventListener("change", () => {
+            var selectedCulture = item.value;
+            if (currentCulture.length === 0) {
+                location.pathname = "/" + selectedCulture + location.pathname;
+            } else {
+                location.pathname = location.pathname.replace(currentCulture, selectedCulture)
+            }
+        });
+    })
 </script>

@@ -1,0 +1,15 @@
+@using Microsoft.AspNetCore.Identity
+
+
+@inject ApplicationDbContext DbContext
+@inject UserManager<User> UserManager
+
+@{
+    var exporter = DbContext.LanguageExporters.FirstOrDefault(exp => exp.CommonExporterId == UserManager.GetUserId(User)
+        && exp.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
+
+    if (exporter is { })
+        @exporter.Name
+    else
+        @UserManager.GetUserName(User)
+}

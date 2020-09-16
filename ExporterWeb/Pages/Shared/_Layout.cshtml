@@ -1,4 +1,11 @@
-﻿@inject CommonLocalizationService Localizer
+﻿@using Microsoft.AspNetCore.Identity
+@inject CommonLocalizationService Localizer
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    var isUserSignedIn = SignInManager.IsSignedIn(User);
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,97 +13,199 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/fonts/Golos text/golostext.css" />
     <link rel="stylesheet" href="~/css/reset.css" />
     <link rel="stylesheet" href="~/css/template.css" />
-    <link rel="stylesheet" href="~/fonts/Golos text/golostext.css" />
-    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/pagination.css" />
 </head> 
 <body>
-    <div>
+    
+    <div class="wrapper">
         <header class="header">
             <div class="container">
-                <div class="header__search-body">
+                <div class="large-search">
                     <form>
-                        <input type="text" class="header__search-input" placeholder="Искать на сайте">
-                        <button type="submit" class="header__search-btn">Найти</button>
+                        <input type="text" class="large-search__input" placeholder="@Localizer["Search on the site"]">
+                        <button type="submit" class="large-search__btn">@Localizer["Search"]</button>
                     </form>
                 </div>
-                <div class="header__row">
-                    <div class="header__logo">
+                <div class="upper-header">
+                    <div class="upper-header__logo">
                         <a class="main-page-link" asp-area="" asp-page="/Index">MADE IN <span>RD.</span></a>
                     </div>
-                    <div class="header__burger">
+                    <div class="upper-header__burger">
                         <span></span>
                     </div>
-                    <div class="header__body">
-                        <div class="mobile-search">
-                            <form action="">
-                                <input class="mobile-search__input" type="text" placeholder="Поиск">
-                                <button class="mobile-search__btn" type="submit">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </button>
-                            </form>
+                    <div class="upper-header-large-body">
+                        <div class="upper-header-search">
+                            <svg class="upper-header-search__icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.9 0C2.2021 0 0 2.2021 0 4.9C0 7.5979 2.2021 9.8 4.9 9.8C6.1236 9.8 7.24151 9.34362 8.10195 8.59688L8.4 8.89492V9.8L12.6 14L14 12.6L9.8 8.4H8.89492L8.59688 8.10195C9.34362 7.24151 9.8 6.1236 9.8 4.9C9.8 2.2021 7.5979 0 4.9 0ZM4.9 1.4C6.84129 1.4 8.4 2.95871 8.4 4.9C8.4 6.84129 6.84129 8.4 4.9 8.4C2.95871 8.4 1.4 6.84129 1.4 4.9C1.4 2.95871 2.95871 1.4 4.9 1.4Z" fill="#9E9E9E"/>
+                            </svg>
                         </div>
-                        <div class="header__body-top">
-                            <button type="button" class="header__show-search-body">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                            <a class="header__account-link" asp-page="/Account/Manage/Index">Личный кабинет</a>
-                            <partial name="_LanguagePartial" />
+                        <a href="">
+                            <svg class="upper-header-large-body__feedback-icon" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.33335 0C0.596673 0 0 0.639293 0 1.42859V11.4287C0 12.218 0.596673 12.8573 1.33335 12.8573H8.78135L6.66674 10.5916V7.14294H9.88553L12.0001 9.40859V1.42859C12.0001 0.639293 11.4035 0 10.6668 0H1.33335ZM2.00002 2.14288H10.0001V3.57147H2.00002V2.14288ZM2.00002 5.00006H5.33339V6.42864H2.00002V5.00006ZM8.00009 8.57152V10.0001L11.4311 13.6762L12.7645 12.2476L9.33344 8.57152H8.00009ZM13.2358 12.7527L11.9025 14.1812L12.5692 14.8955C12.6992 15.0348 12.9105 15.0348 13.0405 14.8955L13.9025 13.972C14.0325 13.832 14.0325 13.6062 13.9025 13.4669L13.2358 12.7527Z" fill="#9E9E9E"/>
+                            </svg>
+                        </a>
+                        <div class="header-company">
+                            @if (isUserSignedIn) {
+                                <partial name="_LoginPartial" />
+                            }
+                            else {
+                                <a class="header-company__login-link" asp-area="Identity" asp-page="/Account/Login">Войти</a>
+                            }
                         </div>
-                        <nav class="header__menu">
-                            <partial name="_NavLinksPartial" />
-                        </nav>
+                        <partial name="_LanguagePartial" />
                     </div>
                 </div>
-                
+                <nav class="large-menu">
+                    <ul class="large-menu__list">
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/About">@Localizer["About portal"]</a>
+                        </li>
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/About">@Localizer["About region"]</a>
+                        </li>
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["Industries"]</a>
+                        </li>
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+                        </li>
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+                        </li>
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/Events/Index">@Localizer["Events"]</a>
+                        </li>
+                        <li class="large-menu__item">
+                            <a class="large-menu__link" asp-page="/News/Index">@Localizer["News"]</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-
         </header>
+        <div class="overlay"></div>
+        <div class="small-body">
+            <div class="mobile-search">
+                <form action="">
+                    <input class="mobile-search__input" type="text" placeholder="Поиск">
+                    <button class="mobile-search__btn" type="submit">
+                        <svg class="mobile-search__icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.9 0C2.2021 0 0 2.2021 0 4.9C0 7.5979 2.2021 9.8 4.9 9.8C6.1236 9.8 7.24151 9.34362 8.10195 8.59688L8.4 8.89492V9.8L12.6 14L14 12.6L9.8 8.4H8.89492L8.59688 8.10195C9.34362 7.24151 9.8 6.1236 9.8 4.9C9.8 2.2021 7.5979 0 4.9 0ZM4.9 1.4C6.84129 1.4 8.4 2.95871 8.4 4.9C8.4 6.84129 6.84129 8.4 4.9 8.4C2.95871 8.4 1.4 6.84129 1.4 4.9C1.4 2.95871 2.95871 1.4 4.9 1.4Z" fill="#9E9E9E"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            <div class="small-body-row">
+                <a class="small-body-row__feedback-link" href="">
+                    <svg class="small-body-row__feedback-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.47622 1C3.10811 1 2 2.15073 2 3.57146V21.5717C2 22.9924 3.10811 24.1431 4.47622 24.1431H18.3082L14.3811 20.0649V13.8573H20.3588L24.286 17.9355V3.57146C24.286 2.15073 23.1779 1 21.8097 1H4.47622ZM5.71433 4.85719H20.5716V7.42864H5.71433V4.85719ZM5.71433 10.0001H11.9049V12.5716H5.71433V10.0001ZM16.8573 16.4287V19.0002L23.2292 25.6172L25.7054 23.0457L19.3335 16.4287H16.8573ZM26.5808 23.9548L24.1046 26.5262L25.3427 27.812C25.5841 28.0627 25.9767 28.0627 26.2181 27.812L27.8189 26.1496C28.0604 25.8976 28.0604 25.4912 27.8189 25.2405L26.5808 23.9548Z" fill="#010B23"/>
+                    </svg>
+                </a>
+                <partial name="_LanguagePartial" />
+                @if (isUserSignedIn) {
+                    <div class="small-body-account">
+                        <a class="small-body-account__link" asp-area="Identity" asp-page="/Account/Manage/Index">
+                            <partial name="_UserNamePartial" />
+                        </a>
+                    </div>
+                }
+                else {
+                    <a class="small-body-row__login-link" asp-area="Identity" asp-page="/Account/Login">Войти</a>
+                }
+            </div>
+           <nav class="small-menu">
+                <ul class="small-menu__list">
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/About">@Localizer["About portal"]</a>
+                    </li>
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/About">@Localizer["About region"]</a>
+                    </li>
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["Industries"]</a>
+                    </li>
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+                    </li>
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+                    </li>
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/Events/Index">@Localizer["Events"]</a>
+                    </li>
+                    <li class="small-menu__item">
+                        <a class="small-menu__link" asp-page="/News/Index">@Localizer["News"]</a>
+                    </li>
+                    @if(isUserSignedIn) {
+                        <li class="small-menu__item">
+                            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                <button class="small-menu__logout-btn" type="submit">@Localizer["Logout"]</button>
+                            </form>
+                        </li>
+                    }
+                </ul>
+           </nav> 
+        </div>
+   
 
 
-        @*<div class="temporary-content"></div>*@
+        <div class="temporary-content"></div>
 
-        <div class="wrapper">
+        <div class="content">
             @RenderBody()
         </div>
-
-        @* <footer class="footer">
+        
+        <footer class="footer">
             <div class="container">
                 <div class="upper-footer">
-                    
-                </div>
-            </div>
-        </footer> *@
-
-        @* <footer>
-            <div class="grid">
-                <div class="upper-footer">
-                    @for (int i = 0; i < 3; i++)
-                    {
+                    @for (int i = 0; i < 3; i++) {
                         <div class="sponsor-item">
-                            <img src="~/img/sponsor-rospotrebnadzor.png" />
-                            <span></span>
+                            <img class="sponsor-item__img" src="~/img/sponsor-rospotrebnadzor.svg" />
                         </div>
                         <div class="sponsor-item">
-                            <img src="~/img/sponsor-my-dagestan.svg" />
-                            <span></span>
+                            <img class="sponsor-item__img" src="~/img/sponsor-my-dagestan.svg" />
                         </div>
                     }
                 </div>
                 <div class="lower-footer">
-                    <partial name="_NavLinksPartial" />
-                    <div>
-                        <a class="main-page-link" href="/ru/index">MADE IN <span class="blue-highlighted">RD.</span></a>
-                        <p class="extra-website-description">
-                            Портал внешнеэкономической деятельности<br/>
-                            Республики Дагестан
-                        </p>
+                    <nav>
+                        <ul class="footer-menu">
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/About">@Localizer["About portal"]</a>
+                            </li>
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/About">@Localizer["About region"]</a>
+                            </li>
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["Industries"]</a>
+                            </li>
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+                            </li>
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+                            </li>
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/Events/Index">@Localizer["Events"]</a>
+                            </li>
+                            <li class="footer-menu__item">
+                                <a class="footer-menu__link" asp-page="/News/Index">@Localizer["News"]</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="footer-logo">
+                        <a class="main-page-link" asp-area="" asp-page="/Index">MADE IN <span>RD.</span></a>
+                        <div class="footer-logo__info">
+                            Портал внешнеэкономической деятельности
+                            <div class="footer-logo__republic">Республики Дагестан</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </footer> *@
+
+        </footer>
 
         <script src="~/js/site.js" asp-append-version="true"></script>
 

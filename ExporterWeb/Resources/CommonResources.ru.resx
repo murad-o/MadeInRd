@@ -123,6 +123,9 @@
   <data name="About region" xml:space="preserve">
     <value>О регионе</value>
   </data>
+  <data name="Account" xml:space="preserve">
+    <value>Личный кабинет</value>
+  </data>
   <data name="All the branches" xml:space="preserve">
     <value>Все отрасли</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="Industries" xml:space="preserve">
     <value>Отрасли</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Выйти из системы</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>
   </data>
@@ -185,6 +191,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Найти</value>
+  </data>
+  <data name="Search on the site" xml:space="preserve">
+    <value>Искать на сайте</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>Поддержка</value>

@@ -18,7 +18,7 @@ namespace ExporterWeb.Pages.Admin.FieldsOfActivity
         }
 
         [BindProperty]
-        public IList<LocalizedNameInput> LocalizedNames { get; }
+        public IList<LocalizedNameInput> LocalizedNames { get; set; }
 
         private protected void FillFieldOfActivityNames(FieldOfActivity fieldOfActivity)
         {

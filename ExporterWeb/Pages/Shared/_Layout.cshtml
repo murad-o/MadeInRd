@@ -47,12 +47,12 @@
                                 <path d="M1.33335 0C0.596673 0 0 0.639293 0 1.42859V11.4287C0 12.218 0.596673 12.8573 1.33335 12.8573H8.78135L6.66674 10.5916V7.14294H9.88553L12.0001 9.40859V1.42859C12.0001 0.639293 11.4035 0 10.6668 0H1.33335ZM2.00002 2.14288H10.0001V3.57147H2.00002V2.14288ZM2.00002 5.00006H5.33339V6.42864H2.00002V5.00006ZM8.00009 8.57152V10.0001L11.4311 13.6762L12.7645 12.2476L9.33344 8.57152H8.00009ZM13.2358 12.7527L11.9025 14.1812L12.5692 14.8955C12.6992 15.0348 12.9105 15.0348 13.0405 14.8955L13.9025 13.972C14.0325 13.832 14.0325 13.6062 13.9025 13.4669L13.2358 12.7527Z" fill="#9E9E9E"/>
                             </svg>
                         </a>
-                        <div class="header-company">
+                        <div class="header-account">
                             @if (isUserSignedIn) {
-                                <partial name="_LoginPartial" />
+                                <partial name="_AccountPopupPartial" />
                             }
                             else {
-                                <a class="header-company__login-link" asp-area="Identity" asp-page="/Account/Login">Войти</a>
+                                <a class="header-account__login-link" asp-area="Identity" asp-page="/Account/Login">Войти</a>
                             }
                         </div>
                         <partial name="_LanguagePartial" />
@@ -150,8 +150,6 @@
         </div>
    
 
-
-        <div class="temporary-content"></div>
 
         <div class="content">
             @RenderBody()

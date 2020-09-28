@@ -21,8 +21,10 @@ namespace ExporterWeb.Models
                 if (custom is null)
                 {
                     custom = new CustomLanguage(SerializedNames);
-                    custom.UpdateValue += serializedString
-                        => SerializedNames = serializedString;
+                    custom.UpdateValue += serializedString =>
+                    {
+                        SerializedNames = serializedString;
+                    };
                 }
                 return custom;
             }
@@ -35,7 +37,7 @@ namespace ExporterWeb.Models
 
     public class CustomLanguage
     {
-        private readonly Dictionary<string, string> _names;
+        private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
         public CustomLanguage(string json)
         {
             _names = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);

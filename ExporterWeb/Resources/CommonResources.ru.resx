@@ -163,7 +163,7 @@
     <value>Вся аналитика</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Домой</value>
+    <value>Главная</value>
   </data>
   <data name="Home page" xml:space="preserve">
     <value>Домашняя страница</value>
@@ -173,6 +173,9 @@
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Выйти из системы</value>
+  </data>
+  <data name="More details" xml:space="preserve">
+    <value>Подробнее</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>
@@ -191,6 +194,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Найти</value>
+  </data>
+  <data name="Search on exporters" xml:space="preserve">
+    <value>Поиск по экспортёрам</value>
   </data>
   <data name="Search on the site" xml:space="preserve">
     <value>Искать на сайте</value>

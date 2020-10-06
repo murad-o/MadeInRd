@@ -51,6 +51,7 @@ namespace ExporterWeb
                 options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
                 options.Conventions.AuthorizeFolder("/Admin/Users", requireAdministratorRole);
             });
+            services.AddControllers();
 
             services.AddAuthorization(options =>
             {
@@ -96,6 +97,7 @@ namespace ExporterWeb
             services.AddScoped<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
             services.AddSingleton<CommonLocalizationService>();
             services.AddSingleton<ImageService>();
+            services.AddSingleton<ImageResizeService>();
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
         }
@@ -127,6 +129,7 @@ namespace ExporterWeb
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

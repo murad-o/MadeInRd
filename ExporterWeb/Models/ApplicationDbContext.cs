@@ -32,5 +32,6 @@ namespace ExporterWeb.Models
         public DbSet<Product>? Products { get; set; }
         public DbSet<NewsModel>? News { get; set; }
         public DbSet<Event>? Events { get; set; }
+        public DbSet<AboutRegionModel>? AboutRegionContents { get; set; }
     }
 }

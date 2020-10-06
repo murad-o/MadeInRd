@@ -1,0 +1,43 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.AboutRegion.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <h4>AboutRegionModel</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AboutRegionModel.Lang" />
+                <div class="form-group">
+                    <label asp-for="AboutRegionModel.Content" class="control-label"></label>
+                    <textarea asp-for="AboutRegionModel.Content" id="edit-about-content"></textarea>
+                    <span asp-validation-for="AboutRegionModel.Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('edit-about-content', {
+            height: 500,
+            filebrowserUploadUrl: '/api/upload/uploadFile'
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

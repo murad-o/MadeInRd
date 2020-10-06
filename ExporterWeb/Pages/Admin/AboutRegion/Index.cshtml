@@ -1,0 +1,23 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.AboutRegion.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    var contentModel = @Model.AboutRegionModel;
+}
+
+<div class="container">
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <p><a asp-page="./Index" asp-route-lang="ru">RU</a> | <a asp-page="Index" asp-route-lang="en">EN</a></p>
+
+    @Html.DisplayNameFor(model => model.AboutRegionModel.Content)
+
+    <div>@Html.Raw(contentModel.Content)</div>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@contentModel.Lang">Edit</a> |
+        <a asp-page="./Details" asp-route-id="@contentModel.Lang">Details</a> |
+        <a asp-page="./Delete" asp-route-id="@contentModel.Lang">Delete</a>
+    </div>
+</div>

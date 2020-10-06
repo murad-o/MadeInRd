@@ -13,17 +13,19 @@ namespace ExporterWeb.Helpers.Services
         private readonly IWebHostEnvironment _appEnvironment;
         private const long QualityLevel = 80L;
         private const string JpegExtension = ".jpg";
+        private readonly ImageResizeService _imageResizeService;
 
-        public ImageService(IWebHostEnvironment appEnvironment)
+        public ImageService(IWebHostEnvironment appEnvironment, ImageResizeService imageResizeService)
         {
             _appEnvironment = appEnvironment;
+            _imageResizeService = imageResizeService;
         }
 
         public string Save(ImageTypes imageType, IFormFile file)
         {
             var imageInfo = GetImageInfo(imageType);
             using Stream stream = file.OpenReadStream();
-            using Bitmap image = Resize(new Bitmap(stream), imageInfo.Size.Width, imageInfo.Size.Height);
+            using Bitmap image = _imageResizeService.Resize(new Bitmap(stream), imageInfo.Size.Width, imageInfo.Size.Height);
 
             EncoderParameters encoderParameters = new EncoderParameters(1)
             {
@@ -91,23 +93,11 @@ namespace ExporterWeb.Helpers.Services
             File.Delete(fullPath);
         }
 
-        private static Bitmap Resize(Bitmap source, int width, int height)
-        {
-            var scale = Math.Max((double)source.Width / width, (double)source.Height / height);
-
-            if (scale <= 1)
-                return source;
-
-            int newWidth = (int)(source.Width / scale);
-            int newHeight = (int)(source.Height / scale);
-            return new Bitmap(source, newWidth, newHeight);
-        }
-
         private static ImageCodecInfo GetEncoder(ImageFormat format)
         {
             return ImageCodecInfo
                 .GetImageDecoders()
-                .FirstOrDefault(codec => codec.FormatID == format.Guid);
+                .FirstOrDefault(codec => codec.FormatID == format.Guid)!;
         }
     }
 }

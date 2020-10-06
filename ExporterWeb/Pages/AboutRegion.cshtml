@@ -1,13 +1,15 @@
 ﻿@page
+@model ExporterWeb.Pages.AboutRegion
 @inject CommonLocalizationService Localizer
 @{ ViewData["Title"] = @Localizer["About portal"]; }
 
-<div class="about-portal-image-block">
+@*<div class="about-portal-image-block">
 	<div>
 		<h1 class="about-portal-image-text">@Localizer["About portal"]</h1>
 	</div>
-</div>
+</div>*@
 
+@*
 <div class="grid about-text-content">
 	<p class="about-text-block">
 		Портал внешнеэкономической деятельности MADE IN RD – созданное Правительством РЕСПУБЛИКИ ДАГЕСТАНй области современное цифровое «одно окно» для экспорто ориентированных предприятий и, одновременно, «витрина» компетенций региона как инструмент развития экспорта.
@@ -40,4 +42,9 @@
 		Целевой аудиторией Портала являются: деловое и научное сообщество Свердловской области, иностранные партнеры региона (действующие и потенциальные), институты развития и субъекты инфраструктуры поддержки ВЭД, федеральные органы исполнительной власти, АО «Российский экспортный центр», торговые представительства Российской Федерации за рубежом, а также все, кому интересна тематика внешнеэкономических связей.
 	</div>
 </div>
-
+*@
+<div class="container">
+	<div class="about-container">
+		@Html.Raw(Model.AboutRegionModel.Content)
+	</div>
+</div>

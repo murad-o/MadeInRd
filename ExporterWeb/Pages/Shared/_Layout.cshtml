@@ -22,6 +22,155 @@
     
     <div class="wrapper">
         <header class="header">
+            <div class="upper-header">
+                <div class="container">
+                    <div class="upper-header__inner-block">
+                        <div class="upper-header__logo">
+                            <a class="main-page-link" asp-page="/Index">MADE IN R<span class="main-page-link__rd">D.</span></a>
+                        </div>
+                        <div class="big-upper-header big-upper-header_position">
+                            <div class="site-info site-info_header-position">
+                                @Localizer["Foreign economic activity"]
+                                <div class="site-info__republic">@Localizer["of the republic of Dagestan"]</div>
+                            </div>
+                            <div class="big-main-search">
+                                <form>
+                                    <div class="big-main-search__body">
+                                        <input class="main-search-input big-main-search__input" type="text" name="search" placeholder="@Localizer["Search on the site"]" />
+                                        <button class="main-search-btn big-main-search__btn" type="submit">
+                                            <svg class="big-main-search__icon" viewBox="0 0 24 24">
+                                                <use xlink:href="/img/sprite.svg#main-search"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="big-main-search-toggler">
+                                <svg class="main-page-icon big-main-search-toggler__icon" viewBox="0 0 24 24">
+                                    <use xlink:href="/img/sprite.svg#main-search"></use>
+                                </svg>
+                            </div>
+                            <div class="feedback feedback_header-position">
+                                <a class="feedback__link" href="#">
+                                    <svg class="main-page-icon" viewBox="0 0 24 24">
+                                        <use xlink:href="/img/sprite.svg#feedback"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="personal-area personal-area_header-position">
+                                <a class="personal-area__link" asp-area="Identity" asp-page="/Account/Manage/Index">@Localizer["Account"]</a>
+                            </div>
+                            <partial name="_LanguagePartial" />
+                        </div>
+                        <div class="upper-header__burger">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="big-menu">
+                <div class="container">
+                    <ul class="big-menu__list">
+                        <li>
+                            <a class="main-menu-link big-menu__link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["Industries"]</a>
+                        </li>
+                        <li>
+                            <a class="main-menu-link big-menu__link" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+                        </li>
+                        <li>
+                            <a class="main-menu-link big-menu__link" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+                        </li>
+                        <li>
+                            <a class="main-menu-link big-menu__link" asp-page="/Events/Index">@Localizer["Events"]</a>
+                        </li>
+                        <li class="big-menu__popup-body">
+                            <a class="big-menu__link big-menu__popup-toggler">@Localizer["Information"]</a>
+                            <ul class="big-popup-menu">
+                                <li>
+                                    <a class="big-menu__link big-popup-menu__link" asp-page="/Exporters/Index">@Localizer["About portal"]</a>
+                                </li>
+                                <li>
+                                    <a class="big-menu__link big-popup-menu__link" asp-page="/Events/Index">@Localizer["About region"]</a>
+                                </li>
+                                <li>
+                                    <a class="big-menu__link big-popup-menu__link" asp-page="/Events/Index">@Localizer["Foreign partners"]</a>
+                                </li>
+                                <li>
+                                    <a class="big-menu__link big-popup-menu__link" asp-page="/Events/Index">@Localizer["Useful"]</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="main-menu-link big-menu__link" asp-page="/News/Index">@Localizer["News"]</a>
+                        </li>
+                        <li>
+                            <a class="main-menu-link big-menu__link" asp-page="/Products/Index">@Localizer["Support"]</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="mobile-content">
+            <div class="site-info site-info__mobile-position">
+                @Localizer["Foreign economic activity"]
+                <div class="site-info__republic">@Localizer["of the republic of Dagestan"]</div>
+            </div>
+            <div class="mobile-search mobile-search_position">
+                <form>
+                    <input class="main-search-input mobile-search__input" type="text" name="search" placeholder="@Localizer["Search on the site"]" />
+                    <button class="main-search-btn mobile-search__btn" type="submit">
+                        <svg viewBox="0 0 24 24">
+                            <use xlink:href="/img/sprite.svg#main-search"></use>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            <div class="mobile-row">
+                <partial name="_LanguagePartial" />
+                <div class="personal-area personal-area_mobile-position">
+                    <a class="personal-area__link" asp-area="Identity" asp-page="/Account/Manage/Index">@Localizer["Account"]</a>
+                </div>
+            </div>
+            <nav class="mobile-menu mobile-menu_position">
+                <ul class="mobile-menu__list">
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["Industries"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/Exporters/Index">@Localizer["Exporters"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/Products/Index">@Localizer["Products & Services"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/Events/Index">@Localizer["Events"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/News/Index">@Localizer["News"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/Products/Index">@Localizer["Support"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/AboutPortal">@Localizer["About portal"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/AboutRegion">@Localizer["About region"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/ForeingPartners">@Localizer["Foreign partners"]</a>
+                    </li>
+                    <li class="mobile-menu__item">
+                        <a class="main-menu-link mobile-menu__link" asp-page="/Useful">@Localizer["Useful"]</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="overlay"></div>
+
+
+
+        @*<header class="header">
             <div class="container">
                 <div class="large-search">
                     <form>
@@ -146,19 +295,20 @@
                         </li>
                     }
                 </ul>
-           </nav> 
-        </div>
-   
+           </nav>
+        </div>*@
+
 
 
         <div class="content">
             @RenderBody()
         </div>
-        
+
         <footer class="footer">
             <div class="container">
                 <div class="upper-footer">
-                    @for (int i = 0; i < 3; i++) {
+                    @for (int i = 0; i < 3; i++)
+                    {
                         <div class="sponsor-item">
                             <img class="sponsor-item__img" src="~/img/sponsor-rospotrebnadzor.svg" />
                         </div>

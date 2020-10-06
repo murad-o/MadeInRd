@@ -1,9 +1,6 @@
 ﻿/* Styles for Exporters and Products */
-body {
+.content {
     background: #F2F8FF;
-}
-.footer {
-    margin-top: 500px; /* temporary */
 }
 .navigation-chain {
     padding: 40px 2px 0;

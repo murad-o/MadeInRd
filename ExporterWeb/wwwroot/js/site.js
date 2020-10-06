@@ -1,21 +1,31 @@
-﻿let searchButton = document.querySelector('.upper-header-search')
-searchButton.addEventListener('click', () => {
-    document.querySelector('.large-search').classList.toggle('active');
-})
+﻿'use strict';
 
+let mainSearchBtn = document.querySelector('.big-main-search-toggler');
+let bigMainSearchBlock = document.querySelector('.big-main-search');
+let bigMainSearchInput = document.querySelector('.big-main-search__input');
+mainSearchBtn.addEventListener('click', () => {
+    mainSearchBtn.classList.add('passive');
+    bigMainSearchBlock.classList.add('active');
+});
 
-let companyName = document.querySelector('.header-account__name');
-companyName?.addEventListener('click', () => {
-    document.querySelector('.account-pop-up').classList.toggle('active');
+document.addEventListener('click', () => {
+    if (event.target.className != mainSearchBtn.className && event.target.className != bigMainSearchInput.className) {
+        bigMainSearchBlock.classList.remove('active');
+        mainSearchBtn.classList.remove('passive');
+    }
 });
 
 
-let links = document.getElementsByClassName('large-menu__link');
-let urls = Array.from(links).map(item => new URL(item));
-let currentUrl = window.location;
-urls.forEach((item, i) => {
-    if (currentUrl.pathname.includes(urls[i].pathname))
-        links[i].parentNode.classList.add('selected');
+let currentLanguage = document.getElementById('current-language').textContent;
+document.querySelectorAll('.language-switcher__possible-item').forEach(item => {
+    item.addEventListener('click', () => {
+        let selectedLanguage = item.firstElementChild.value; // get selected language from input
+        if (currentLanguage.length === 0) {
+            location.pathname = "/" + selectedLanguage + location.pathname;
+        } else {
+            location.pathname = location.pathname.replace(currentLanguage, selectedLanguage);
+        }
+    });
 });
 
 
@@ -27,6 +37,38 @@ overlay.addEventListener('click', toggleMobileMenu);
 function toggleMobileMenu() {
     document.querySelector('body').classList.toggle('lock');
     burger.classList.toggle('active');
-    document.querySelector('.small-body').classList.toggle('active');
+    document.querySelector('.mobile-content').classList.toggle('active');
     overlay.classList.toggle('active');
 }
+
+
+let menuPopupToggler = document.querySelector('.big-menu__popup-toggler');
+let bigPopupMenu = document.querySelector('.big-popup-menu');
+menuPopupToggler.addEventListener('click', () => {
+    bigPopupMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', () => {
+    if (event.target.className != menuPopupToggler.className) {
+        bigPopupMenu.classList.remove('active');
+    }
+});
+
+
+let links = document.querySelectorAll('.main-menu-link');   
+let urls = Array.from(links).map(link => new URL(link));
+let currentUrl = window.location;
+urls.forEach((url, index) => {
+    if (currentUrl.pathname.includes(url.pathname)) {
+        links[index].classList.add('selected');
+    }
+});
+
+let popupLinks = document.querySelectorAll('.big-popup-menu__link');
+let popupUrls = Array.from(popupLinks).map(link => new URL(link));
+popupUrls.forEach((url, index) => {
+    if (currentUrl.pathname.includes(url.pathname)) {
+        popupLinks[index].classList.add('selected');
+        document.querySelector('.big-menu__popup-toggler').classList.add('selected');
+    }
+})

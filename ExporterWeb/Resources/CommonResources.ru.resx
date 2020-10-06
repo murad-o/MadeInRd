@@ -156,6 +156,9 @@
   <data name="FieldOfActivity" xml:space="preserve">
     <value>Отрасль</value>
   </data>
+  <data name="Foreign economic activity" xml:space="preserve">
+    <value>Портал внешнеэкономической деятельности</value>
+  </data>
   <data name="Foreign partners" xml:space="preserve">
     <value>Иностранные партнёры</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="Industries" xml:space="preserve">
     <value>Отрасли</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Информация</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Выйти из системы</value>
@@ -186,6 +192,9 @@
   <data name="News" xml:space="preserve">
     <value>Новости</value>
   </data>
+  <data name="of the republic of Dagestan" xml:space="preserve">
+    <value>Республики Дагестан</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Конфиденциальность</value>
   </data>
@@ -199,7 +208,7 @@
     <value>Поиск по экспортёрам</value>
   </data>
   <data name="Search on the site" xml:space="preserve">
-    <value>Искать на сайте</value>
+    <value>Поиск по сайту</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>Поддержка</value>

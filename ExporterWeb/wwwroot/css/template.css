@@ -1,236 +1,285 @@
-﻿body {
+﻿html, body {
     height: 100%;
-    font-size: 16px;
-    font-family: "Golos text";
+    font: 14px 'Golos text';
 }
-
 * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
-
 a {
     text-decoration: none;
 }
-
 .container {
-    max-width: 1280px;
+    max-width: 1184px;
     padding: 0 15px;
     margin: 0 auto;
 }
-
-.main-page-link {
-    font-weight: bold;
-    font-size: 27px;
-    line-height: 27px;
-    color: #fff;
-}
-.main-page-link span {
-    color: #075bb8;
-}
-
 .header, footer {
     background: #010B23;
 }
-.header *, footer * {
+.header *, .footer * {
     color: #fff;
 }
 
-.header {
-    z-index: 4;
+/* Separated blocks that are used in big and small resolution screen */
+.main-page-link {
+    font-weight: bold;
+    font-size: 27px;
+    color: #fff;
+}
+.main-page-link__rd {
+    color: #1D87FE;
+}
+.site-info, .site-info__republic {
+    font-size: 14px;
+    line-height: 20px;
+    color: #9E9E9E;
+}
+.main-menu-link {
+    text-transform: uppercase;
+    color: #fff;
     position: relative;
 }
-
-
-/* Search for sreen resolution above 1023px */
-.large-search {
+.main-search-input {
+    width: 100%;
+    height: 36px;
+    padding: 0 40px 0 15px;
+    border: none;
+    outline: none;
+    color: #2D3446;
+    font-family: 'Golos text';
+}
+.main-search-btn {
+    width: 36px;
+    height: 36px;
     position: absolute;
-    left: 0;
-    top: -100px;
+    outline: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.main-page-icon {
+    width: 24px;
+    height: 24px;
+    fill: #9E9E9E;
+}
+.feedback__link {
+    width: 32px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100px;
-    transition: all 0.3s ease 0s;
 }
-.large-search.active {
-    top: 0;
-}
-.large-search__input {
-    width: 600px;
-    height: 40px;
-    margin-right: 30px;
-    padding: 0 10px;
-    outline: none;
-    color: #010B23;
-    font-family: 'Golos text';
-    font-size: 15px;
-    line-height: 16px;
-}
-.large-search__btn {
-    width: 120px;
-    height: 40px;
-    background: #010B23;
+.personal-area__link {
+    display: block;
+    padding: 10px 15px;
     border: 1px solid #fff;
+    font-weight: 500;
+    line-height: 18px;
     color: #fff;
-    font-size: 15px;
-    line-height: 16px;
+}
+.personal-area__link:hover,
+.language-switcher__possible-item:hover,
+.language-switcher__possible-item:hover .language-switcher__name {
+    background: #2D3446;
+    color: #1D87FE;
+}
+.language-switcher {
+    position: relative;
+    color: #fff;
+}
+.language-switcher__current-item {
+    width: 90px;
+    height: 40px;
+    border: 1px solid #fff;
+}
+.language-switcher:hover .language-switcher__current-item {
+    border-bottom: none;
+}
+.language-switcher__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
+.language-switcher__name {
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 15px;
+}
+.language-switcher__flag {
+    margin-right: 5px;
+}
+.language-switcher__arrow {
+    width: 16px;
+    height: 9px;
+    margin-left: 10px;
+}
+.language-switcher__select {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    display: none;
+    background: #010B23;
+}
+.language-switcher:hover .language-switcher__select {
+    display: block;
+    border-top: none;
+}
+.language-switcher__possible-item {
+    height: 38px;
+}
+.language-switcher__input {
+    display: none;
+}
+#current-language {
+    display: none;
+}
+/* */
+
+/* Header styles for screen resolution above 1023 */
 .upper-header {
+    padding: 25px 0;
+}
+.upper-header__inner-block {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 0;
-    transition: all 0.3s ease 0s;
-}
-.large-search.active ~ .upper-header {
-    padding-top: 125px;
 }
 .upper-header__burger {
     display: none;
 }
-
-
-/* Upper-header styles for screen resolution above 1023px */
-.upper-header-large-body {
+.upper-header__logo {
+    flex: 0 1 170px;
+}
+.big-upper-header {
     display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
     align-items: center;
-}
-.upper-header-search {
-    margin-right: 20px;
-    padding: 10px;
-    cursor: pointer;
-}
-.upper-header-large-body__feedback-icon {
-    margin-right: 20px;
-}
-.header-account {
-    display: flex;
-    justify-content: center;;
     position: relative;
-    margin-right: 30px;
 }
-.header-account__name {
-    color: #1D87FE;
-    text-decoration: underline;
-    text-transform: uppercase;
-    cursor: pointer;
+.big-upper-header_position {
+    margin-left: 30px;
 }
-.header-account__login-link {
-    display: block;
-    margin-right: -20px;
-    padding: 12px;
-    border: 1px solid #fff;
-    font-weight: 500;
-}
-.account-pop-up {
+.site-info_header-position {
     position: absolute;
-    top: 30px;
+    left: 0;
+}
+.big-main-search {
     display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 200px;
-    height: 110px;
-    background: #fff;
-    box-shadow: 0px 4px 6px rgba(9, 63, 179, 0.08), 0px 8px 20px rgba(2, 11, 34, 0.1);
-    border-radius: 5px;
+    flex: 1 1 auto;
+}
+.big-main-search.active {
+    display: block;
+}
+.big-main-search__body {
+    display: flex;
+    justify-content: flex-end;
+}
+.big-main-search__input {
+    font-size: 14px;
     z-index: 2;
 }
-.account-pop-up.active {
-    display: flex;
+.big-main-search__btn {
+    z-index: 3;
 }
-.account-pop-up__item {
+.big-main-search__icon {
+    vertical-align: middle;
+}
+.big-main-search-toggler {
     display: flex;
-    width: 80%;
     align-items: center;
-    height: 50px;
-}
-.account-pop-up__item:first-child {
-    border-bottom: 1px solid #E5E5EB;
-}
-.account-pop-up__personal-area,
-.account-pop-up__logout-btn {
-    margin-left: 10px;
-    color: #333;
-    font-family: 'Golos text';
-    font-size: 14px;
-}
-.account-pop-up__logout-btn {
-    border: none;
-    background: none;
-    outline: none;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
-    padding: 0;
 }
-
-
-/* Menu styles for screen resolution above 1024px */
-.large-menu {
-    padding: 20px 0;
-    border-top: 2px solid rgba(240, 240, 240, 0.1);
+.big-main-search-toggler__icon {
+    pointer-events: none;
 }
-.large-menu__list {
+.big-main-search-toggler.passive {
+    display: none;
+}
+.feedback_header-position {
+    margin: 0 15px 0;
+}
+.personal-area_header-position {
+    margin: 0 20px 0 10px;
+}
+.big-menu {
+    border-top: 2px solid #171F33;
+    padding: 12px 0;
+}
+.big-menu__list {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
 }
-.large-menu__item {
-    position: relative;
-}
-.large-menu__item.selected:after {
+.main-menu-link.selected:after,
+.big-menu__popup-toggler.selected:before {
     content: '';
     position: absolute;
-    top: -22px;
     left: 0;
     width: 100%;
     height: 2px;
     background-color: #1D87FE;
-}
-.large-menu__link {
-    text-transform: uppercase;
-    font-size: 13px;
-}
-.large-menu__link:hover {
-    color: #1D87FE;
-}
-
-
-/* Styles for screen resolution below 1024px */
-.small-body, .overlay {
-    display: none;
-}
-
-
-/* Separated block that is used in large header and small menu */
-.culture-switcher {
-    width: 80px;
-    position: relative;
-}
-.culture-switcher__select {
-    width: 100%;
-    padding: 12px 12px 12px 20px;
-    border: 1px solid #FFFFFF;
-    background-color: #010B23;
-    outline: none;
-    font-family: "Golos text";
-    line-height: 16px;
-    text-transform: uppercase;
-    font-size: 13px;
-    font-weight: 500;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-.culture-switcher__img {
-    position: absolute;
-    top: 17px;
-    right: 15px;
     pointer-events: none;
 }
-
+.main-menu-link.selected:after {
+    top: -14px;
+}
+.big-menu__link {
+    display: block;
+    padding: 5px 0;
+}
+.big-menu__link:hover {
+    color: #1D87FE;
+}
+.big-menu__popup-body {
+    position: relative;
+}
+.big-menu__popup-toggler {
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.big-menu__popup-toggler.selected:before {
+    top: -14px;
+}
+.big-menu__popup-toggler:after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: -10px;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 5px solid #fff;
+}
+.big-popup-menu {
+    display: none;
+    width: 220px;
+    position: absolute;
+    top: 39px;
+    left: -25px;
+    background: #010B23;
+    border: 1px solid #fff;
+}
+.big-popup-menu.active {
+    display: block;
+}
+.big-popup-menu__link {
+    padding: 10px 25px;
+    text-transform: uppercase;
+}
+.big-popup-menu__link:hover {
+    background: #2D3446;
+}
+.big-popup-menu__link.selected {
+    color: #1D87FE;
+}
+.mobile-content, .overlay {
+    display: none;
+}
 
 /* Footer */
 .footer {
@@ -285,19 +334,24 @@ a {
 
 }
 
-
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
     body.lock {
         overflow: hidden;
     }
     .header {
-        position: fixed;
         width: 100%;
+        position: fixed;
         top: 0;
         left: 0;
+        z-index: 4;
     }
     .upper-header {
-        padding: 15px 0;
+        height: 60px;
+        padding: 17px 0;
+    }
+    .upper-header__inner-block {
+        padding: 0 10px;
+        justify-content: space-between;
     }
     .upper-header__burger {
         display: block;
@@ -342,156 +396,75 @@ a {
     .upper-header__burger.active span {
         transform: scale(0);
     }
-    .large-search,
-    .upper-header-large-body,
-    .large-menu {
+    .big-upper-header,
+    .big-menu {
         display: none;
+    }
+    .mobile-content {
+        display: block;
+        width: 320px;
+        height: 100%;
+        padding: 60px 28px 10px;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        background: #2D3446;
+        overflow: auto;
+        transition: all 0.3s ease 0s;
+        z-index: 3;
+    }
+    .mobile-content.active {
+        right: 0;
+    }
+    .site-info__mobile-position {
+        margin-top: 15px;
+    }
+    .mobile-search {
+        position: relative;
+    }
+    .mobile-search_position {
+        margin: 15px 0;
+    }
+    .mobile-search__btn {
+        right: 5px;
+    }
+    .mobile-row {
+        display: flex;
+    }
+    .mobile-row .language-switcher__select {
+        background: #2D3446;
+        z-index: 2;
+    }
+    .personal-area_mobile-position {
+        margin-left: 15px;
+    }
+    .mobile-menu_position {
+        margin-top: 20px;
+    }
+    .mobile-menu__item {
+        margin-bottom: 15px;
+    }
+    .mobile-menu__link {
+        font-weight: 500;
+    }
+    .main-menu-link.selected:after {
+        top: 17px;
     }
     .overlay.active {
         display: block;
         position: fixed;
         top: 0;
         left: 0;
-        padding-top: 62px;
+        padding-top: 60px;
         width: 100%;
         height: 100%;
         background: rgba(1, 11, 35, 0.2);
         z-index: 2;
     }
-    .small-body {
-        display: block;
-        width: 320px;
-        height: 100%;
-        padding: 0 15px;
-        position: fixed;
-        top: 0;
-        padding-top: 62px;
-        right: -100%;
-        background: #fff;
-        z-index: 3;
-        transition: all 0.3s ease 0s;
-        overflow: auto;
-    }
-    .small-body.active {
-        right: 0;
-    }
-    .mobile-search {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        margin: 15px 0 25px;
-    }
-    .mobile-search__input {
-        width: 290px;
-        height: 45px;
-        padding: 0 50px 0 20px;
-        border: 1px solid #B4B4B4;
-        border-radius: 3px;
-        outline: none;
-        color: #010B23;
-        font-size: 14px;
-        font-family: 'Golos text';
-    }
-    .mobile-search__btn {
-        position: absolute;
-        width: 45px;
-        height: 45px;
-        right: 10px;
-        background: none;
-        border: none;
-    }
-    .small-body-row {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        flex-wrap: wrap-reverse;
-    }
-    .small-body-account {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .small-body-account__link {
-        color: #1D87FE;
-        text-decoration: underline;
-        text-transform: uppercase;
-        font-weight: 500;
-        font-size: 16px;
-    }
-    .small-body-row__feedback-link {
-        margin-right: 20px;
-    }
-    .culture-switcher__select {
-        border: 1px solid #010B23;
-        background: none;
-    }
-    .culture-switcher__img path {
-        stroke: #010B23;
-    }
-    .small-body-row__login-link {
-        margin-left: 15px;
-        padding: 12px;
-        border: 1px solid #010B23;
-        color: #010B23;
-    }
-    .small-menu {
-        margin-top: 24px;
-    }
-    .small-menu__list {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-    .small-menu__item {
-        margin-bottom: 20px;
-    }
-    .small-menu__link,
-    .small-menu__logout-btn {
-        color: #010B23;
-        text-transform: uppercase;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    .small-menu__logout-btn {
-        font-family: 'Golos text';
-        border: none;
-        background: none;
-        padding: 0;
-    }
-    .footer {
-        padding: 30px 0;    
-    }
     .content {
-        margin-top: 57px;
+        margin-top: 60px;
     }
 }
-
-@media (max-width: 768px) {
-    .upper-footer {
-        justify-content: space-around;
-    }
-    .lower-footer {
-        padding: 0 10px;
-    }
-    .footer-menu {
-        width: auto;
-        height: auto;
-    }
-}
-
-@media (max-width: 576px) {
-    .sponsor-item {
-        flex: 0 0 120px;
-    }
-    .lower-footer {
-        flex-direction: column;
-    }
-    .footer-logo {
-        margin-top: 30px;
-    }
-}
-
 
 
 .index-image-block, .about-portal-image-block {

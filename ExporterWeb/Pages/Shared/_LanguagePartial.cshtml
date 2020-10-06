@@ -7,32 +7,26 @@
     var supportedCultures = LocOps.Value.SupportedUICultures;
 }
 
-<div class="culture-switcher">
+<span id="current-language">@Context.Request.RouteValues["culture"]</span> @* This element is hidden and needed to take value from js *@
+
+<div class="language-switcher">
     <form>
-        <select name="culture" class="culture-switcher__select">
-            @foreach (var culture in supportedCultures)
+        <div class="language-switcher__current-item language-switcher__item">
+            <img class="language-switcher__flag" src="/img/flags/@(currentCulture).svg" alt="Flag" />
+            <span class="language-switcher__name">@currentCulture</span>
+            <svg class="language-switcher__arrow" viewBox="0 0 16 9">
+                <use xlink:href="/img/sprite.svg#language-arrow"></use>
+            </svg>
+        </div>
+        <div class="language-switcher__select">
+            @foreach (var culture in supportedCultures.Where(culture => culture.Name != currentCulture.Name))
             {
-                <option value="@culture.Name" selected="@(currentCulture.Name == culture.Name)">@culture.TwoLetterISOLanguageName</option>
+                <div class="language-switcher__item language-switcher__possible-item">
+                    <input class="language-switcher__input" type="radio" value="@culture.Name" />
+                    <img class="language-switcher__flag" src="/img/flags/@(culture).svg" alt="Flag" />
+                    <span class="language-switcher__name">@culture.Name</span>
+                </div>
             }
-        </select>
-        <svg class="culture-switcher__img" width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 1L7.78788 8L1 0.999999" stroke="white" />
-        </svg>
+        </div>
     </form>
 </div>
-
-
-<script>
-    var currentCulture = "@Context.Request.RouteValues["culture"]";
-    var segments = location.pathname.split('/');
-    document.querySelectorAll(".culture-switcher__select").forEach(item => {
-        item.addEventListener("change", () => {
-            var selectedCulture = item.value;
-            if (currentCulture.length === 0) {
-                location.pathname = "/" + selectedCulture + location.pathname;
-            } else {
-                location.pathname = location.pathname.replace(currentCulture, selectedCulture)
-            }
-        });
-    })
-</script>

@@ -1,19 +1,31 @@
 ﻿html, body {
     height: 100%;
-    font: 14px 'Golos text';
+    font: 16px 'Golos text';
 }
 * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
-a {
+a, a:hover {
     text-decoration: none;
 }
-.container {
-    max-width: 1140px;
-    padding: 0 15px;
-    margin: 0 auto;
-}
+
+h1, h2, h3, h4, h5, h6 {margin:0}
+
+ul, li {padding: 0;margin: 0;list-style: none}
+
+input {border-radius: 4px;}
+input:focus, input:focus-within, select:focus, select:focus-within {outline: none}
+
+
+
+/*.container {*/
+/*    max-width: 1140px;*/
+/*    padding: 0 15px;*/
+/*    margin: 0 auto;*/
+/*}*/
+
+
 .header, footer {
     background: #010B23;
 }
@@ -232,6 +244,7 @@ a {
 .big-menu__link {
     display: block;
     padding: 5px 0;
+    font-size: 14px;
 }
 .big-menu__link:hover {
     color: #1D87FE;
@@ -329,6 +342,7 @@ a {
 }
 .footer-logo__info,
 .footer-logo__republic {
+    font-size: 14px;
     line-height: 16px;
     color: #9E9E9E;
 
@@ -623,4 +637,63 @@ a {
 }
 .about-text-block > ul > li {
     margin-top: 1.5em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.modalReg {
+    max-width: 780px !important;
+    width: 100%;
+    padding: 90px 120px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.modal-header__top {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.modal-header__title {
+    font-size: 31px;
+    font-weight: 700;
+}
+.modal-header__text {font-size: 16px;color:#1D87FE;text-decoration: underline}
+.modal-header__subtitle {font-size: 22px;font-weight: 500}
+
+.modalreg-form {
+    width: 100%;
+}
+
+.modal-header__center {margin-bottom: 40px;}
+
+.modalreg-form .form-group {
+    margin-bottom: 50px;
+}
+.form-group label {
+    color: #010B23;
+    margin-bottom: 10px;
+}
+
+
+.modalreg-form input, .modalreg-form select {
+    width: 100%;
+    height: 56px;
+    padding: 0 20px;
+    border: 1px solid #9E9E9E;
+    border-radius: 4px;
 }

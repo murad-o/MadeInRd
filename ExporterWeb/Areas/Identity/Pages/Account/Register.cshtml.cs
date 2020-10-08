@@ -176,16 +176,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             await _context.LanguageExporters!.AddAsync(languageExporter);
             await _context.SaveChangesAsync();
 
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = user.Id, code, returnUrl },
-                protocol: Request.Scheme);
-
-            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            await SendConfirmationEmail(user, returnUrl);
             _context.Database.CommitTransaction();
 
             if (_userManager.Options.SignIn.RequireConfirmedAccount)
@@ -198,6 +189,21 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 return LocalRedirect(returnUrl);
             }
         }
+
+        private async Task SendConfirmationEmail(User user, string? returnUrl)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { area = "Identity", userId = user.Id, code, returnUrl },
+                protocol: Request.Scheme);
+
+            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+        }
+
 
 #nullable disable
         [BindProperty]

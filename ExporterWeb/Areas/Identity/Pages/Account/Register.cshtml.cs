@@ -117,88 +117,93 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
+                return Page();
+
+            var user = new User
             {
-                var user = new User
+                UserName = Input.Email,
+                Email = Input.Email,
+                FirstName = Input.ContactPersonFirstName,
+                SecondName = Input.ContactPersonSecondName,
+                Patronymic = Input.ContactPersonPatronymic,
+            };
+            var languageExporter = new LanguageExporter
+            {
+                CommonExporter = new CommonExporter
                 {
-                    UserName = Input.Email,
-                    Email = Input.Email,
-                    FirstName = Input.ContactPersonFirstName,
-                    SecondName = Input.ContactPersonSecondName,
-                    Patronymic = Input.ContactPersonPatronymic,
-                };
-                var languageExporter = new LanguageExporter
-                {
-                    CommonExporter = new CommonExporter
-                    {
-                        INN = Input.INN,
-                        OGRN_IP = Input.OGRN_IP,
-                        FieldOfActivityId = Input.FieldOfActivityId
-                    },
-                    Language = Languages.DefaultLanguage,
-                    Name = Input.Name,
-                    Description = Input.Description,
-                    ContactPersonFirstName = Input.ContactPersonFirstName,
-                    ContactPersonSecondName = Input.ContactPersonSecondName,
-                    ContactPersonPatronymic = Input.ContactPersonPatronymic,
-                    DirectorFirstName = Input.DirectorFirstName,
-                    DirectorSecondName = Input.DirectorSecondName,
-                    DirectorPatronymic = Input.DirectorPatronymic,
-                };
+                    INN = Input.INN,
+                    OGRN_IP = Input.OGRN_IP,
+                    FieldOfActivityId = Input.FieldOfActivityId
+                },
+                Language = Languages.DefaultLanguage,
+                Name = Input.Name,
+                Description = Input.Description,
+                ContactPersonFirstName = Input.ContactPersonFirstName,
+                ContactPersonSecondName = Input.ContactPersonSecondName,
+                ContactPersonPatronymic = Input.ContactPersonPatronymic,
+                DirectorFirstName = Input.DirectorFirstName,
+                DirectorSecondName = Input.DirectorSecondName,
+                DirectorPatronymic = Input.DirectorPatronymic,
+            };
 
-                _context.Database.BeginTransaction();
-                var userCreateResult = await _userManager.CreateAsync(user, Input.Password);
-                languageExporter.CommonExporter!.UserId = user.Id;
+            _context.Database.BeginTransaction();
+            var userCreateResult = await _userManager.CreateAsync(user, Input.Password);
+            languageExporter.CommonExporter!.UserId = user.Id;
 
-                if (userCreateResult.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var exportersRole = Constants.ExportersRole;
-                    var roleAddResult = await _userManager.AddToRoleAsync(user, exportersRole);
-
-                    if (!roleAddResult.Succeeded)
-                    {
-                        _logger.LogWarning($"Role {exportersRole} can't be added to user {user.UserName}");
-                        var errorMessages = roleAddResult.Errors.Select(e => $"{e.Code}: {e.Description}");
-                        _logger.LogWarning("Errors:\n" + string.Join("\n", errorMessages));
-                        return StatusCode(StatusCodes.Status500InternalServerError);
-                    }
-
-                    await _context.LanguageExporters!.AddAsync(languageExporter);
-                    await _context.SaveChangesAsync();
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code, returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                    _context.Database.CommitTransaction();
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
-                }
-
+            if (!userCreateResult.Succeeded)
+            {
                 foreach (var error in userCreateResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return Page();
+            _logger.LogInformation("User created a new account with password.");
+
+            var exportersRole = Constants.ExportersRole;
+            var roleAddResult = await _userManager.AddToRoleAsync(user, exportersRole);
+
+            if (!roleAddResult.Succeeded)
+            {
+                _logger.LogWarning($"Role {exportersRole} can't be added to user {user.UserName}");
+                var errorMessages = roleAddResult.Errors.Select(e => $"{e.Code}: {e.Description}");
+                _logger.LogWarning("Errors:\n" + string.Join("\n", errorMessages));
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            await _context.LanguageExporters!.AddAsync(languageExporter);
+            await _context.SaveChangesAsync();
+
+            await SendConfirmationEmail(user, returnUrl);
+            _context.Database.CommitTransaction();
+
+            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
+            }
+            else
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return LocalRedirect(returnUrl);
+            }
         }
+
+        private async Task SendConfirmationEmail(User user, string? returnUrl)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { area = "Identity", userId = user.Id, code, returnUrl },
+                protocol: Request.Scheme);
+
+            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+        }
+
 
 #nullable disable
         [BindProperty]

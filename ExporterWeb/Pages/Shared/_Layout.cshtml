@@ -371,18 +371,18 @@
                         <h4 class="modal-header__subtitle">Информация о компании</h4>
                     </div>
                 </div>
-                <form class="modalreg-form">
+                <form class="for-validate modalreg-form">
                     <div class="form-group">
                         <label for="formGroupExampleInput">Наименование компании</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Введите наименование компании">
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Введите наименование компании" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">ИНН</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите ИНН компании">
+                        <input type="text" class="form-control" id="wgw" placeholder="Введите ИНН компании" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">ОГРН или ОГРНИП</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите ОГРН или ОГРНИП компании">
+                        <input type="text" class="form-control" id="wgwg" placeholder="Введите ОГРН или ОГРНИП компании" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Направление деятельности</label>
@@ -398,48 +398,49 @@
 
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Фамилия</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите фамилию">
+                        <input type="text" class="form-control required-input" id="hsr" placeholder="Введите фамилию" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Имя</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите имя">
+                        <input type="text" class="form-control required-input" id="heh" placeholder="Введите имя" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Отчество</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Введите отчество">
+                        <input type="text" class="form-control" id="hgea" placeholder="Введите отчество">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Должность</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Укажите вашу должность">
+                        <input type="text" class="form-control" id="wgw" placeholder="Укажите вашу должность">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">E-mail</label>
-                        <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="Введите адрес электронной почты">
+                        <input type="email" name="email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Телефон</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                        <input id="" type="tel" name="phone" class="form-control phone-mask required-input" id="wfw" placeholder="+7 (___) ___-__-__" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Пароль</label>
-                        <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Придумайте пароль">
+                        <input type="password" id="password-input" class="form-control password-input" id="arh" placeholder="Придумайте пароль">
+                        <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Повторите пароль</label>
-                        <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Повторите пароль снова">
+                        <input type="password" id="password-input" class="form-control password-input" id="wgaw" placeholder="Повторите пароль снова">
+                        <a href="#" class="password-repeat-control" onclick="return show_hide_password(this);"></a>
                     </div>
 
                     <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                            <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
-                            <div class="invalid-feedback">You must agree before submitting.</div>
+                            <label class="form-check-label" for="invalidCheck">Принимаю соглашение на обработку данных</label>
                         </div>
                     </div>
 
-                    <div class="form-group d-flex justify-content-between align-items-center">
-                        <button class="btn btn-primary" type="submit">Войти</button>
-                        <a href="">Забыли пароль?</a>
+                    <div class="form-group d-flex align-items-center">
+                        <button class="btn btn-primary btn_right" type="submit">Войти</button>
+                        <a class="link link_border" href="#">Забыли пароль?</a>
                     </div>
                 </form>
             </div>
@@ -447,8 +448,10 @@
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/jquery.fancybox.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.inputmask.min.js" asp-append-version="true"></script>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
 
         @RenderSection("Scripts", required: false)
     </div>

@@ -14,16 +14,69 @@ h1, h2, h3, h4, h5, h6 {margin:0}
 
 ul, li {padding: 0;margin: 0;list-style: none}
 
-input {border-radius: 4px;}
-input:focus, input:focus-within, select:focus, select:focus-within {outline: none}
+input {padding: 0 20px;border: 1px solid #9E9E9E;border-radius: 4px;}
+input:hover {border-color: #010B23;}
+input:focus, input:focus-within, select:focus, select:focus-within {outline-color: #1D87FE}
 
 
+.btn {
+    padding: 20px 30px;
+    border-radius: 4px;
+    border: none;
+    display: block;
+    transition: .1s;
+}
+.btn:hover {
+    transition: .1s;
+}
+.btn-primary {
+    color: #fff;
+    background: #1D87FE;
+    border: solid 1px #1d87fe;
+}
+.btn-primary:hover {
+    background-color: #0061D9;
+    border-color:#0061D9;
+}
+.btn-primary:focus, .btn-primary:focus-within {
+    background-color: #0050B2;
+    outline: none;
+    border-color:#0050B2;
+}
 
-/*.container {*/
-/*    max-width: 1140px;*/
-/*    padding: 0 15px;*/
-/*    margin: 0 auto;*/
-/*}*/
+
+.btn-primary-outline {
+    color: #1D87FE;
+    background-color: transparent;
+    border: 1px solid #1D87FE;
+}
+.btn-primary-outline:hover {
+    color: #0061D9;
+    background-color: #E6F0FC;
+    border-color: #0061D9;
+}
+.btn-primary-outline:focus {
+    color: #0050B2;
+    background-color: #CCDCF0;
+    border-color: #0050B2;
+    outline: none;
+}
+
+.btn_right {margin-right: 40px}
+
+
+.link {
+    line-height: 1.5;
+    color: #1D87FE;
+}
+.link:hover {color: #0061D9; }
+.link:focus {color: #0050B2; }
+
+.link_border {border-bottom: solid 1px #1D87FE;}
+.link_border:hover {border-color: #0061D9}
+.link_border:focus {border-color: #0050B2}
+
+
 
 
 .header, footer {
@@ -683,17 +736,26 @@ input:focus, input:focus-within, select:focus, select:focus-within {outline: non
 
 .modalreg-form .form-group {
     margin-bottom: 50px;
+    position: relative;
+}
+.modalreg-form .form-group:last-child {
+    margin-bottom: 0;
 }
 .form-group label {
     color: #010B23;
     margin-bottom: 10px;
 }
 
+.password-control {
+    width: 24px;
+    height: 24px;
+    background: red;
+    position: absolute;
+    right: 11px;
+    bottom: 15px;
+}
 
-.modalreg-form input, .modalreg-form select {
+.modalreg-form input[type="text"], .modalreg-form input[type="tel"], .modalreg-form input[type="number"], .modalreg-form input[type="email"], .modalreg-form input[type="password"], .modalreg-form select {
     width: 100%;
     height: 56px;
-    padding: 0 20px;
-    border: 1px solid #9E9E9E;
-    border-radius: 4px;
 }

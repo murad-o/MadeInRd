@@ -74,24 +74,42 @@ popupUrls.forEach((url, index) => {
 })
 
 
+$('[data-fancybox=""]').fancybox({
+    touch: false
+});
+
+
+new SlimSelect({
+    select: '#custom-select',
+    showSearch: true,
+    // searchText: 'Поиск',
+    searchPlaceholder: 'Поиск',
+    allowDeselect: true,
+    placeholder: 'Выберите отрасль'
+})
+
+
+// Показать/скрыть пароль
+function show_hide_password(event, id) {
+    let input = document.getElementById(id);
+
+    if (input.getAttribute('type') == 'password') {
+        event.currentTarget.classList.add('view');
+        input.setAttribute('type', 'text');
+    } else {
+        event.currentTarget.classList.remove('view');
+        input.setAttribute('type', 'password');
+    }
+}
+
+
+
+
 $(document).ready(function () {
 
-    function show_hide_password(target) {
-        var input = document.querySelectorAll('.password-input');
-        for (var inputItem of input) {
-            if (inputItem.getAttribute('type') == 'password') {
-                target.classList.add('view');
-                inputItem.setAttribute('type', 'text');
-            } else {
-                target.classList.remove('view');
-                inputItem.setAttribute('type', 'password');
-            }
-        }
-        return false;
-    }
-
-
     $(".phone-mask").inputmask('+7 (999) 999-99-99');
+
+
 
     /*
     $('form.for-validate .required-input').on('change', function () {

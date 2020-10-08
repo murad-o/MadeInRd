@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="~/css/bootstrap-reboot.min.css" />
     <link rel="stylesheet" href="~/css/bootstrap-grid.min.css" />
     <link rel="stylesheet" href="~/css/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="~/css/slimselect.min.css" />
     <link rel="stylesheet" href="~/css/template.css" />
-    <!--<link rel="stylesheet" href="~/css/pagination.css" />-->
 </head> 
 <body>
     
@@ -357,6 +357,9 @@
         </footer>
 
         <div class="modal modalReg" style="display: none;max-width:500px;" id="modalReg">
+            <button data-fancybox-close class="modal-close">
+                <svg class="modal-close__icon"><use xlink:href="/img/sprite.svg#modal-close"></use></svg>
+            </button>
             <div class="">
                 <div class="modal-header d-flex flex-column align-items-start">
                     <div class="modal-header__top d-flex justify-content-between align-items-center">
@@ -364,7 +367,7 @@
                             <h3 class="modal-header__title">Регистрация</h3>
                         </div>
                         <div>
-                            <span class="modal-header__text">Войти в личный кабинет</h3>
+                            <a href="#" class="modal-header__text">Войти в личный кабинет</a>
                         </div>
                     </div>
                     <div class="modal-header__bottom">
@@ -374,22 +377,23 @@
                 <form class="for-validate modalreg-form">
                     <div class="form-group">
                         <label for="formGroupExampleInput">Наименование компании</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Введите наименование компании" required>
+                        <input type="text" class="form-control" id="formGroupExampleInput" autofocus="autofocus" placeholder="Введите наименование компании" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">ИНН</label>
-                        <input type="text" class="form-control" id="wgw" placeholder="Введите ИНН компании" required>
+                        <input type="number" class="form-control" placeholder="Введите ИНН компании" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">ОГРН или ОГРНИП</label>
-                        <input type="text" class="form-control" id="wgwg" placeholder="Введите ОГРН или ОГРНИП компании" required>
+                        <input type="number" class="form-control" placeholder="Введите ОГРН или ОГРНИП компании" min="100" max="999999" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Направление деятельности</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Выберите отрасль</option>
-                            <option>...</option>
-                            <option>...</option>
+                        <select id="custom-select" required>
+                            <option data-placeholder="true"></option>
+                            <option value="value1">Value 1</option>
+                            <option value="value2">Value 2</option>
+                            <option value="value3">Value 3</option>
                         </select>
                     </div>
                     <div class="modal-header__center">
@@ -398,11 +402,11 @@
 
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Фамилия</label>
-                        <input type="text" class="form-control required-input" id="hsr" placeholder="Введите фамилию" required>
+                        <input type="text" class="form-control required-input" id="hsr" placeholder="Введите фамилию">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Имя</label>
-                        <input type="text" class="form-control required-input" id="heh" placeholder="Введите имя" required>
+                        <input type="text" class="form-control required-input" id="heh" placeholder="Введите имя">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Отчество</label>
@@ -418,23 +422,32 @@
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Телефон</label>
-                        <input id="" type="tel" name="phone" class="form-control phone-mask required-input" id="wfw" placeholder="+7 (___) ___-__-__" required>
+                        <input id="" type="tel" name="phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__" required>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Пароль</label>
-                        <input type="password" id="password-input" class="form-control password-input" id="arh" placeholder="Придумайте пароль">
-                        <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
+                        <input type="password" id="password-input" class="form-control password-input" placeholder="Придумайте пароль">
+                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-input')">
+                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
+                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                        </a>
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Повторите пароль</label>
-                        <input type="password" id="password-input" class="form-control password-input" id="wgaw" placeholder="Повторите пароль снова">
-                        <a href="#" class="password-repeat-control" onclick="return show_hide_password(this);"></a>
+                        <input type="password" id="password-repeat-input" class="form-control password-input" placeholder="Повторите пароль снова">
+                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
+                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
+                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                        </a>
                     </div>
 
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                            <label class="form-check-label" for="invalidCheck">Принимаю соглашение на обработку данных</label>
+                            <label class="form-check-label label_custom" for="invalidCheck">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <span class="checkmark checkmark-checkbox"></span>
+                                <p>Я ознакомился и согласен с <a class="link link_border" href="/policy" target="_blank">пользовательским соглашением</a></p>
+                             </label>
                         </div>
                     </div>
 
@@ -450,6 +463,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="~/js/jquery.fancybox.min.js" asp-append-version="true"></script>
         <script src="~/js/jquery.inputmask.min.js" asp-append-version="true"></script>
+        <script src="~/js/slimselect.min.js" asp-append-version="true"></script>
 
         <script src="~/js/site.js" asp-append-version="true"></script>
 

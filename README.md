@@ -30,6 +30,13 @@ You can create as many administrators/managers as you want adding them in this w
 
 Also, the setting with the key `"AnalyticsAppOrigin"` and a value of the format `"https://<YOUR_DOMAIN>:<PORT>"` will add an origin that the Analytics App will work with.
 
+To use SMTP for sending mails you have to add email and password to user-secrets. To do that run
+```bash
+dotnet user-secrets set "smtp:email" "<YOUR_EMAIL>"
+dotnet user-secrets set "smtp:password" "<YOUR_PASSWORD>"
+```
+
+
 # Run
 
 When you just cloned the repository and added all the secrets, you should run the `ExporterWeb/` in the RELEASE mode once. In that mode, **the migrations** and **your data in `"db:..."`** will apply.

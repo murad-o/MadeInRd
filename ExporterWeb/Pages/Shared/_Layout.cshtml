@@ -226,18 +226,16 @@
 
         </footer>
 
-        <div class="modal modalReg" style="display: none;max-width:500px;" id="modalReg">
+        <div class="modal modalReg" style="display: none" id="modalReg">
             <button data-fancybox-close class="modal-close">
                 <svg class="modal-close__icon"><use xlink:href="/img/sprite.svg#modal-close"></use></svg>
             </button>
             <div class="">
-                <div class="modal-header d-flex flex-column align-items-start">
-                    <div class="modal-header__top d-flex justify-content-between align-items-center">
-                        <div>
+                <div class="modal-header">
+                    <div class="modal-header__top">
+                        <div class="d-flex justify-content-between align-items-baseline">
                             <h3 class="modal-header__title">Регистрация</h3>
-                        </div>
-                        <div>
-                            <a href="#" class="modal-header__text">Войти в личный кабинет</a>
+                            <a href="#" class="link link_border modal-header__text">Войти в личный кабинет</a>
                         </div>
                     </div>
                     <div class="modal-header__bottom">
@@ -321,9 +319,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group d-flex align-items-center">
-                        <button class="btn btn-primary btn_right" type="submit">Войти</button>
-                        <a class="link link_border" href="#">Забыли пароль?</a>
+                    <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start">
+                        <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">Зарегистрироваться</button>
+                        <a class="link link_border d-sm-none d-block mt-4" href="#">Войти в личный кабинет</a>
                     </div>
                 </form>
             </div>

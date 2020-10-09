@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -105,6 +106,14 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [Required]
             public string DirectorSecondName { get; set; } = "";
             public string? DirectorPatronymic { get; set; }
+        }
+
+        public PartialViewResult OnGetRegisterPartial()
+        {
+            return new PartialViewResult
+            {
+                ViewName = "_RegisterPartial"
+            };
         }
 
         public async Task OnGetAsync(string? returnUrl)

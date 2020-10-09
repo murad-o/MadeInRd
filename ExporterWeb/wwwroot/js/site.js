@@ -79,14 +79,14 @@ $('[data-fancybox=""]').fancybox({
 });
 
 
-new SlimSelect({
-    select: '#custom-select',
-    showSearch: true,
-    // searchText: 'Поиск',
-    searchPlaceholder: 'Поиск',
-    allowDeselect: true,
-    placeholder: 'Выберите отрасль'
-})
+//new SlimSelect({
+//    select: '#custom-select',
+//    showSearch: true,
+//    // searchText: 'Поиск',
+//    searchPlaceholder: 'Поиск',
+//    allowDeselect: true,
+//    placeholder: 'Выберите отрасль'
+//})
 
 
 // Показать/скрыть пароль
@@ -103,9 +103,13 @@ function show_hide_password(event, id) {
 }
 
 
-
-
 $(document).ready(function () {
+
+    //Загрузка формы регистрации
+    var url = '/Identity/Account/Register?handler=registerpartial';
+    $.get(url).done(function (data) {
+        $("#register-form-container").html(data);
+    });
 
     $(".phone-mask").inputmask('+7 (999) 999-99-99');
 

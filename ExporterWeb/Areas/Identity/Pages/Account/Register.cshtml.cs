@@ -148,46 +148,46 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 DirectorPatronymic = Input.DirectorPatronymic,
             };
 
-            _context.Database.BeginTransaction();
+            await _context.Database.BeginTransactionAsync();
             var userCreateResult = await _userManager.CreateAsync(user, Input.Password);
             languageExporter.CommonExporter!.UserId = user.Id;
 
-            if (!userCreateResult.Succeeded)
+            if (userCreateResult.Succeeded)
             {
-                foreach (var error in userCreateResult.Errors)
+                _logger.LogInformation("User created a new account with password.");
+
+                const string? exportersRole = Constants.ExportersRole;
+                var roleAddResult = await _userManager.AddToRoleAsync(user, exportersRole);
+
+                if (!roleAddResult.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    _logger.LogWarning($"Role {exportersRole} can't be added to user {user.UserName}");
+                    var errorMessages = roleAddResult.Errors.Select(e => $"{e.Code}: {e.Description}");
+                    _logger.LogWarning("Errors:\n" + string.Join("\n", errorMessages));
+                    return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-            }
 
-            _logger.LogInformation("User created a new account with password.");
+                await _context.LanguageExporters!.AddAsync(languageExporter);
+                await _context.SaveChangesAsync();
 
-            var exportersRole = Constants.ExportersRole;
-            var roleAddResult = await _userManager.AddToRoleAsync(user, exportersRole);
+                await SendConfirmationEmail(user, returnUrl);
+                _context.Database.CommitTransaction();
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
+                }
 
-            if (!roleAddResult.Succeeded)
-            {
-                _logger.LogWarning($"Role {exportersRole} can't be added to user {user.UserName}");
-                var errorMessages = roleAddResult.Errors.Select(e => $"{e.Code}: {e.Description}");
-                _logger.LogWarning("Errors:\n" + string.Join("\n", errorMessages));
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-
-            await _context.LanguageExporters!.AddAsync(languageExporter);
-            await _context.SaveChangesAsync();
-
-            await SendConfirmationEmail(user, returnUrl);
-            _context.Database.CommitTransaction();
-
-            if (_userManager.Options.SignIn.RequireConfirmedAccount)
-            {
-                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
-            }
-            else
-            {
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
             }
+
+            foreach (var error in userCreateResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return Page();
         }
 
         private async Task SendConfirmationEmail(User user, string? returnUrl)

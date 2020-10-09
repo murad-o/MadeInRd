@@ -21,6 +21,7 @@ namespace ExporterWeb.Helpers.Services
             var smtpEmail = smtpSection["email"];
 
             var from = new MailAddress(smtpEmail, "Made in RD", System.Text.Encoding.UTF8);
+
             var to = new MailAddress(email);
 
             using var mailMessage = new MailMessage(from, to)

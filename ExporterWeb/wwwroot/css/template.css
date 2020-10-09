@@ -1,4 +1,4 @@
-﻿html, body {height: 100%;font: 16px 'Golos text';}
+﻿html, body {height: 100%;font: 16px 'Golos text';background-color: #E5E5E5}
 
 * {box-sizing: border-box;-moz-box-sizing: border-box;}
 
@@ -7,6 +7,8 @@ a, a:hover {text-decoration: none;}
 h1, h2, h3, h4, h5, h6 {line-height: 1.3;}
 
 ul, li {padding: 0;margin: 0;list-style: none}
+
+p {line-height: 1.5}
 
 input {color:#010B23;padding: 0 20px;border: 1px solid #9E9E9E;border-radius: 4px;}
 input:hover {border-color: #010B23;}
@@ -622,6 +624,38 @@ button:focus {outline: none}
 
 .fancybox-slide--html .fancybox-close-small {width: 56px;height: 56px;top: 20px;right: 20px;padding: 0;}
 .fancybox-button svg {fill: #1D87FE;}
+
+
+
+
+
+
+
+
+
+/* Подтверждение ригистрации */
+.account-card {
+    max-width: 780px;
+    padding: 40px 120px;
+    background: #eeeeee;
+    margin: 60px auto;
+}
+.account-card__title {
+    font-size: 31px;
+    margin-bottom: 40px;
+}
+.register-text {
+    font-weight: 400;
+    color: #010B23;
+    margin-bottom: 40px;
+}
+
+
+
+
+
+
+
 
 
 @media (max-width: 991px) {

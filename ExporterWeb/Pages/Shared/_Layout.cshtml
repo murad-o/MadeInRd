@@ -244,7 +244,88 @@
                         <h4 class="modal-header__subtitle">Информация о компании</h4>
                     </div>
                 </div>
-                @await Component.InvokeAsync("Register")
+                <form class="for-validate modalreg-form">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Наименование компании</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" autofocus="autofocus" placeholder="Введите наименование компании" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">ИНН</label>
+                        <input type="number" class="form-control" placeholder="Введите ИНН компании" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">ОГРН или ОГРНИП</label>
+                        <input type="number" class="form-control" placeholder="Введите ОГРН или ОГРНИП компании" min="100" max="999999" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Направление деятельности</label>
+                        <select id="custom-select" required>
+                            <option data-placeholder="true"></option>
+                            <option value="value1">Value 1</option>
+                            <option value="value2">Value 2</option>
+                            <option value="value3">Value 3</option>
+                        </select>
+                    </div>
+                    <div class="modal-header__center">
+                        <h4 class="modal-header__subtitle">Данные контактного лица организации</h4>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Фамилия</label>
+                        <input type="text" class="form-control required-input" id="hsr" placeholder="Введите фамилию">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Имя</label>
+                        <input type="text" class="form-control required-input" id="heh" placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Отчество</label>
+                        <input type="text" class="form-control" id="hgea" placeholder="Введите отчество">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Должность</label>
+                        <input type="text" class="form-control" id="wgw" placeholder="Укажите вашу должность">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">E-mail</label>
+                        <input type="email" name="email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Телефон</label>
+                        <input id="" type="tel" name="phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Пароль</label>
+                        <input type="password" id="password-input" class="form-control password-input" placeholder="Придумайте пароль">
+                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-input')">
+                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
+                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Повторите пароль</label>
+                        <input type="password" id="password-repeat-input" class="form-control password-input" placeholder="Повторите пароль снова">
+                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
+                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
+                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                        </a>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label label_custom" for="invalidCheck">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <span class="checkmark checkmark-checkbox"></span>
+                                <p>Я ознакомился и согласен с <a class="link link_border" href="/policy" target="_blank">пользовательским соглашением</a></p>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex align-items-center">
+                        <button class="btn btn-primary btn_right" type="submit">Войти</button>
+                        <a class="link link_border" href="#">Забыли пароль?</a>
+                    </div>
+                </form>
             </div>
         </div>
 

@@ -108,14 +108,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string? DirectorPatronymic { get; set; }
         }
 
-        public PartialViewResult OnGetRegisterPartial()
-        {
-            return new PartialViewResult
-            {
-                ViewName = "_RegisterPartial"
-            };
-        }
-
         public async Task OnGetAsync(string? returnUrl)
         {
             ReturnUrl = returnUrl;

@@ -105,12 +105,6 @@ function show_hide_password(event, id) {
 
 $(document).ready(function () {
 
-    //Загрузка формы регистрации
-    var url = '/Identity/Account/Register?handler=registerpartial';
-    $.get(url).done(function (data) {
-        $("#register-form-container").html(data);
-    });
-
     $(".phone-mask").inputmask('+7 (999) 999-99-99');
 
 

@@ -607,7 +607,7 @@ button:focus {outline: none}
  * АККАУНТ
 *********************/
 
-.account-card {max-width: 780px;padding: 80px 120px;background: #fff;margin: 60px auto;}
+.account-card {max-width: 780px;padding: 80px 120px;background: #fff;margin: 60px auto;border-radius: 4px;}
 
 .account-header__top {width: 100%;}
 .account-header__title {font-size: 31px;font-weight: 700;margin-bottom: 45px;}
@@ -666,12 +666,15 @@ button:focus {outline: none}
 }
 
 @media (max-width: 576px) {
+    html, body {background-color: #fff}
+    
+    
     .fancybox-slide--html {padding: 0}
     .modal {max-width: 100%;padding:60px 15px 40px;margin: 60px 0 100px;}
     .modal-close {top: 5px;right: 2px;}
 
     .account-card {
-        padding: 35px 15px 15px;
+        padding: 35px 15px 35px;
         margin: 0 -15px;
     }
     .account-header {margin-bottom: 20px;}

@@ -21,6 +21,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Localization;
 
 namespace ExporterWeb
 {
@@ -44,9 +45,10 @@ namespace ExporterWeb
             services.AddDefaultIdentity<User>(options =>
                     options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddErrorDescriber<MultiLanguageIdentityErrorDescriber>();
 
-            string requireAdministratorRole = "RequireAdministratorRole";
+            const string requireAdministratorRole = "RequireAdministratorRole";
             services.AddRazorPages(options => {
                 options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
                 options.Conventions.AuthorizeFolder("/Admin/Users", requireAdministratorRole);
@@ -65,10 +67,7 @@ namespace ExporterWeb
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization(options =>
                 {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                    {
-                        return factory.Create(nameof(CommonResources), Assembly.GetExecutingAssembly().GetName().Name);
-                    };
+                    options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(nameof(ErrorsResources),Assembly.GetExecutingAssembly().GetName().FullName);
                 });
 
             services.Configure<RouteOptions>(options =>
@@ -96,6 +95,7 @@ namespace ExporterWeb
             services.AddScoped<IAuthorizationHandler, ExporterOwnerAuthorizationHandler>();
             services.AddScoped<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
             services.AddSingleton<CommonLocalizationService>();
+            services.AddSingleton<ErrorsLocalizationService>();
             services.AddSingleton<ImageService>();
             services.AddSingleton<ImageResizeService>();
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();

@@ -61,12 +61,12 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         public class InputModel
         {
             // User form 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; } = "";
 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -78,26 +78,26 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; } = "";
 
             // CommonExporter form
-            [Required]
+            [Required(ErrorMessage = "Field {0} is required")]
             [MaxLength(12)]
             public string INN { get; set; } = "";
 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             [MaxLength(15)]
             public string OGRN_IP { get; set; } = "";
 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public int FieldOfActivityId { get; set; }
 
             // LanguageExporter form
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public string Name { get; set; } = "";
 
             public string? Description { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public string ContactPersonFirstName { get; set; } = "";
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public string ContactPersonSecondName { get; set; } = "";
             public string? ContactPersonPatronymic { get; set; }
 

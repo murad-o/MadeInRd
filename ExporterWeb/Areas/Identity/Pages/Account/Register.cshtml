@@ -4,128 +4,135 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<main class="primary-content" role="main">
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="container">
 
-            <!--   LanguageExporter form    -->
-            <div class="form-group">
-                <label asp-for="Input.Name"></label>
-                <input asp-for="Input.Name" class="form-control" />
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Description"></label>
-                <input asp-for="Input.Description" class="form-control" />
-                <span asp-validation-for="Input.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ContactPersonFirstName"></label>
-                <input asp-for="Input.ContactPersonFirstName" class="form-control" />
-                <span asp-validation-for="Input.ContactPersonFirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ContactPersonSecondName"></label>
-                <input asp-for="Input.ContactPersonSecondName" class="form-control" />
-                <span asp-validation-for="Input.ContactPersonSecondName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ContactPersonPatronymic"></label>
-                <input asp-for="Input.ContactPersonPatronymic" class="form-control" />
-                <span asp-validation-for="Input.ContactPersonPatronymic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.DirectorFirstName"></label>
-                <input asp-for="Input.DirectorFirstName" class="form-control" />
-                <span asp-validation-for="Input.DirectorFirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.DirectorSecondName"></label>
-                <input asp-for="Input.DirectorSecondName" class="form-control" />
-                <span asp-validation-for="Input.DirectorSecondName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.DirectorPatronymic"></label>
-                <input asp-for="Input.DirectorPatronymic" class="form-control" />
-                <span asp-validation-for="Input.DirectorPatronymic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.FieldOfActivityId">FieldOfActivity name</label>
-                <select asp-for="Input.FieldOfActivityId" class="form-control"
-                        asp-items="@(new SelectList(Model.FieldsOfActivity.Select(f => new { f.Id, LocalizedName = f.Name[Languages.DefaultLanguage] }), nameof(FieldOfActivity.Id), "LocalizedName"))">
-                </select>
-                <span asp-validation-for="Input.FieldOfActivityId" class="text-danger"></span>
-            </div>
-
-            <!--  CommonExporter form -->
-            <div class="form-group">
-                <label asp-for="Input.INN"></label>
-                <input asp-for="Input.INN" class="form-control" />
-                <span asp-validation-for="Input.INN" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.OGRN_IP"></label>
-                <input asp-for="Input.OGRN_IP" class="form-control" />
-                <span asp-validation-for="Input.OGRN_IP" class="text-danger"></span>
-            </div>
-
-            <!--    User form     -->
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to register.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
+        <div class="account-card">
+        
+            <div class="account-header">
+                <div class="account-header__top">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <h3 class="account-header__title">@ViewData["Title"]</h3>
+                        <a href="#" class="link link_border account-header__text">Войти в личный кабинет</a>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+                </div>
+                <div class="account-header__bottom">
+                    <h4 class="account-header__subtitle">Информация о компании</h4>
+                </div>
+                
+                
+                <form class="for-validate account-form">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Input.Name">Наименование компании</label>
+                        <input asp-for="Input.Name" class="form-control" autofocus="autofocus" placeholder="Введите наименование компании" required>
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.INN">ИНН</label>
+                        <input asp-for="Input.INN" class="form-control" placeholder="Введите ИНН компании" required>
+                        <span asp-validation-for="Input.INN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.OGRN_IP">ОГРН или ОГРНИП</label>
+                        <input asp-for="Input.OGRN_IP" class="form-control" placeholder="Введите ОГРН или ОГРНИП компании" min="100" max="999999" required>
+                        <span asp-validation-for="Input.OGRN_IP" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.FieldOfActivityId">Направление деятельности</label>
+                        <select asp-for="Input.FieldOfActivityId" id="custom-select" required>
+                            <option data-placeholder="true"></option>
+                            <option value="value1">Value 1</option>
+                            <option value="value2">Value 2</option>
+                            <option value="value3">Value 3</option>
+                        </select>
+                    </div>
+                    <div class="account-header__center">
+                        <h4 class="account-header__subtitle">Данные контактного лица организации</h4>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.ContactPersonSecondName">Фамилия</label>
+                        <input asp-for="Input.ContactPersonSecondName" class="form-control required-input" id="hsr" placeholder="Введите фамилию">
+                        <span asp-validation-for="Input.ContactPersonSecondName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ContactPersonFirstName">Имя</label>
+                        <input asp-for="Input.ContactPersonFirstName" class="form-control required-input" id="heh" placeholder="Введите имя">
+                        <span asp-validation-for="Input.ContactPersonFirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ContactPersonPatronymic">Отчество</label>
+                        <input asp-for="Input.ContactPersonPatronymic" class="form-control" id="hgea" placeholder="Введите отчество">
+                        <span asp-validation-for="Input.ContactPersonPatronymic" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Должность</label>
+                        <input type="text" class="form-control" id="wgw" placeholder="Укажите вашу должность">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email">E-mail</label>
+                        <input asp-for="Input.Email" name="email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты" required>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Телефон</label>
+                        <input id="" type="tel" name="phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__" required>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Password">Пароль</label>
+                        <input asp-for="Input.Password" id="password-input" class="form-control password-input" placeholder="Придумайте пароль">
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-input')">
+                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
+                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword">Повторите пароль</label>
+                        <input asp-for="Input.ConfirmPassword" id="password-repeat-input" class="form-control password-input" placeholder="Повторите пароль снова">
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
+                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
+                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                        </a>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label label_custom" for="invalidCheck">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <span class="checkmark checkmark-checkbox"></span>
+                                <p>Я ознакомился и согласен с <a class="link link_border" href="/policy" target="_blank">пользовательским соглашением</a></p>
+                            </label>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+                    </div>
+
+                    <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start">
+                        <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">Зарегистрироваться</button>
+                        <a class="link link_border d-sm-none d-block mt-4" href="#">Войти в личный кабинет</a>
+                    </div>
+                </form>
+                
+            </div>
+        
+
+        </div>
     </div>
-</div>
+    
+</main>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        new SlimSelect({
+           select: '#custom-select',
+           showSearch: true,
+           // searchText: 'Поиск',
+           searchPlaceholder: 'Поиск',
+           allowDeselect: true,
+           placeholder: 'Выберите отрасль'
+        })
+    </script>
 }

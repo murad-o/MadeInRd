@@ -79,16 +79,6 @@ $('[data-fancybox=""]').fancybox({
 });
 
 
-//new SlimSelect({
-//    select: '#custom-select',
-//    showSearch: true,
-//    // searchText: 'Поиск',
-//    searchPlaceholder: 'Поиск',
-//    allowDeselect: true,
-//    placeholder: 'Выберите отрасль'
-//})
-
-
 // Показать/скрыть пароль
 function show_hide_password(event, id) {
     let input = document.getElementById(id);
@@ -106,8 +96,6 @@ function show_hide_password(event, id) {
 $(document).ready(function () {
 
     $(".phone-mask").inputmask('+7 (999) 999-99-99');
-
-
 
     /*
     $('form.for-validate .required-input').on('change', function () {

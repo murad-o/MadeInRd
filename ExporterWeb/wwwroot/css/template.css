@@ -618,7 +618,7 @@ button:focus {outline: none}
 .account-form .form-group {margin-bottom: 50px;position: relative;}
 .account-form .form-group:last-child {margin-bottom: 0;}
 .form-group label {color: #010B23;margin-bottom: 10px;}
-.password-control {position: absolute;right: 11px;bottom: 9px;}
+.password-control {position: absolute;right: 11px;top: 40px;}
 .password-control {fill:#000}
 .password-control svg {width: 44px;height: 38px;fill: #010B23;}
 .password-control .hidden {display: none}
@@ -633,8 +633,9 @@ button:focus {outline: none}
 .account-form select {width: 100%;height: 56px;}
 
 .form-check-label {cursor: pointer;margin-bottom: 0;}
-.form-check-label p {font-size: 16px;line-height: 1;margin: 0;position: relative;top: -2px;}
+.form-check-label p {font-size: 16px;line-height: 1;margin: 0;position: relative;top: 1px;}
 
+.password-control {cursor: pointer}
 
 /* Подтверждение ригистрации */
 .account-card__title {font-size: 31px;margin-bottom: 40px;}

@@ -88,19 +88,19 @@
                         <label asp-for="Input.Password">Пароль</label>
                         <input asp-for="Input.Password" id="password-input" class="form-control password-input" placeholder="Придумайте пароль">
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-input')">
+                        <small class="password-control" onclick="show_hide_password(event, 'password-input')">
                             <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
                             <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
-                        </a>
+                        </small>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.ConfirmPassword">Повторите пароль</label>
                         <input asp-for="Input.ConfirmPassword" id="password-repeat-input" class="form-control password-input" placeholder="Повторите пароль снова">
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                        <a href="#" class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
+                        <small class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
                             <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
                             <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
-                        </a>
+                        </small>
                     </div>
 
                     <div class="form-group">
@@ -114,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start">
+                    <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start mb-0">
                         <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">Зарегистрироваться</button>
                         <a class="link link_border d-sm-none d-block mt-4" href="#">Войти в личный кабинет</a>
                     </div>

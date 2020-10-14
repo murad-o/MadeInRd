@@ -1,13 +1,14 @@
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.RouteModelConventions;
 using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using ExporterWeb.Resources;
-using ExporterWeb.Helpers.RouteModelConventions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -20,8 +21,6 @@ using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Localization;
 
 namespace ExporterWeb
 {
@@ -101,6 +100,7 @@ namespace ExporterWeb
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<RazorPartialToStringRenderer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -74,11 +74,11 @@ button:focus {outline: none}
 .btn_right {margin-right: 40px}
 
 
-.link {line-height: 1.5;color: #1D87FE;}
+.link {line-height: 1.2;color: #1D87FE;}
 .link:hover {color: #0061D9; }
 .link:focus {color: #0050B2; }
 
-.link_border {border-bottom: solid 1px #1D87FE;}
+.link_border {border-bottom: solid 1px #1D87FE;white-space: nowrap;}
 .link_border:hover {border-color: #0061D9}
 .link_border:focus {border-color: #0050B2}
 

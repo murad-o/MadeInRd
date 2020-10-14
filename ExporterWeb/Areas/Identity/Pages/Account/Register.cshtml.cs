@@ -108,7 +108,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string Phone { get; set; } = "";
             
             [Required]
-            [Range(typeof(bool), "true", "true")]
             public bool IsTermsOfUseAgreed { get; set; }
         }
 

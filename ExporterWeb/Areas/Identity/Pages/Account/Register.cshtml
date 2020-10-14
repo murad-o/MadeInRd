@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Globalization
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -22,7 +23,7 @@
                 </div>
                 
                 
-                <form class="for-validate account-form">
+                <form method="post" class="for-validate account-form">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Input.Name">Наименование компании</label>
@@ -43,9 +44,10 @@
                         <label asp-for="Input.FieldOfActivityId">Направление деятельности</label>
                         <select asp-for="Input.FieldOfActivityId" id="custom-select" required>
                             <option data-placeholder="true"></option>
-                            <option value="value1">Value 1</option>
-                            <option value="value2">Value 2</option>
-                            <option value="value3">Value 3</option>
+                            @foreach (var industry in Model.FieldsOfActivity)
+                            {
+                                <option value="@industry.Id">@industry.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</option>
+                            }
                         </select>
                     </div>
                     <div class="account-header__center">
@@ -54,31 +56,33 @@
 
                     <div class="form-group">
                         <label asp-for="Input.ContactPersonSecondName">Фамилия</label>
-                        <input asp-for="Input.ContactPersonSecondName" class="form-control required-input" id="hsr" placeholder="Введите фамилию">
+                        <input asp-for="Input.ContactPersonSecondName" class="form-control required-input" placeholder="Введите фамилию">
                         <span asp-validation-for="Input.ContactPersonSecondName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.ContactPersonFirstName">Имя</label>
-                        <input asp-for="Input.ContactPersonFirstName" class="form-control required-input" id="heh" placeholder="Введите имя">
+                        <input asp-for="Input.ContactPersonFirstName" class="form-control required-input" placeholder="Введите имя">
                         <span asp-validation-for="Input.ContactPersonFirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.ContactPersonPatronymic">Отчество</label>
-                        <input asp-for="Input.ContactPersonPatronymic" class="form-control" id="hgea" placeholder="Введите отчество">
+                        <input asp-for="Input.ContactPersonPatronymic" class="form-control" placeholder="Введите отчество">
                         <span asp-validation-for="Input.ContactPersonPatronymic" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput2">Должность</label>
-                        <input type="text" class="form-control" id="wgw" placeholder="Укажите вашу должность">
+                        <label asp-for="Input.Position">Должность</label>
+                        <input asp-for="Input.Position" class="form-control" placeholder="Укажите вашу должность">
+                        <span asp-validation-for="Input.Position" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Email">E-mail</label>
-                        <input asp-for="Input.Email" name="email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты" required>
+                        <input asp-for="Input.Email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты" required>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="formGroupExampleInput2">Телефон</label>
-                        <input id="" type="tel" name="phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__" required>
+                        <label asp-for="Input.Phone">Телефон</label>
+                        <input asp-for="Input.Phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__" required>
+                        <span asp-validation-for="Input.Phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Password">Пароль</label>
@@ -102,9 +106,10 @@
                     <div class="form-group">
                         <div class="form-check">
                             <label class="form-check-label label_custom" for="invalidCheck">
-                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <input asp-for="Input.IsTermsOfUseAgreed" class="form-check-input" id="invalidCheck" required>
                                 <span class="checkmark checkmark-checkbox"></span>
                                 <p>Я ознакомился и согласен с <a class="link link_border" href="/policy" target="_blank">пользовательским соглашением</a></p>
+                                <span asp-validation-for="Input.IsTermsOfUseAgreed" class="text-danger"></span>
                             </label>
                         </div>
                     </div>

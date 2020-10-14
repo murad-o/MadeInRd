@@ -102,10 +102,14 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string? ContactPersonPatronymic { get; set; }
 
             [Required]
-            public string DirectorFirstName { get; set; } = "";
+            public string Position { get; set; } = "";
+
             [Required]
-            public string DirectorSecondName { get; set; } = "";
-            public string? DirectorPatronymic { get; set; }
+            public string Phone { get; set; } = "";
+            
+            [Required]
+            [Range(typeof(bool), "true", "true")]
+            public bool IsTermsOfUseAgreed { get; set; }
         }
 
         public async Task OnGetAsync(string? returnUrl)
@@ -144,9 +148,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 ContactPersonFirstName = Input.ContactPersonFirstName,
                 ContactPersonSecondName = Input.ContactPersonSecondName,
                 ContactPersonPatronymic = Input.ContactPersonPatronymic,
-                DirectorFirstName = Input.DirectorFirstName,
-                DirectorSecondName = Input.DirectorSecondName,
-                DirectorPatronymic = Input.DirectorPatronymic,
+                Position = Input.Position,
+                Phone = Input.Phone,
             };
 
             await _context.Database.BeginTransactionAsync();

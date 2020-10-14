@@ -36,7 +36,7 @@ namespace ExporterWeb.Models
         [Required]
         public string Language { get; set; } = "";
 
-        [Display(Name = "Name"), Required]
+        [Required]
         public string Name { get; set; } = "";
 
         public string? Description { get; set; }
@@ -46,13 +46,15 @@ namespace ExporterWeb.Models
         [Required]
         public string ContactPersonSecondName { get; set; } = "";
         public string? ContactPersonPatronymic { get; set; }
+        [Required]
+        public string Position { get; set; } = "";
 
-        [Required]
-        public string DirectorFirstName { get; set; } = "";
-        [Required]
-        public string DirectorSecondName { get; set; } = "";
+        public string? DirectorFirstName { get; set; }
+        public string? DirectorSecondName { get; set; }
         public string? DirectorPatronymic { get; set; }
 
+        [Required]
+        public string Phone { get; set; } = "";
         public string? WorkingTime { get; set; }
 
         public string? Address { get; set; }

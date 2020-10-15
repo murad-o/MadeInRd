@@ -219,4 +219,7 @@
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать!</value>
   </data>
+  <data name="Last name" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
 </root>

@@ -63,4 +63,13 @@
     <data name="The {0} must be at least {2} and at max {1} characters long." xml:space="preserve">
         <value>Длина поля {0} должна быть в диапозоне {2}-{1}</value>
     </data>
+    <data name="Invalid email address" xml:space="preserve">
+        <value>Некорректный формат адреса электронной почты</value>
+    </data>
+    <data name="{0} length should not be more than {2}" xml:space="preserve">
+        <value>Длина {0} не может быть длинеее, чем {2}</value>
+    </data>
+    <data name="{0} must be {1} characters long" xml:space="preserve">
+        <value>{0} должен иметь длину {1}</value>
+    </data>
 </root>

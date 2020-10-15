@@ -62,7 +62,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         {
             // User form 
             [Required(ErrorMessage = "The {0} field is required")]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Invalid email address")]
             [Display(Name = "Email")]
             public string Email { get; set; } = "";
 
@@ -75,39 +75,47 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Required(ErrorMessage = "The {0} field is required")]
             public string ConfirmPassword { get; set; } = "";
 
             // CommonExporter form
             [Required(ErrorMessage = "Field {0} is required")]
-            [MaxLength(12)]
+            [StringLength(10, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 10)]
             public string INN { get; set; } = "";
 
             [Required(ErrorMessage = "The {0} field is required")]
-            [MaxLength(15)]
+            [StringLength(15, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 15)]
+            [Display(Name = "OGRN IP")]
             public string OGRN_IP { get; set; } = "";
 
             [Required(ErrorMessage = "The {0} field is required")]
+            [Display(Name = "Industry")]
             public int FieldOfActivityId { get; set; }
 
             // LanguageExporter form
             [Required(ErrorMessage = "The {0} field is required")]
+            [Display(Name = "Name")]
             public string Name { get; set; } = "";
 
             public string? Description { get; set; }
 
             [Required(ErrorMessage = "The {0} field is required")]
+            [Display(Name = "First name")]
+            
             public string ContactPersonFirstName { get; set; } = "";
             [Required(ErrorMessage = "The {0} field is required")]
+            [Display(Name = "Last name")]
             public string ContactPersonSecondName { get; set; } = "";
+            [Display(Name = "Patronymic")]
             public string? ContactPersonPatronymic { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public string Position { get; set; } = "";
 
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public string Phone { get; set; } = "";
             
-            [Required]
+            [Required(ErrorMessage = "The {0} field is required")]
             public bool IsTermsOfUseAgreed { get; set; }
         }
 

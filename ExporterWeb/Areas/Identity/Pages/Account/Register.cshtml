@@ -15,7 +15,7 @@
                 <div class="account-header__top">
                     <div class="d-flex justify-content-between align-items-baseline">
                         <h3 class="account-header__title">@ViewData["Title"]</h3>
-                        <a href="#" class="link link_border account-header__text">Войти в личный кабинет</a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="link link_border account-header__text">Войти в личный кабинет</a>
                     </div>
                 </div>
                 <div class="account-header__bottom">
@@ -108,7 +108,7 @@
                             <label class="form-check-label label_custom" for="invalidCheck">
                                 <input asp-for="Input.IsTermsOfUseAgreed" class="form-check-input" id="invalidCheck" required>
                                 <span class="checkmark checkmark-checkbox"></span>
-                                <p>Я ознакомился и согласен с <a class="link link_border" href="/policy" target="_blank">пользовательским соглашением</a></p>
+                                <p>Я ознакомился и согласен с <a asp-page="/TermsOfUse" class="link link_border" target="_blank">пользовательским соглашением</a></p>
                                 <span asp-validation-for="Input.IsTermsOfUseAgreed" class="text-danger"></span>
                             </label>
                         </div>

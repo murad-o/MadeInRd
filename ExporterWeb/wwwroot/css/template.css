@@ -340,25 +340,30 @@ button:focus {outline: none}
 }
 
 
-/*********************
- *** TermsOfuse ***
-*********************/
-.termsofuse{
-    padding-top: 40px;
-}
-.termsofuse__title{
+
+h1.page__title {
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
     align-items: center;
     color: #010B23;
 }
-.termsofuse__subtitle{
+
+/*********************
+ *** TermsOfuse ***
+*********************/
+.termsofuse {
+    padding: 100px 0 60px 0;
+}
+.termsofuse__wrapper {
     margin-top:40px;
 }
-.termsofuse__subtitle p{
+.termsofuse__wrapper p {
+    font-weight: 400;
+    font-style: normal;
     line-height: 24px;
     color: #010B23;
+    margin-bottom: 20px;
 }
 /* ****************** END ***************** */
 

@@ -82,7 +82,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "This field is required")]
             [StringLength(10, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 10)]
             [Display(Name = "INN", ResourceType = typeof(AccountResources))]
-            
             public string INN { get; set; } = "";
 
             [Required(ErrorMessage = "This field is required")]
@@ -118,9 +117,9 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "This field is required")]
             [Display(Name = "Phone", ResourceType = typeof(AccountResources))]
             public string Phone { get; set; } = "";
-            
-            [Required(ErrorMessage = "TermsError")]
-            public bool IsTermsOfUseAgreed { get; set; } 
+
+            [Required]
+            public bool IsTermsOfUseAgreed { get; set; }
         }
 
         public async Task OnGetAsync(string? returnUrl)

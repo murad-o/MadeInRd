@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AccountResources = ExporterWeb.Resources.Account.Account;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
@@ -61,62 +61,66 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         public class InputModel
         {
             // User form 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
             [EmailAddress(ErrorMessage = "Invalid email address")]
-            [Display(Name = "Email")]
+            [Display(Name = "Email", ResourceType = typeof(AccountResources))]
             public string Email { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Password", ResourceType = typeof(AccountResources))]
             public string Password { get; set; } = "";
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "ConfirmPassword", ResourceType = typeof(AccountResources))]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
             public string ConfirmPassword { get; set; } = "";
 
             // CommonExporter form
-            [Required(ErrorMessage = "Field {0} is required")]
+            [Required(ErrorMessage = "This field is required")]
             [StringLength(10, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 10)]
+            [Display(Name = "INN", ResourceType = typeof(AccountResources))]
+            
             public string INN { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
             [StringLength(15, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 15)]
-            [Display(Name = "OGRN IP")]
+            [Display(Name = "OGRN_IP", ResourceType = typeof(AccountResources))]
             public string OGRN_IP { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
-            [Display(Name = "Industry")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Industry", ResourceType = typeof(AccountResources))]
             public int FieldOfActivityId { get; set; }
 
             // LanguageExporter form
-            [Required(ErrorMessage = "The {0} field is required")]
-            [Display(Name = "Name")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Name", ResourceType = typeof(AccountResources))]
             public string Name { get; set; } = "";
 
             public string? Description { get; set; }
 
-            [Required(ErrorMessage = "The {0} field is required")]
-            [Display(Name = "First name")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "FirstName", ResourceType = typeof(AccountResources))]
             
             public string ContactPersonFirstName { get; set; } = "";
-            [Required(ErrorMessage = "The {0} field is required")]
-            [Display(Name = "Last name")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "LastName", ResourceType = typeof(AccountResources))]
             public string ContactPersonSecondName { get; set; } = "";
-            [Display(Name = "Patronymic")]
+            [Display(Name = "Patronymic", ResourceType = typeof(AccountResources))]
             public string? ContactPersonPatronymic { get; set; }
 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Position", ResourceType = typeof(AccountResources))]
             public string Position { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Phone", ResourceType = typeof(AccountResources))]
             public string Phone { get; set; } = "";
             
-            [Required(ErrorMessage = "The {0} field is required")]
-            public bool IsTermsOfUseAgreed { get; set; }
+            [Required(ErrorMessage = "TermsError")]
+            public bool IsTermsOfUseAgreed { get; set; } 
         }
 
         public async Task OnGetAsync(string? returnUrl)

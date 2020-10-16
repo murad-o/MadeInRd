@@ -138,6 +138,9 @@
   <data name="Analytics" xml:space="preserve">
     <value>Аналитика</value>
   </data>
+  <data name="Back to home page" xml:space="preserve">
+    <value>Вернуться на главную</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
@@ -177,6 +180,9 @@
   <data name="Information" xml:space="preserve">
     <value>Информация</value>
   </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Войти в личный кабинет</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Выйти из системы</value>
   </data>
@@ -194,6 +200,9 @@
   </data>
   <data name="of the republic of Dagestan" xml:space="preserve">
     <value>Республики Дагестан</value>
+  </data>
+  <data name="Password recovery" xml:space="preserve">
+    <value>Восстановление пароля</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Конфиденциальность</value>
@@ -218,5 +227,8 @@
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать!</value>
+  </data>
+  <data name="Your password has been reset. Now you can log in." xml:space="preserve">
+    <value>Новый пароль сохранён. Теперь вы можете войти в ваш личный кабинет.</value>
   </data>
 </root>

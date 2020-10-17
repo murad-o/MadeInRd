@@ -91,7 +91,7 @@ namespace ExporterWeb.Helpers
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresNonAlphanumeric),
-                Description = "Passwords must have at least one non alphanumeric character."
+                Description = _localizer["Passwords must have at least one non alphanumeric character."]
             };
         }
 

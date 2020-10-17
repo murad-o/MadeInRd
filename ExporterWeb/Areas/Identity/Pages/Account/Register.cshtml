@@ -10,7 +10,7 @@
     <div class="container">
 
         <div class="account-card">
-        
+
             <div class="account-header">
                 <div class="account-header__top">
                     <div class="d-flex justify-content-between align-items-baseline">
@@ -21,35 +21,37 @@
                 <div class="account-header__bottom">
                     <h4 class="account-header__subtitle">Информация о компании</h4>
                 </div>
-                
-                
+
+
                 <form method="post" class="for-validate account-form">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div asp-validation-summary="All"></div>
                     <div class="form-group">
                         <label asp-for="Input.Name">Наименование компании</label>
-                        <input asp-for="Input.Name" class="form-control" autofocus="autofocus" placeholder="Введите наименование компании" required>
+                        <input asp-for="Input.Name" class="form-control" autofocus="autofocus" placeholder="Введите наименование компании">
                         <span asp-validation-for="Input.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.INN">ИНН</label>
-                        <input asp-for="Input.INN" class="form-control" placeholder="Введите ИНН компании" required>
+                        <input asp-for="Input.INN" class="form-control" placeholder="Введите ИНН компании">
                         <span asp-validation-for="Input.INN" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.OGRN_IP">ОГРН или ОГРНИП</label>
-                        <input asp-for="Input.OGRN_IP" class="form-control" placeholder="Введите ОГРН или ОГРНИП компании" min="100" max="999999" required>
+                        <input asp-for="Input.OGRN_IP" class="form-control" placeholder="Введите ОГРН или ОГРНИП компании">
                         <span asp-validation-for="Input.OGRN_IP" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.FieldOfActivityId">Направление деятельности</label>
-                        <select asp-for="Input.FieldOfActivityId" id="custom-select" required>
+                        <select asp-for="Input.FieldOfActivityId" id="custom-select">
                             <option data-placeholder="true"></option>
                             @foreach (var industry in Model.FieldsOfActivity)
                             {
                                 <option value="@industry.Id">@industry.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</option>
                             }
                         </select>
+                        <span asp-validation-for="Input.FieldOfActivityId" class="text-danger"></span>
                     </div>
+
                     <div class="account-header__center">
                         <h4 class="account-header__subtitle">Данные контактного лица организации</h4>
                     </div>
@@ -76,12 +78,12 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Email">E-mail</label>
-                        <input asp-for="Input.Email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты" required>
+                        <input asp-for="Input.Email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты">
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Phone">Телефон</label>
-                        <input asp-for="Input.Phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__" required>
+                        <input asp-for="Input.Phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__">
                         <span asp-validation-for="Input.Phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -89,8 +91,12 @@
                         <input asp-for="Input.Password" id="password-input" class="form-control password-input" placeholder="Придумайте пароль">
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                         <small class="password-control" onclick="show_hide_password(event, 'password-input')">
-                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
-                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                            <svg class="view">
+                                <use xlink:href="/img/sprite.svg#password-view"></use>
+                            </svg>
+                            <svg class="hidden">
+                                <use xlink:href="/img/sprite.svg#password-hidden"></use>
+                            </svg>
                         </small>
                     </div>
                     <div class="form-group">
@@ -98,15 +104,19 @@
                         <input asp-for="Input.ConfirmPassword" id="password-repeat-input" class="form-control password-input" placeholder="Повторите пароль снова">
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         <small class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
-                            <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
-                            <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
+                            <svg class="view">
+                                <use xlink:href="/img/sprite.svg#password-view"></use>
+                            </svg>
+                            <svg class="hidden">
+                                <use xlink:href="/img/sprite.svg#password-hidden"></use>
+                            </svg>
                         </small>
                     </div>
 
                     <div class="form-group">
                         <div class="form-check">
                             <label class="form-check-label label_custom" for="invalidCheck">
-                                <input asp-for="Input.IsTermsOfUseAgreed" class="form-check-input" id="invalidCheck" required>
+                                <input asp-for="Input.IsTermsOfUseAgreed" class="form-check-input" id="invalidCheck">
                                 <span class="checkmark checkmark-checkbox"></span>
                                 <p>Я ознакомился и согласен с <a asp-page="/TermsOfUse" class="link link_border" target="_blank">пользовательским соглашением</a></p>
                                 <span asp-validation-for="Input.IsTermsOfUseAgreed" class="text-danger"></span>
@@ -114,22 +124,23 @@
                         </div>
                     </div>
 
+
                     <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start mb-0">
                         <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">Зарегистрироваться</button>
                         <a class="link link_border d-sm-none d-block mt-4" href="#">Войти в личный кабинет</a>
                     </div>
                 </form>
-                
+
             </div>
-        
+
 
         </div>
     </div>
-    
+
 </main>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
     <script>
         new SlimSelect({
            select: '#custom-select',

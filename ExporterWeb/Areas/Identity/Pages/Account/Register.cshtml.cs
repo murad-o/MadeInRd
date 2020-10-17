@@ -67,7 +67,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string Email { get; set; } = "";
 
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Passwords must consist at least {2} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password", ResourceType = typeof(AccountResources))]
             public string Password { get; set; } = "";
@@ -80,12 +80,12 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             // CommonExporter form
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(10, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 10)]
+            [StringLength(10, ErrorMessage = "This field must consist {1} digits", MinimumLength = 10)]
             [Display(Name = "INN", ResourceType = typeof(AccountResources))]
             public string INN { get; set; } = "";
 
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(15, ErrorMessage = "{0} must be {1} characters long", MinimumLength = 15)]
+            [StringLength(15, ErrorMessage = "This field must consist {2} or {1} digits", MinimumLength = 13)]
             [Display(Name = "OGRN_IP", ResourceType = typeof(AccountResources))]
             public string OGRN_IP { get; set; } = "";
 
@@ -116,6 +116,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "This field is required")]
             [Display(Name = "Phone", ResourceType = typeof(AccountResources))]
+            [DataType(DataType.PhoneNumber)]
+            [RegularExpression(@"^\+7\s\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}$", ErrorMessage = "Enter a valid phone")]
             public string Phone { get; set; } = "";
 
             [Required]

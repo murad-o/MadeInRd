@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
@@ -14,19 +15,19 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly IEmailSender _emailSender;
 
-        public RegisterConfirmationModel(UserManager<User> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<User> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
-            _sender = sender;
+            _emailSender = emailSender;
         }
 
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
-        public string EmailConfirmationUrl { get; set; }
+        public string EmailConfirmationUrl { get; set; } = "";
 
-        public async Task<IActionResult> OnGetAsync(string email, string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string email, string returnUrl)
         {
             if (email == null)
             {
@@ -44,13 +45,14 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             var userId = await _userManager.GetUserIdAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            EmailConfirmationUrl = Url.Page(
+            var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                values: new { area = "Identity", userId = userId, code, returnUrl },
                 protocol: Request.Scheme);
 
-            await _sender.SendEmailAsync(Email, "Confirm email", EmailConfirmationUrl);
+            await _emailSender.SendEmailAsync(email, "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             return Page();
         }

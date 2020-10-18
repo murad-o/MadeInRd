@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Identity;

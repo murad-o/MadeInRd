@@ -1,5 +1,4 @@
-﻿using System;
-using ExporterWeb.Helpers.Services;
+﻿using ExporterWeb.Helpers.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExporterWeb.Helpers

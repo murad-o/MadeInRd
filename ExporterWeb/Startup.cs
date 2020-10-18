@@ -74,14 +74,6 @@ namespace ExporterWeb
                 options.LowercaseUrls = true;
             });
 
-            services.AddControllers(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
-
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = Languages.WhiteList.Select(lang => new CultureInfo(lang)).ToList();

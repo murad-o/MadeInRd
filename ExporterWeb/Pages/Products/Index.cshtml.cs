@@ -8,7 +8,6 @@ using X.PagedList;
 
 namespace ExporterWeb.Pages.Products
 {
-    [AllowAnonymous]
     public class IndexModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;

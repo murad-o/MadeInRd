@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Hosting;
 namespace ExporterWeb.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class UploadController : Controller
     {

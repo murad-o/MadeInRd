@@ -11,7 +11,6 @@ using X.PagedList;
 
 namespace ExporterWeb.Pages.Exporters
 {
-    [AllowAnonymous]
     public class IndexModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;

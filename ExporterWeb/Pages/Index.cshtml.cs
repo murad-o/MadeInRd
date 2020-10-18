@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages
 {
-    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

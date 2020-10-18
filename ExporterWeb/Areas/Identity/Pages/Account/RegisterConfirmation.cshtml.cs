@@ -11,7 +11,6 @@ using System.Text.Encodings.Web;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<User> _userManager;

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;

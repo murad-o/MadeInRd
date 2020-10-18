@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Exporters
 {
-    [AllowAnonymous]
     public class DetailsModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;

@@ -106,7 +106,17 @@ button:focus {outline: none}
 
 
 
-
+/* Валидация форм */
+.validation-summary-errors {color: #E53935;margin-bottom: 30px;}
+.validation-summary-errors li {margin-bottom: 5px;}
+.input-validation-error, .ss-main .ss-single-selected, .ss-content {border: solid 1px #E53935;}
+.input-validation-error:hover, .ss-open-below, .ss-content:hover {border: solid 1px #E53935;}
+.input-validation-error:focus, .ss-open-below, .ss-content:focus {outline-color: #E53935}
+.field-validation-error {font-size: 14px;color: #E53935;display: block;margin-top: 10px;margin-left: 10px;}
+.field-validation-error:before {content: "*";position: absolute;left: 0;}
+input#invalidCheck ~ .chechmark {
+    border: solid 2px red !important;
+}
 
 
 

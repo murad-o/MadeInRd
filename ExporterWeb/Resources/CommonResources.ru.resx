@@ -253,7 +253,7 @@
     <value>Поддержка</value>
   </data>
   <data name="Thanks for registration!" xml:space="preserve">
-    <value>Спасибо за регистрацию!&lt;/</value>
+    <value>Спасибо за регистрацию!</value>
   </data>
   <data name="Useful" xml:space="preserve">
     <value>Полезное</value>
@@ -266,5 +266,11 @@
   </data>
   <data name="Last name" xml:space="preserve">
     <value>Фамилия</value>
+  </data>
+  <data name="We have sent you a confirmation email. Follow the link in the letter to complete the registration." xml:space="preserve">
+    <value>Мы отправили вам на электронную почту письмо для подтверждения. Перейдите по ссылке в письме для завершения регистрации.</value>
+  </data>
+  <data name="If you have not received the message within a few minutes, then check your Spam folder." xml:space="preserve">
+    <value>Если письмо не пришло в течение нескольких минут, то проверьте папку "Спам".</value>
   </data>
 </root>

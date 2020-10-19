@@ -24,12 +24,13 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; } = "";
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(100, ErrorMessage = "Passwords must consist at least {2} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password", ResourceType = typeof(Resources.Account.Account))]
             public string Password { get; set; } = "";
 
+            [Required(ErrorMessage = "This field is required")]
             [DataType(DataType.Password)]
             [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Account.Account))]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
@@ -58,7 +59,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError("", "User with the email does not exist");
                 return Page();
             }
 

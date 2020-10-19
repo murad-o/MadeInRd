@@ -135,4 +135,7 @@
   <data name="Passwords must consist at least {2} characters" xml:space="preserve">
     <value>Passwords must consist at least {2} characters</value>
   </data>
+  <data name="This e-mail is not registered or not confirmed" xml:space="preserve">
+    <value>This e-mail is not registered or not confirmed</value>
+  </data>
 </root>

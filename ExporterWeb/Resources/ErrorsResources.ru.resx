@@ -180,4 +180,7 @@
   <data name="Enter a valid phone" xml:space="preserve">
     <value>Введите действительный номер</value>
   </data>
+  <data name="This e-mail is not registered or not confirmed" xml:space="preserve">
+    <value>Данный e-mail не зарегистрирован или не подтвержден</value>
+  </data>
 </root>

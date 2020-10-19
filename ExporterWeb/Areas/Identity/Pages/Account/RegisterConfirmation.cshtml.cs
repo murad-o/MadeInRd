@@ -27,11 +27,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync(string email, string returnUrl)
         {
-            if (email == null)
-            {
-                return RedirectToPage("/Index");
-            }
-
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {

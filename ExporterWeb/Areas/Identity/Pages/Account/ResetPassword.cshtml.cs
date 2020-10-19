@@ -27,10 +27,11 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            [Display(Name = "Password", ResourceType = typeof(Resources.Account.Account))]
             public string Password { get; set; } = "";
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Account.Account))]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; } = "";
 
@@ -39,19 +40,12 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code, string email)
         {
-            if (code == null)
+            Input = new InputModel
             {
-                return BadRequest("A code must be supplied for password reset.");
-            }
-            else
-            {
-                Input = new InputModel
-                {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
-                    Email = email
-                };
-                return Page();
-            }
+                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
+                Email = email
+            };
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

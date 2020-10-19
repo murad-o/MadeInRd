@@ -26,6 +26,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email", ResourceType = typeof(Resources.Account.Account))]
             public string Email { get; set; } = "";
         }
 

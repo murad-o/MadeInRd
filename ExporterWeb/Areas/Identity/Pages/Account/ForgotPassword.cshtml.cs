@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers.Services;
+using ExporterWeb.Models.ViewModels;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
@@ -17,12 +17,14 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly ErrorsLocalizationService _errorsLocalizer;
+        private readonly RazorPartialToStringRenderer _razorPartialToStringRenderer;
 
-        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender, ErrorsLocalizationService errorsLocalizer)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender, ErrorsLocalizationService errorsLocalizer, RazorPartialToStringRenderer razorPartialToStringRenderer)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _errorsLocalizer = errorsLocalizer;
+            _razorPartialToStringRenderer = razorPartialToStringRenderer;
         }
 
         public class InputModel
@@ -53,10 +55,10 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 values: new { area = "Identity", code, email = Input.Email },
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailAsync(
-                Input.Email,
-                "Reset Password",
-                $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            var body = await _razorPartialToStringRenderer.RenderPartialToStringAsync(
+                "Emails/ForgotPasswordConfirmationEmail", new ForgotPasswordEmailModel {Callback = callbackUrl});
+            
+            await _emailSender.SendEmailAsync(Input.Email, "Reset Password",body);
 
             return RedirectToPage("./ForgotPasswordConfirmation");
 

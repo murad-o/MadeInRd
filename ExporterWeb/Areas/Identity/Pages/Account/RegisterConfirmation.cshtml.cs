@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Text.Encodings.Web;
+using ExporterWeb.Helpers.Services;
+using ExporterWeb.Models.ViewModels;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
@@ -14,11 +15,13 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly RazorPartialToStringRenderer _partialToStringRenderer;
 
-        public RegisterConfirmationModel(UserManager<User> userManager, IEmailSender emailSender)
+        public RegisterConfirmationModel(UserManager<User> userManager, IEmailSender emailSender, RazorPartialToStringRenderer partialToStringRenderer)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _partialToStringRenderer = partialToStringRenderer;
         }
 
         public string Email { get; set; } = "";
@@ -44,8 +47,10 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 values: new { area = "Identity", userId = userId, code, returnUrl },
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailAsync(email, "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            var body = await _partialToStringRenderer.RenderPartialToStringAsync("Emails/RegisterConfirmationEmail",
+                new RegisterConfirmationEmailModel { FirstName = user.FirstName, LastName = user.SecondName, Callback = callbackUrl});
+
+            await _emailSender.SendEmailAsync(email, "Confirm your email", body);
 
             return Page();
         }

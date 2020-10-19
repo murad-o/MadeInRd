@@ -25,7 +25,7 @@
         <value>Email</value>
     </data>
     <data name="Password" xml:space="preserve">
-        <value>Passwords</value>
+        <value>Password</value>
     </data>
     <data name="OGRN_IP" xml:space="preserve">
         <value>OGRN IP</value>

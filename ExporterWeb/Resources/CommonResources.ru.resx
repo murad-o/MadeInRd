@@ -273,4 +273,46 @@
   <data name="If you have not received the message within a few minutes, then check your Spam folder." xml:space="preserve">
     <value>Если письмо не пришло в течение нескольких минут, то проверьте папку "Спам".</value>
   </data>
+  <data name="Information about company" xml:space="preserve">
+    <value>Информация о компании</value>
+  </data>
+  <data name="Data of the organization’s contact person" xml:space="preserve">
+    <value>Данные контактного лица организации</value>
+  </data>
+  <data name="I'm aware and agree with" xml:space="preserve">
+    <value>Я ознакомился и согласен с</value>
+  </data>
+  <data name="the terms of the user agreement" xml:space="preserve">
+    <value>пользовательским соглашением</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Зарегестрироваться</value>
+  </data>
+  <data name="Enter company name" xml:space="preserve">
+    <value>Введите наименование компании</value>
+  </data>
+  <data name="Enter company INN" xml:space="preserve">
+    <value>Введите ИНН компании</value>
+  </data>
+  <data name="Enter company OGRNIP" xml:space="preserve">
+    <value>Введите ОГРН или ОГРНИП компании</value>
+  </data>
+  <data name="Select an industry" xml:space="preserve">
+    <value>Выберите отрасль</value>
+  </data>
+  <data name="Enter your last name" xml:space="preserve">
+    <value>Введите фамилию</value>
+  </data>
+  <data name="Enter your first name" xml:space="preserve">
+    <value>Введите имя</value>
+  </data>
+  <data name="Enter your patronymic" xml:space="preserve">
+    <value>Введите отчество</value>
+  </data>
+  <data name="Indicate your position" xml:space="preserve">
+    <value>Укажите вашу должность</value>
+  </data>
+  <data name="Enter password again" xml:space="preserve">
+    <value>Повторите пароль снова</value>
+  </data>
 </root>

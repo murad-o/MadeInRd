@@ -1,8 +1,10 @@
 ﻿@page
 @using System.Globalization
+@using ExporterWeb.Helpers.Services
+@inject CommonLocalizationService Localizer
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = Localizer["Registration"];
 }
 
 <main class="primary-content" role="main">
@@ -14,34 +16,34 @@
             <div class="account-header">
                 <div class="account-header__top">
                     <div class="d-flex justify-content-between align-items-baseline">
-                        <h3 class="account-header__title">@ViewData["Title"]</h3>
-                        <a asp-area="Identity" asp-page="/Account/Login" class="link link_border account-header__text">Войти в личный кабинет</a>
+                        <h3 class="account-header__title">@Localizer["Registration"]</h3>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="link link_border account-header__text">@Localizer["Log in"]</a>
                     </div>
                 </div>
                 <div class="account-header__bottom">
-                    <h4 class="account-header__subtitle">Информация о компании</h4>
+                    <h4 class="account-header__subtitle">@Localizer["Information about company"]</h4>
                 </div>
 
 
                 <form method="post" class="for-validate account-form">
                     <div asp-validation-summary="All"></div>
                     <div class="form-group">
-                        <label asp-for="Input.Name">Наименование компании</label>
-                        <input asp-for="Input.Name" class="form-control" autofocus="autofocus" placeholder="Введите наименование компании">
+                        <label asp-for="Input.Name"></label>
+                        <input asp-for="Input.Name" class="form-control" autofocus="autofocus" placeholder="@Localizer["Enter company name"]">
                         <span asp-validation-for="Input.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.INN">ИНН</label>
-                        <input asp-for="Input.INN" class="form-control" placeholder="Введите ИНН компании">
+                        <label asp-for="Input.INN"></label>
+                        <input asp-for="Input.INN" class="form-control" placeholder=@Localizer["Enter company INN"]>
                         <span asp-validation-for="Input.INN" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.OGRN_IP">ОГРН или ОГРНИП</label>
-                        <input asp-for="Input.OGRN_IP" class="form-control" placeholder="Введите ОГРН или ОГРНИП компании">
+                        <label asp-for="Input.OGRN_IP"></label>
+                        <input asp-for="Input.OGRN_IP" class="form-control" placeholder=@Localizer["Enter company OGRNIP"]>
                         <span asp-validation-for="Input.OGRN_IP" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.FieldOfActivityId">Направление деятельности</label>
+                        <label asp-for="Input.FieldOfActivityId"></label>
                         <select asp-for="Input.FieldOfActivityId" id="custom-select">
                             <option data-placeholder="true"></option>
                             @foreach (var industry in Model.FieldsOfActivity)
@@ -53,42 +55,42 @@
                     </div>
 
                     <div class="account-header__center">
-                        <h4 class="account-header__subtitle">Данные контактного лица организации</h4>
+                        <h4 class="account-header__subtitle">@Localizer["Data of the organization’s contact person"]</h4>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Input.ContactPersonSecondName">Фамилия</label>
-                        <input asp-for="Input.ContactPersonSecondName" class="form-control required-input" placeholder="Введите фамилию">
+                        <label asp-for="Input.ContactPersonSecondName"></label>
+                        <input asp-for="Input.ContactPersonSecondName" class="form-control required-input" placeholder=@Localizer["Enter your last name"]>
                         <span asp-validation-for="Input.ContactPersonSecondName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.ContactPersonFirstName">Имя</label>
-                        <input asp-for="Input.ContactPersonFirstName" class="form-control required-input" placeholder="Введите имя">
+                        <label asp-for="Input.ContactPersonFirstName"></label>
+                        <input asp-for="Input.ContactPersonFirstName" class="form-control required-input" placeholder=@Localizer["Enter your first name"]>
                         <span asp-validation-for="Input.ContactPersonFirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.ContactPersonPatronymic">Отчество</label>
-                        <input asp-for="Input.ContactPersonPatronymic" class="form-control" placeholder="Введите отчество">
+                        <label asp-for="Input.ContactPersonPatronymic"></label>
+                        <input asp-for="Input.ContactPersonPatronymic" class="form-control" placeholder=@Localizer["Enter your patronymic"]>
                         <span asp-validation-for="Input.ContactPersonPatronymic" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.Position">Должность</label>
-                        <input asp-for="Input.Position" class="form-control" placeholder="Укажите вашу должность">
+                        <label asp-for="Input.Position"></label>
+                        <input asp-for="Input.Position" class="form-control" placeholder=@Localizer["Indicate your position"]>
                         <span asp-validation-for="Input.Position" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.Email">E-mail</label>
-                        <input asp-for="Input.Email" class="form-control email-mask required-input" placeholder="Введите адрес электронной почты">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="form-control email-mask required-input" placeholder=@Localizer["Enter your email"]>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.Phone">Телефон</label>
+                        <label asp-for="Input.Phone"></label>
                         <input asp-for="Input.Phone" class="form-control phone-mask required-input" placeholder="+7 (___) ___-__-__">
                         <span asp-validation-for="Input.Phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.Password">Пароль</label>
-                        <input asp-for="Input.Password" id="password-input" class="form-control password-input" placeholder="Придумайте пароль">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" id="password-input" class="form-control password-input" placeholder=@Localizer["Enter password"]>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                         <small class="password-control" onclick="show_hide_password(event, 'password-input')">
                             <svg class="view">
@@ -100,8 +102,8 @@
                         </small>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.ConfirmPassword">Повторите пароль</label>
-                        <input asp-for="Input.ConfirmPassword" id="password-repeat-input" class="form-control password-input" placeholder="Повторите пароль снова">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" id="password-repeat-input" class="form-control password-input" placeholder=@Localizer["Enter password again"]>
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         <small class="password-control" onclick="show_hide_password(event, 'password-repeat-input')">
                             <svg class="view">
@@ -118,7 +120,9 @@
                             <label class="form-check-label label_custom" for="invalidCheck">
                                 <input asp-for="Input.IsTermsOfUseAgreed" class="form-check-input" id="invalidCheck">
                                 <span class="checkmark checkmark-checkbox"></span>
-                                <p>Я ознакомился и согласен с <a asp-page="/TermsOfUse" class="link link_border" target="_blank">пользовательским соглашением</a></p>
+                                <p>
+                                    @Localizer["I'm aware and agree with"] <a asp-page="/TermsOfUse" class="link link_border" target="_blank">@Localizer["the terms of the user agreement"]</a>
+                                </p>
                                 <span asp-validation-for="Input.IsTermsOfUseAgreed" class="text-danger"></span>
                             </label>
                         </div>
@@ -126,8 +130,8 @@
 
 
                     <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start mb-0">
-                        <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">Зарегистрироваться</button>
-                        <a class="link link_border d-sm-none d-block mt-4" href="#">Войти в личный кабинет</a>
+                        <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">@Localizer["Sign up"]</button>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="link link_border d-sm-none d-block mt-4">@Localizer["Log in"]</a>
                     </div>
                 </form>
 
@@ -148,7 +152,7 @@
            // searchText: 'Поиск',
            searchPlaceholder: 'Поиск',
            allowDeselect: true,
-           placeholder: 'Выберите отрасль'
+           placeholder: '@Localizer["Select an industry"]'
         })
     </script>
 }

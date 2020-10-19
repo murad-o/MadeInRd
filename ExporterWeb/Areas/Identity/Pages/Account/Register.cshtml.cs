@@ -112,6 +112,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string Phone { get; set; } = "";
 
             [Required]
+            [Range(typeof(bool), "true", "true", ErrorMessage = "Your consent with the user agreement is required")]
             public bool IsTermsOfUseAgreed { get; set; }
         }
 

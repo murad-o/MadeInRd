@@ -25,7 +25,7 @@
                 </div>
 
 
-                <form method="post" class="for-validate account-form">
+                <form method="post" class="for-validate account-form" id="form-registration">
                     <div asp-validation-summary="ModelOnly"></div>
                     <div class="form-group">
                         <label asp-for="Input.Name"></label>
@@ -42,7 +42,7 @@
                         <input asp-for="Input.OGRN_IP" class="form-control" placeholder=@Localizer["Enter company OGRNIP"]>
                         <span asp-validation-for="Input.OGRN_IP" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div id="form-group_select" class="form-group form-group-select">
                         <label asp-for="Input.FieldOfActivityId"></label>
                         <select asp-for="Input.FieldOfActivityId" id="custom-select">
                             <option data-placeholder="true"></option>
@@ -51,7 +51,8 @@
                                 <option value="@industry.Id">@industry.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</option>
                             }
                         </select>
-                        <span asp-validation-for="Input.FieldOfActivityId" class="text-danger"></span>
+                        @* <span asp-validation-for="Input.FieldOfActivityId" class="form-group-select__hidden-text" style="display: none"></span> *@
+                        <span id="select-error" asp-validation-for="Input.FieldOfActivityId" class="field-validation-error select-error text-danger"></span>
                     </div>
 
                     <div class="account-header__center">
@@ -123,15 +124,15 @@
                                 <p>
                                     @Localizer["I'm aware and agree with"] <a asp-page="/TermsOfUse" class="link link_border" target="_blank">@Localizer["the terms of the user agreement"]</a>
                                 </p>
-                                <span asp-validation-for="Input.IsTermsOfUseAgreed" class="text-danger"></span>
                             </label>
                         </div>
+                        <span asp-validation-for="Input.IsTermsOfUseAgreed" class="text-danger"></span>
                     </div>
 
 
                     <div class="form-group d-flex align-items-sm-center flex-sm-row flex-column align-items-start mb-0">
                         <button class="btn btn-big btn-primary go__register mr-0 mr-sm-4" type="submit">@Localizer["Sign up"]</button>
-                        <a asp-area="Identity" asp-page="/Account/Login" class="link link_border d-sm-none d-block mt-4">@Localizer["Log in"]</a>
+                        <a class="link link_border d-sm-none d-block mt-4" href="#">@Localizer["Log in"]</a>
                     </div>
                 </form>
 
@@ -149,12 +150,29 @@
         new SlimSelect({
            select: '#custom-select',
            showSearch: true,
-           // searchText: 'Поиск',
-           searchPlaceholder: 'Поиск',
+           searchText: 'Поиск',
+           // searchPlaceholder: 'Поиск',
            allowDeselect: true,
+           selected: true,
+           // value: '',
+           // hideSelectedOption: true,
            placeholder: '@Localizer["Select an industry"]'
         })
         
+        // Настройка кастомного селекта
+        const form = document.getElementById('form-registration');
+        form.addEventListener('submit', function() {
+            let select = document.getElementById('custom-select');
+            let selectWrp = document.getElementById('form-group_select');
+
+            select.value ? selectWrp.classList.remove('form-group-select__invalid') : selectWrp.classList.add('form-group-select__invalid');
+
+            select.addEventListener('change', function() {
+                select.value ? selectWrp.classList.remove('form-group-select__invalid') : selectWrp.classList.add('form-group-select__invalid');
+            });
+        });
+        
+        // Фикс чекбокса
         let defaultRangeValidator = $.validator.methods.range;
         $.validator.methods.range = function(value, element, param) {
             if(element.type === 'checkbox') {

@@ -20,56 +20,30 @@ input::placeholder {color: #9E9E9E;}
 /* Селект */
 .ss-main .ss-single-selected {height: 56px;padding: 0 20px;border-color: #9E9E9E;}
 .ss-main .ss-single-selected .placeholder .ss-disabled {color: #9E9E9E;}
-.ss-content .ss-search input {height: 38px;border-color: #9E9E9E;}
-.ss-content .ss-search input:focus {box-shadow: none;border: solid 2px #8c8c8c;}
+.ss-content .ss-search input {height: 38px;border: solid 1px #9E9E9E;}
+.ss-content .ss-search input:focus {box-shadow: none;border: solid 1px #8c8c8c;}
 .ss-content {border-color: #9E9E9E;}
 .ss-content .ss-list .ss-option {padding: 10px 20px;color: #010B23;}
+.ss-content.ss-open {margin-top: 8px;border-radius: 4px;}
+
+
+.text-danger {color: #E53935}
 
 
 
 button:focus {outline: none}
 
-.btn {
-    padding: 10px 26px;
-    border-radius: 4px;
-    border: none;
-    display: block;
-    transition: .1s;
-}
+.btn {padding: 10px 26px;border-radius: 4px;border: none;display: block;transition: .1s;}
 .btn:hover {transition: .1s;}
 .btn-big {padding: 20px 30px}
-.btn-primary {
-    color: #fff;
-    background: #1D87FE;
-    border: solid 1px #1d87fe;
-}
-.btn-primary:hover {
-    background-color: #0061D9;
-    border-color:#0061D9;
-}
-.btn-primary:focus, .btn-primary:focus-within {
-    background-color: #0050B2;
-    outline: none;
-    border-color:#0050B2;
-}
+.btn-primary {color: #fff;background: #1D87FE;border: solid 1px #1d87fe;}
+.btn-primary:hover {background-color: #0061D9;border-color:#0061D9;}
+.btn-primary:focus, .btn-primary:focus-within {background-color: #0050B2;outline: none;border-color:#0050B2;}
 
 
-.btn-primary-outline {
-    color: #1D87FE;
-    background-color: transparent;
-    border: 1px solid #1D87FE;
-}
-.btn-primary-outline:hover {
-    color: #0061D9;
-    background-color: #E6F0FC;
-    border-color: #0061D9;
-}
-.btn-primary-outline:focus {
-    color: #0050B2;
-    background-color: #CCDCF0;
-    border-color: #0050B2;
-    outline: none;
-}
+.btn-primary-outline {color: #1D87FE;background-color: transparent;border: 1px solid #1D87FE;}
+.btn-primary-outline:hover {color: #0061D9;background-color: #E6F0FC;border-color: #0061D9;}
+.btn-primary-outline:focus {color: #0050B2;background-color: #CCDCF0;border-color: #0050B2;outline: none;}
 
 .btn_right {margin-right: 40px}
 
@@ -109,15 +83,12 @@ button:focus {outline: none}
 /* Валидация форм */
 .validation-summary-errors {color: #E53935;margin-bottom: 30px;}
 .validation-summary-errors li {margin-bottom: 5px;}
-.input-validation-error, .ss-main .ss-single-selected, .ss-content {border: solid 1px #E53935;}
-.input-validation-error:hover, .ss-open-below, .ss-content:hover {border: solid 1px #E53935;}
-.input-validation-error:focus, .ss-open-below, .ss-content:focus {outline-color: #E53935}
+.input-validation-error{border: solid 1px #E53935;}
+.input-validation-error:hover {border: solid 1px #E53935;}
+.input-validation-error:focus {outline-color: #E53935}
 .field-validation-error {font-size: 14px;color: #E53935;display: block;margin-top: 10px;margin-left: 10px;}
 .field-validation-error:before {content: "*";position: absolute;left: 0;}
-input#invalidCheck ~ .chechmark {
-    border: solid 2px red !important;
-}
-
+input#invalidCheck ~ .chechmark {border: solid 2px red !important;}
 
 
 
@@ -675,6 +646,14 @@ h1.page__title {
 .form-check-label p {font-size: 16px;line-height: 1;margin: 0;position: relative;top: 1px;}
 
 .password-control {cursor: pointer}
+
+/* Кошки мышки с селектом */
+.form-group-select select {display: block !important;position: absolute;opacity: 0;}
+.form-group-select .select-error {display: none}
+.form-group-select.form-group-select__invalid span {display: block;}
+.form-group-select .ss-main.input-validation-error {border: none}
+.form-group-select__invalid .ss-main .ss-single-selected {border: solid 1px red;border-radius: 4px;}
+
 
 /* Подтверждение ригистрации */
 .account-card__title {font-size: 31px;margin-bottom: 40px;}

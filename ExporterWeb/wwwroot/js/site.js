@@ -96,7 +96,7 @@ function show_hide_password(event, id) {
 $(document).ready(function () {
 
     $(".phone-mask").inputmask('+7 (999) 999-99-99');
-
+    
     /*
     $('form.for-validate .required-input').on('change', function () {
         let canSubmit = true;

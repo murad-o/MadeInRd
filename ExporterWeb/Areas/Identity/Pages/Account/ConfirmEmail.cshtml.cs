@@ -5,28 +5,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Threading.Tasks;
+using ExporterWeb.Helpers.Services;
+using ExporterWeb.Models.ViewModels;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<User> _userManager;
+        private readonly IEmailSender _emailSender;
+        private RazorPartialToStringRenderer _razorPartialToStringRenderer;
 
-        public ConfirmEmailModel(UserManager<User> userManager)
+        public ConfirmEmailModel(UserManager<User> userManager, IEmailSender emailSender, RazorPartialToStringRenderer razorPartialToStringRenderer)
         {
             _userManager = userManager;
+            _emailSender = emailSender;
+            _razorPartialToStringRenderer = razorPartialToStringRenderer;
         }
-
-        [TempData]
-        public string StatusMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
-            if (userId == null || code == null)
-            {
-                return RedirectToPage("/Index");
-            }
-
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
@@ -35,7 +34,9 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            var body = await _razorPartialToStringRenderer.RenderPartialToStringAsync(
+                "Emails/RegistrationCompletedEmail", new RegisterConfirmationEmailModel());
+            await _emailSender.SendEmailAsync(user.Email, "Email confirmed", body);
             return Page();
         }
     }

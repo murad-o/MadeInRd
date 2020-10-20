@@ -138,6 +138,18 @@
   <data name="Analytics" xml:space="preserve">
     <value>Аналитика</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Back to home page" xml:space="preserve">
+    <value>Вернуться на главную</value>
+  </data>
+  <data name="Confirm password" xml:space="preserve">
+    <value>Повторите пароль снова</value>
+  </data>
+  <data name="Create a new password for your account" xml:space="preserve">
+    <value>Придумайте новый пароль для вашего аккаунта</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
@@ -146,6 +158,12 @@
   </data>
   <data name="Email" xml:space="preserve">
     <value>Почта</value>
+  </data>
+  <data name="Enter password" xml:space="preserve">
+    <value>Придумайте пароль</value>
+  </data>
+  <data name="Enter your email" xml:space="preserve">
+    <value>Введите адрес электронной почты</value>
   </data>
   <data name="Events" xml:space="preserve">
     <value>Мероприятия</value>
@@ -177,6 +195,9 @@
   <data name="Information" xml:space="preserve">
     <value>Информация</value>
   </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Войти в личный кабинет</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Выйти из системы</value>
   </data>
@@ -192,14 +213,32 @@
   <data name="News" xml:space="preserve">
     <value>Новости</value>
   </data>
+  <data name="Now you can log in to your account and fill information about your company" xml:space="preserve">
+    <value>Теперь вы можете войти в личный кабинет, и заполнить информацию о вашей компании.</value>
+  </data>
   <data name="of the republic of Dagestan" xml:space="preserve">
     <value>Республики Дагестан</value>
+  </data>
+  <data name="Password recovery" xml:space="preserve">
+    <value>Восстановление пароля</value>
+  </data>
+  <data name="Please check your email to reset your password." xml:space="preserve">
+    <value>Проверьте свою почту, чтобы сбросить пароль</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Конфиденциальность</value>
   </data>
   <data name="Products &amp; Services" xml:space="preserve">
     <value>Продукция и услуги</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Восстановить</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Найти</value>
@@ -213,10 +252,67 @@
   <data name="Support" xml:space="preserve">
     <value>Поддержка</value>
   </data>
+  <data name="Thanks for registration!" xml:space="preserve">
+    <value>Благодарим за регистрацию!</value>
+  </data>
   <data name="Useful" xml:space="preserve">
     <value>Полезное</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать!</value>
+  </data>
+  <data name="Your password has been reset. Now you can log in." xml:space="preserve">
+    <value>Новый пароль сохранён. Теперь вы можете войти в ваш личный кабинет.</value>
+  </data>
+  <data name="Last name" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="We have sent you a confirmation email. Follow the link in the letter to complete the registration." xml:space="preserve">
+    <value>Мы отправили вам на электронную почту письмо для подтверждения. Перейдите по ссылке в письме для завершения регистрации.</value>
+  </data>
+  <data name="If you have not received the message within a few minutes, then check your Spam folder." xml:space="preserve">
+    <value>Если письмо не пришло в течение нескольких минут, то проверьте папку "Спам".</value>
+  </data>
+  <data name="Information about company" xml:space="preserve">
+    <value>Информация о компании</value>
+  </data>
+  <data name="Data of the organization’s contact person" xml:space="preserve">
+    <value>Данные контактного лица организации</value>
+  </data>
+  <data name="I'm aware and agree with" xml:space="preserve">
+    <value>Я ознакомился и согласен с</value>
+  </data>
+  <data name="the terms of the user agreement" xml:space="preserve">
+    <value>пользовательским соглашением</value>
+  </data>
+  <data name="Sign up" xml:space="preserve">
+    <value>Зарегестрироваться</value>
+  </data>
+  <data name="Enter company name" xml:space="preserve">
+    <value>Введите наименование компании</value>
+  </data>
+  <data name="Enter company INN" xml:space="preserve">
+    <value>Введите ИНН компании</value>
+  </data>
+  <data name="Enter company OGRNIP" xml:space="preserve">
+    <value>Введите ОГРН или ОГРНИП компании</value>
+  </data>
+  <data name="Select an industry" xml:space="preserve">
+    <value>Выберите отрасль</value>
+  </data>
+  <data name="Enter your last name" xml:space="preserve">
+    <value>Введите фамилию</value>
+  </data>
+  <data name="Enter your first name" xml:space="preserve">
+    <value>Введите имя</value>
+  </data>
+  <data name="Enter your patronymic" xml:space="preserve">
+    <value>Введите отчество</value>
+  </data>
+  <data name="Indicate your position" xml:space="preserve">
+    <value>Укажите вашу должность</value>
+  </data>
+  <data name="Enter password again" xml:space="preserve">
+    <value>Повторите пароль снова</value>
   </data>
 </root>

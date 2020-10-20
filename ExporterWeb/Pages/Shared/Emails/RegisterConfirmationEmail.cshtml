@@ -1,0 +1,12 @@
+﻿@model ExporterWeb.Models.ViewModels.RegisterConfirmationEmailModel
+@inject CommonLocalizationService Localizer
+
+@{
+    Layout = "Emails/_EmailLayout";
+}
+
+<h3>@Localizer["Thanks for registration!"]</h3>
+<p>Здравствуйте, @Model.LastName @Model.FirstName!</p>
+<p>Нажмите <a href="@Model.Callback">сюда</a>, чтобы подтвердить аккаунт</p>
+
+

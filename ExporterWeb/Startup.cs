@@ -1,34 +1,19 @@
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
 using ExporterWeb.Helpers.Services;
-using ExporterWeb.Models;
-using ExporterWeb.Resources;
-using ExporterWeb.Helpers.RouteModelConventions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Localization.Routing;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Localization;
 
 namespace ExporterWeb
 {
     public class Startup
     {
-        private const string DbConnectionString = "ExportersDbConnection";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,59 +23,21 @@ namespace ExporterWeb
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString(DbConnectionString);
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString));
+            services.ConfigureDatabase(Configuration);
 
-            services.AddDefaultIdentity<User>(options =>
-                    options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddErrorDescriber<MultiLanguageIdentityErrorDescriber>();
+            services.ConfigureIdentity();
 
-            const string requireAdministratorRole = "RequireAdministratorRole";
-            services.AddRazorPages(options => {
-                options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
-                options.Conventions.AuthorizeFolder("/Admin/Users", requireAdministratorRole);
-            });
+            services.ConfigureRazorPages();
+            
             services.AddControllers();
+            
+            services.ConfigureAuthorization();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(requireAdministratorRole,
-                     policy => policy.RequireRole(Constants.AdministratorsRole));
-            });
+            services.ConfigureLocalization();
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.ConfigureRouteOptions();
 
-            services.AddMvc()
-                .AddViewLocalization()
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(nameof(ErrorsResources),Assembly.GetExecutingAssembly().GetName().FullName);
-                });
-
-            services.Configure<RouteOptions>(options =>
-            {
-                options.LowercaseUrls = true;
-            });
-
-            services.AddControllers(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                                 .RequireAuthenticatedUser()
-                                 .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = Languages.WhiteList.Select(lang => new CultureInfo(lang)).ToList();
-                options.DefaultRequestCulture = new RequestCulture(Languages.DefaultLanguage);
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-                options.RequestCultureProviders.Insert(0, new RouteDataRequestCultureProvider { Options = options });
-            });
+            services.ConfigureRequestLocalizationOptions();
 
             services.AddScoped<IAuthorizationHandler, ExporterOwnerAuthorizationHandler>();
             services.AddScoped<IAuthorizationHandler, ProductOwnerAuthorizationHandler>();
@@ -101,6 +48,7 @@ namespace ExporterWeb
             services.AddSingleton<IAuthorizationHandler, ManagerAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, AdministratorAuthorizationHandler>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<RazorPartialToStringRenderer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

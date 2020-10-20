@@ -1,6 +1,5 @@
 using ExporterWeb.Helpers;
 using ExporterWeb.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages
 {
-    [AllowAnonymous]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

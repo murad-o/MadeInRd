@@ -1,5 +1,4 @@
-﻿using System;
-using ExporterWeb.Helpers.Services;
+﻿using ExporterWeb.Helpers.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExporterWeb.Helpers
@@ -91,7 +90,7 @@ namespace ExporterWeb.Helpers
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresNonAlphanumeric),
-                Description = "Passwords must have at least one non alphanumeric character."
+                Description = _localizer["Passwords must have at least one non alphanumeric character."]
             };
         }
 

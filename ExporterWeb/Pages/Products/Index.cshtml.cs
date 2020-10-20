@@ -1,5 +1,4 @@
 ﻿using ExporterWeb.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -8,7 +7,6 @@ using X.PagedList;
 
 namespace ExporterWeb.Pages.Products
 {
-    [AllowAnonymous]
     public class IndexModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;

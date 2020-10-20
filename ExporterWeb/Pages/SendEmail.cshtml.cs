@@ -33,7 +33,7 @@ namespace ExporterWeb.Pages
                 "kudanoff@yandex.ru",
                 "ibragim.kudanov@mail.ru"
             };
-            var body = await _razorPartialToStringRenderer.RenderPartialToStringAsync("Emails/RegisterConfirmationEmail",
+            var body = await _razorPartialToStringRenderer.RenderPartialToStringAsync("Emails/RegistrationCompletedEmail",
                 emailModel);
             foreach (var email in emails)
             {

@@ -2,44 +2,35 @@ using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AccountResources = ExporterWeb.Resources.Account.Account;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
             ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
             _context = context;
         }
 
@@ -61,51 +52,68 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         public class InputModel
         {
             // User form 
-            [Required(ErrorMessage = "The {0} field is required")]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "This field is required")]
+            [EmailAddress(ErrorMessage = "Invalid email address")]
+            [Display(Name = "Email", ResourceType = typeof(AccountResources))]
             public string Email { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(100, ErrorMessage = "Passwords must consist at least {2} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Password", ResourceType = typeof(AccountResources))]
             public string Password { get; set; } = "";
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "ConfirmPassword", ResourceType = typeof(AccountResources))]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Required(ErrorMessage = "This field is required")]
             public string ConfirmPassword { get; set; } = "";
 
             // CommonExporter form
-            [Required(ErrorMessage = "Field {0} is required")]
-            [MaxLength(12)]
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(10, ErrorMessage = "This field must consist {1} digits", MinimumLength = 10)]
+            [Display(Name = "INN", ResourceType = typeof(AccountResources))]
             public string INN { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
-            [MaxLength(15)]
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(15, ErrorMessage = "This field must consist {2} or {1} digits", MinimumLength = 13)]
+            [Display(Name = "OGRN_IP", ResourceType = typeof(AccountResources))]
             public string OGRN_IP { get; set; } = "";
 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Industry", ResourceType = typeof(AccountResources))]
             public int FieldOfActivityId { get; set; }
 
             // LanguageExporter form
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Name", ResourceType = typeof(AccountResources))]
             public string Name { get; set; } = "";
 
             public string? Description { get; set; }
 
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "FirstName", ResourceType = typeof(AccountResources))]
+            
             public string ContactPersonFirstName { get; set; } = "";
-            [Required(ErrorMessage = "The {0} field is required")]
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "LastName", ResourceType = typeof(AccountResources))]
             public string ContactPersonSecondName { get; set; } = "";
+            [Display(Name = "Patronymic", ResourceType = typeof(AccountResources))]
             public string? ContactPersonPatronymic { get; set; }
 
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Position", ResourceType = typeof(AccountResources))]
+            public string Position { get; set; } = "";
+
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Phone", ResourceType = typeof(AccountResources))]
+            [DataType(DataType.PhoneNumber)]
+            [RegularExpression(@"^\+7\s\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}$", ErrorMessage = "Enter a valid phone")]
+            public string Phone { get; set; } = "";
+
             [Required]
-            public string DirectorFirstName { get; set; } = "";
-            [Required]
-            public string DirectorSecondName { get; set; } = "";
-            public string? DirectorPatronymic { get; set; }
+            [Range(typeof(bool), "true", "true", ErrorMessage = "Your consent with the user agreement is required")]
+            public bool IsTermsOfUseAgreed { get; set; }
         }
 
         public async Task OnGetAsync(string? returnUrl)
@@ -144,9 +152,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 ContactPersonFirstName = Input.ContactPersonFirstName,
                 ContactPersonSecondName = Input.ContactPersonSecondName,
                 ContactPersonPatronymic = Input.ContactPersonPatronymic,
-                DirectorFirstName = Input.DirectorFirstName,
-                DirectorSecondName = Input.DirectorSecondName,
-                DirectorPatronymic = Input.DirectorPatronymic,
+                Position = Input.Position,
+                Phone = Input.Phone,
             };
 
             await _context.Database.BeginTransactionAsync();
@@ -170,8 +177,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
                 await _context.LanguageExporters!.AddAsync(languageExporter);
                 await _context.SaveChangesAsync();
-
-                await SendConfirmationEmail(user, returnUrl);
                 _context.Database.CommitTransaction();
                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
@@ -191,19 +196,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private async Task SendConfirmationEmail(User user, string? returnUrl)
-        {
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = user.Id, code, returnUrl },
-                protocol: Request.Scheme);
-
-            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-        }
+        
 
 
 #nullable disable

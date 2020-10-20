@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Drawing;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 namespace ExporterWeb.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class UploadController : Controller
     {

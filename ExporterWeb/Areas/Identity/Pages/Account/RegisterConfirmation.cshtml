@@ -1,0 +1,26 @@
+﻿@page
+@using ExporterWeb.Helpers.Services
+@model RegisterConfirmationModel
+@inject CommonLocalizationService Localizer
+
+<h1>@ViewData["Title"]</h1>
+
+<main class="primary-content" role="main">
+
+    <div class="container">
+
+        <div class="account-card">
+
+            <h1 class="account-card__title">@Localizer["Registration"]</h1>
+
+            <div class="register-text">
+                <p>@Localizer["We have sent you a confirmation email. Follow the link in the letter to complete the registration."]</p>
+                <br>
+                <p>@Localizer["If you have not received the message within a few minutes, then check your Spam folder."]</p>
+            </div>
+            <a class="link link_border" href="/">@Localizer["Back to home page"]</a>
+
+        </div>
+    </div>
+
+</main>

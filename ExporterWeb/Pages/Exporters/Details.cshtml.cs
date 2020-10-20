@@ -1,5 +1,4 @@
 ﻿using ExporterWeb.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace ExporterWeb.Pages.Exporters
 {
-    [AllowAnonymous]
     public class DetailsModel : BasePageModel
     {
         private readonly ApplicationDbContext _context;

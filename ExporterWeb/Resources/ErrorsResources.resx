@@ -117,70 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User Name {0} is already taken." xml:space="preserve">
-    <value>Имя пользователя {0} занято</value>
-  </data>
-  <data name="An unknown failure has occurred." xml:space="preserve">
-    <value>Произошла неизвестная ошибка</value>
-  </data>
-  <data name="Incorrect password." xml:space="preserve">
-    <value>Неправильный пароль</value>
-  </data>
-  <data name="A user with this login already exists." xml:space="preserve">
-    <value>Пользователь с таким логином уже существует</value>
-  </data>
-  <data name="User name '{userName}' is invalid, can only contain letters or digits." xml:space="preserve">
-    <value>Имя пользователя {userName} не валидно. Имя пользователя может содержать только цифры и буквы</value>
-  </data>
-  <data name="Email {0} is already taken." xml:space="preserve">
-    <value>Почта {0} уже занята</value>
-  </data>
-  <data name="Email '{email}' is invalid." xml:space="preserve">
-    <value>Введите действительный адрес</value>
-  </data>
-  <data name="Passwords must consist at least {2} characters" xml:space="preserve">
-    <value>Пароль должен состоять хотя бы из {2} символов</value>
-  </data>
-  <data name="Passwords must have at least one non alphanumeric character." xml:space="preserve">
-    <value>Пароль должен содержать как минимум один спецсимвол</value>
-  </data>
-  <data name="Passwords must have at least one digit ('0'-'9')." xml:space="preserve">
-    <value>Пароль должен содержать хотя бы одну цифру ('0'-'9')</value>
-  </data>
-  <data name="Passwords must have at least one lowercase ('a'-'z')." xml:space="preserve">
-    <value>Пароль должен содержать хотя бы одну строчную букву ('a'-'z')</value>
-  </data>
-  <data name="Passwords must have at least one uppercase ('A'-'Z')." xml:space="preserve">
-    <value>Пароль должен содержать хотя бы одну заглавную букву ('A'-'Z').</value>
-  </data>
   <data name="This field is required" xml:space="preserve">
-    <value>Это обязательное поле</value>
-  </data>
-  <data name="The password and confirmation password do not match." xml:space="preserve">
-    <value>Пароли не совпадают</value>
-  </data>
-  <data name="The {0} must be at least {2} and at max {1} characters long." xml:space="preserve">
-    <value>Длина поля {0} должна быть в диапозоне {2}-{1}</value>
-  </data>
-  <data name="Invalid email address" xml:space="preserve">
-    <value>Некорректный формат адреса электронной почты</value>
-  </data>
-  <data name="{0} length should not be more than {2}" xml:space="preserve">
-    <value>Длина {0} не может быть длинеее, чем {2}</value>
+    <value>This field is required</value>
   </data>
   <data name="Your consent with the user agreement is required" xml:space="preserve">
-    <value>Необходимо ваше согласие с пользовательским соглашением</value>
+    <value>Your consent with the user agreement is required</value>
   </data>
   <data name="This field must consist {1} digits" xml:space="preserve">
-    <value>Необходимо ввести номер, состоящий из {1} цифр</value>
+    <value>This field must consist {1} digits</value>
   </data>
   <data name="This field must consist {2} or {1} digits" xml:space="preserve">
-    <value>Необходимо ввести номер, состоящий из {2} или {1} цифр</value>
+    <value>This field must consist {2} or {1} digits</value>
   </data>
   <data name="Enter a valid phone" xml:space="preserve">
-    <value>Введите действительный номер</value>
+    <value>Enter a valid phone</value>
+  </data>
+  <data name="Passwords must consist at least {2} characters" xml:space="preserve">
+    <value>Passwords must consist at least {2} characters</value>
   </data>
   <data name="This e-mail is not registered or not confirmed" xml:space="preserve">
-    <value>Данный e-mail не зарегистрирован или не подтвержден</value>
+    <value>This e-mail is not registered or not confirmed</value>
   </data>
 </root>

@@ -3,6 +3,7 @@
 * {box-sizing: border-box;-moz-box-sizing: border-box;}
 
 a, a:hover {text-decoration: none;}
+a:hover, a:visited {color: #fff}
 
 h1, h2, h3, h4, h5, h6 {line-height: 1.3;}
 
@@ -48,9 +49,10 @@ button:focus {outline: none}
 .btn_right {margin-right: 40px}
 
 
-.link {line-height: 1.2;color: #1D87FE;}
-.link:hover {color: #0061D9; }
-.link:focus {color: #0050B2; }
+.link, link:visited {line-height: 1.2;color: #1D87FE;}
+
+.link:hover {color: #0061D9;}
+.link:focus {color: #0050B2;}
 
 .link_border {border-bottom: solid 1px #1D87FE;white-space: nowrap;}
 .link_border:hover {border-color: #0061D9}

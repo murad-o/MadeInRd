@@ -141,13 +141,6 @@
 }
 
 @media (max-width: 1024px) {
-    .navigation-chain {
-        display: none;
-    }
-    .items-container {
-        max-width: 850px;
-        margin: 0 auto;
-    }
     /* Industry pop-up filters  */
     .industries {
         position: fixed;

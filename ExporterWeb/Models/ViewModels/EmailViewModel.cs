@@ -1,6 +1,6 @@
 ﻿namespace ExporterWeb.Models.ViewModels
 {
-    public class RegisterConfirmationEmailModel
+    public class EmailViewModel
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

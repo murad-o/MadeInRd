@@ -6,16 +6,22 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
+using ExporterWeb.Helpers.Services;
+using ExporterWeb.Models.ViewModels;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
+        private readonly RazorPartialToStringRenderer _razorPartialToStringRenderer;
+        private readonly EmailSender _emailSender;
 
-        public ResetPasswordModel(UserManager<User> userManager)
+        public ResetPasswordModel(UserManager<User> userManager, RazorPartialToStringRenderer razorPartialToStringRenderer, EmailSender emailSender)
         {
             _userManager = userManager;
+            _razorPartialToStringRenderer = razorPartialToStringRenderer;
+            _emailSender = emailSender;
         }
 
         public class InputModel
@@ -65,6 +71,9 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
+                var emailBody = await _razorPartialToStringRenderer.RenderPartialToStringAsync(
+                    "Emails/ResetPasswordConfirmationEmail", new EmailViewModel());
+                await _emailSender.SendEmailAsync(user.Email, "Пароль изменен", emailBody);
                 return RedirectToPage("./ResetPasswordConfirmation");
             }
 

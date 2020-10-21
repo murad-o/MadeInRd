@@ -36,7 +36,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             var result = await _userManager.ConfirmEmailAsync(user, code);
             var body = await _razorPartialToStringRenderer.RenderPartialToStringAsync(
                 "Emails/RegistrationCompletedEmail", new RegisterConfirmationEmailModel());
-            await _emailSender.SendEmailAsync(user.Email, "Email confirmed", body);
+            await _emailSender.SendEmailAsync(user.Email, "Почта подтверждена", body);
             return Page();
         }
     }

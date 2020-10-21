@@ -50,7 +50,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             var body = await _partialToStringRenderer.RenderPartialToStringAsync("Emails/RegisterConfirmationEmail",
                 new RegisterConfirmationEmailModel { FirstName = user.FirstName, LastName = user.SecondName, Callback = callbackUrl});
 
-            await _emailSender.SendEmailAsync(email, "Confirm your email", body);
+            await _emailSender.SendEmailAsync(email, "Подтвеждение почты", body);
 
             return Page();
         }

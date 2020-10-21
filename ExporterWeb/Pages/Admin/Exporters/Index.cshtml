@@ -1,0 +1,38 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.Exporters.Index
+
+Новые зарегистрированные экспортеры
+<table>
+    <thead>
+        <tr>
+            <th>Наименование компании</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @foreach (var exporter in Model.Exporters)
+            {
+                <tr>
+                    <td>@exporter.Name</td>
+                    <td><a asp-page="/Exporters/Details" asp-route-id="@exporter.CommonExporterId">Подробнее</a></td>
+                    <td>
+                        <form method="post">
+                            <input asp-for="Id" type="hidden" value="@exporter.CommonExporterId">
+                            <input asp-for="Language" type="hidden" value="@exporter.Language">
+                            <button type="submit">Одобрить</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-page="Reject" asp-route-id="@exporter.CommonExporterId">Отказать</a>
+                    </td>
+                </tr>
+            }
+        
+    </tbody>
+</table>
+<ol>
+
+</ol>

@@ -1,0 +1,10 @@
+﻿@page
+@model ExporterWeb.Pages.Admin.Exporters.Reject
+
+
+<form method="post">
+    <label>Введите причину отказа</label>
+    <textarea asp-for="RejectionReason"></textarea>
+    <input asp-for="Language" type="hidden" value="@Model.Language">
+    <button type="submit">Отправить</button>
+</form>

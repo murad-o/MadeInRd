@@ -2,32 +2,6 @@
 .content {
     background: #F2F8FF;
 }
-.navigation-chain {
-    padding: 40px 2px 0;
-    border-bottom: 1px solid #DEDEDE;
-}
-.navigation-chain__list {
-    display: flex;
-    align-items: center;
-    padding-bottom: 9px;
-}
-.navigation-chain__item {
-    margin-right: 10px;
-}
-.navigation-chain__link {
-    font-size: 14px;
-    line-height: 16px;
-    color: #3B4256;
-}
-.navigation-chain__item:first-child .navigation-chain__link {
-    color: #1D87FE;
-}
-.navigation-chain__point {
-    display: block;
-    width: 3px;
-    height: 3px;
-    background-color: #1D87FE;
-}
 .items-container {
     display: flex;
     padding-top: 20px;

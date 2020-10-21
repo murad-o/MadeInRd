@@ -336,7 +336,7 @@ h1.page__title {
  *** TermsOfuse ***
 *********************/
 .termsofuse {
-    padding: 100px 0 60px 0;
+    padding: 40px 0 60px 0;
 }
 .termsofuse__wrapper {
     margin-top:40px;
@@ -347,6 +347,32 @@ h1.page__title {
     line-height: 24px;
     color: #010B23;
     margin-bottom: 20px;
+}
+
+.navigation-chain {
+    padding: 40px 2px 0;
+}
+.navigation-chain__list {
+    display: flex;
+    align-items: center;
+    padding-bottom: 9px;
+}
+.navigation-chain__item {
+    margin-right: 20px;
+}
+.navigation-chain__link {
+    font-size: 14px;
+    line-height: 16px;
+    color: #3B4256;
+}
+.navigation-chain__item:first-child .navigation-chain__link {
+    color: #1D87FE;
+}
+.navigation-chain__point {
+    display: block;
+    width: 3px;
+    height: 3px;
+    background-color: #1D87FE;
 }
 /* ****************** END ***************** */
 
@@ -666,9 +692,6 @@ h1.page__title {
 
 
 
-
-
-
 /*********************
  * АДАПТИВ
 *********************/
@@ -704,4 +727,5 @@ h1.page__title {
     .account-header__subtitle {font-size: 19px;margin-bottom: 20px;}
     .form-check {margin: 30px 0;}
     .go__register {width: 100%}
+
 }

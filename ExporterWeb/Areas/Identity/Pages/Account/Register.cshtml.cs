@@ -71,7 +71,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             // CommonExporter form
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(10, ErrorMessage = "This field must consist {1} digits", MinimumLength = 10)]
+            [RegularExpression(@"^(\d{10}|\d{12})$", ErrorMessage = "This field must consist 10 or 12 digits")]
+            [StringLength(12, MinimumLength = 10)]
             [Display(Name = "INN", ResourceType = typeof(AccountResources))]
             public string INN { get; set; } = "";
 

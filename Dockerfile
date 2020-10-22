@@ -19,4 +19,4 @@ RUN dotnet publish "ExporterWeb.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ExporterWeb.dll"]
+ENTRYPOINT ["dotnet", "ExporterWeb.dll", "-c Release"]

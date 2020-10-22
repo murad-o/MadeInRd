@@ -1,9 +1,0 @@
-.git/
-
-bin/
-obj/
-
-.vs/
-Dockerfile
-dockerfile
-README.md

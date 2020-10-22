@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models.ViewModels;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
@@ -15,9 +16,9 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly RazorPartialToStringRenderer _razorPartialToStringRenderer;
-        private readonly EmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
-        public ResetPasswordModel(UserManager<User> userManager, RazorPartialToStringRenderer razorPartialToStringRenderer, EmailSender emailSender)
+        public ResetPasswordModel(UserManager<User> userManager, RazorPartialToStringRenderer razorPartialToStringRenderer, IEmailSender emailSender)
         {
             _userManager = userManager;
             _razorPartialToStringRenderer = razorPartialToStringRenderer;

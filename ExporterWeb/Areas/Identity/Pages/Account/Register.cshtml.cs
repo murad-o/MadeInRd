@@ -77,7 +77,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             public string INN { get; set; } = "";
 
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(15, ErrorMessage = "This field must consist {2} or {1} digits", MinimumLength = 13)]
+            [RegularExpression(@"^(\d{13}|\d{15})$", ErrorMessage = "This field must consist 13 or 15 digits")]
+            [StringLength(15, MinimumLength = 13)]
             [Display(Name = "OGRN_IP", ResourceType = typeof(AccountResources))]
             public string OGRN_IP { get; set; } = "";
 

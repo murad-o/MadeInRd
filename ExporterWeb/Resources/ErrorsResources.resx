@@ -135,4 +135,7 @@
   <data name="This e-mail is not registered or not confirmed" xml:space="preserve">
     <value>This e-mail is not registered or not confirmed</value>
   </data>
+  <data name="This field must consist 13 or 15 digits" xml:space="preserve">
+    <value>This field must consist 13 or 15 digits</value>
+  </data>
 </root>

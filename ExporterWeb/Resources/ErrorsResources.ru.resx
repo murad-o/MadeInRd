@@ -171,16 +171,16 @@
   <data name="Your consent with the user agreement is required" xml:space="preserve">
     <value>Необходимо ваше согласие с пользовательским соглашением</value>
   </data>
-  <data name="This field must consist {1} digits" xml:space="preserve">
-    <value>Необходимо ввести номер, состоящий из {1} цифр</value>
-  </data>
-  <data name="This field must consist {2} or {1} digits" xml:space="preserve">
-    <value>Необходимо ввести номер, состоящий из {2} или {1} цифр</value>
+  <data name="This field must consist 10 or 12 digits" xml:space="preserve">
+    <value>Необходимо ввести номер, состоящий из 10 или 12 цифр</value>
   </data>
   <data name="Enter a valid phone" xml:space="preserve">
     <value>Введите действительный номер</value>
   </data>
   <data name="This e-mail is not registered or not confirmed" xml:space="preserve">
     <value>Данный e-mail не зарегистрирован или не подтвержден</value>
+  </data>
+  <data name="This field must consist 13 or 15 digits" xml:space="preserve">
+    <value>Необходимо ввести номер, состоящий из 13 или 15 цифр</value>
   </data>
 </root>

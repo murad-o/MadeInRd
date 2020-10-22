@@ -123,11 +123,8 @@
   <data name="Your consent with the user agreement is required" xml:space="preserve">
     <value>Your consent with the user agreement is required</value>
   </data>
-  <data name="This field must consist {1} digits" xml:space="preserve">
-    <value>This field must consist {1} digits</value>
-  </data>
-  <data name="This field must consist {2} or {1} digits" xml:space="preserve">
-    <value>This field must consist {2} or {1} digits</value>
+  <data name="This field must consist 10 or 12 digits" xml:space="preserve">
+    <value>This field must consist 10 or 12 digits</value>
   </data>
   <data name="Enter a valid phone" xml:space="preserve">
     <value>Enter a valid phone</value>
@@ -137,5 +134,8 @@
   </data>
   <data name="This e-mail is not registered or not confirmed" xml:space="preserve">
     <value>This e-mail is not registered or not confirmed</value>
+  </data>
+  <data name="This field must consist 13 or 15 digits" xml:space="preserve">
+    <value>This field must consist 13 or 15 digits</value>
   </data>
 </root>

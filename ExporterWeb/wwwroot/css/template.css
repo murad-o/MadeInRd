@@ -3,7 +3,7 @@
 * {box-sizing: border-box;-moz-box-sizing: border-box;}
 
 a, a:hover {text-decoration: none;}
-a:hover, a:visited {color: #fff}
+/*a:hover, a:visited {color: #fff}*/
 
 h1, h2, h3, h4, h5, h6 {line-height: 1.3;}
 
@@ -99,6 +99,7 @@ input#invalidCheck ~ .chechmark {border: solid 2px red !important;}
 
 /* Separated blocks that are used in big and small resolution screen */
 .main-page-link {font-weight: bold;font-size: 27px;color: #fff;}
+.main-page-link:hover {color: #fff;}
 .main-page-link__rd {color: #1D87FE;}
 .site-info, .site-info__republic {font-size: 14px;line-height: 20px;color: #9E9E9E;}
 .main-menu-link {text-transform: uppercase;color: #fff;position: relative;}

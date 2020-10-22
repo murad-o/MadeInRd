@@ -71,12 +71,14 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             // CommonExporter form
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(10, ErrorMessage = "This field must consist {1} digits", MinimumLength = 10)]
+            [RegularExpression(@"^(\d{10}|\d{12})$", ErrorMessage = "This field must consist 10 or 12 digits")]
+            [StringLength(12, MinimumLength = 10)]
             [Display(Name = "INN", ResourceType = typeof(AccountResources))]
             public string INN { get; set; } = "";
 
             [Required(ErrorMessage = "This field is required")]
-            [StringLength(15, ErrorMessage = "This field must consist {2} or {1} digits", MinimumLength = 13)]
+            [RegularExpression(@"^(\d{13}|\d{15})$", ErrorMessage = "This field must consist 13 or 15 digits")]
+            [StringLength(15, MinimumLength = 13)]
             [Display(Name = "OGRN_IP", ResourceType = typeof(AccountResources))]
             public string OGRN_IP { get; set; } = "";
 

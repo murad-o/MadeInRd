@@ -1,4 +1,4 @@
-﻿@model ExporterWeb.Models.ViewModels.EmailViewModel
+﻿@model ExporterWeb.Models.ViewModels.AccountRefusedViewModel
 
 @{
     Layout = "Emails/_EmailLayout";
@@ -39,7 +39,7 @@
 						<table width="100%" style="text-align:center;padding: 45px 30px 50px;">
 							<tr>
 								<td>
-									<h1 style="font-size:21px; line-height: 1.2; margin:0 0 40px;">Восстановление пароля</h1>
+									<h1 style="font-size:21px; line-height: 1.2; margin:0 0 40px;">Учетная запись не одобрена</h1>
 								</td>
 							</tr>
 							<tr style="font-size:16px; color:#010B23">
@@ -49,11 +49,19 @@
 							</tr>
 							<tr>
 								<td>
-									<p>Ваш новый пароль сохранён.</p>
-                                    <br>
-                                    <p>Если Вы не запрашивали изменение пароля, пожалуйста, незамедлительно свяжитесь с нами, по электронной почте, либо по номеру 8(912)345-67-89.</p>
+									<p style="margin: 0 0 30px 0;">К сожалению учетная запись вашей компании не одобрена.</p>
 								</td>
 							</tr>
+							<tr style="background-color: #F4F7FB; padding: 20px">
+								<td>
+									<p style="text-align: left; padding:15px; margin:0">Причина отказа: @Model.RejectionReason</p>
+								</td>
+							</tr>
+							<tr>
+                            	<td>
+                            		<p style="margin: 30px 0 0 0;">Если вы считаете ошибочным отказ в регистрации напишите нам на почту, либо позвоните по номеру 8 912 345-67-89.</p>
+                            	</td>
+                            </tr>
 						</table>
 						<table width="100%" style="text-align:center; background-color:#ECECEC; padding:40px 30px">
 							<tr>

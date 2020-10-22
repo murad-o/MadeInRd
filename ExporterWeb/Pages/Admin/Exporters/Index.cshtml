@@ -26,7 +26,7 @@
                         </form>
                     </td>
                     <td>
-                        <a asp-page="Reject" asp-route-id="@exporter.CommonExporterId">Отказать</a>
+                        <a asp-page="Reject" asp-route-id="@exporter.CommonExporterId" asp-route-language="@CultureInfo.CurrentCulture.TwoLetterISOLanguageName">Отказать</a>
                     </td>
                 </tr>
             }

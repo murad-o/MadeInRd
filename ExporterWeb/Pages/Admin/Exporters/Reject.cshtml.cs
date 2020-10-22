@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
+using ExporterWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +17,13 @@ namespace ExporterWeb.Pages.Admin.Exporters
     {
         private readonly ApplicationDbContext _context;
         private readonly IEmailSender _emailSender;
+        private readonly RazorPartialToStringRenderer _partialToStringRenderer;
 
-        public Reject(ApplicationDbContext context, IEmailSender emailSender)
+        public Reject(ApplicationDbContext context, IEmailSender emailSender, RazorPartialToStringRenderer partialToStringRenderer)
         {
             _context = context;
             _emailSender = emailSender;
+            _partialToStringRenderer = partialToStringRenderer;
         }
 
         public void OnGet(string id, string language)
@@ -36,9 +40,15 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 .FirstOrDefaultAsync(e => e.CommonExporterId == Id && e.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName);
 
             var email = exporter.CommonExporter!.User!.Email;
-            string message = $"Ваша компания не одобрена администрацией сайта. Причина отказа: {RejectionReason}";
-            string subject = "Компания отклонена";
-            await _emailSender.SendEmailAsync(email, subject, message);
+            var body = await _partialToStringRenderer.RenderPartialToStringAsync(
+                "Emails/AccountApprovedNotificationEmail",
+                new AccountRefusedViewModel
+                {
+                    FirstName = exporter.ContactPersonFirstName, 
+                    LastName = exporter.ContactPersonSecondName,
+                    RejectionReason = RejectionReason
+                });
+            await _emailSender.SendEmailAsync(email, "Компания отклонена", body);
 
             return RedirectToPage("./Index");
         } 

@@ -1,9 +1,7 @@
 ﻿namespace ExporterWeb.Models.ViewModels
 {
-    public class EmailViewModel
+    public class EmailViewModel : ContactInfoModel
     {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
         public string? Callback { get; set; }
     }
 }

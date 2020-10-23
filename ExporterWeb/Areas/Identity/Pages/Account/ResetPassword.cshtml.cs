@@ -73,7 +73,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 var emailBody = await _razorPartialToStringRenderer.RenderPartialToStringAsync(
-                    "Emails/ResetPasswordConfirmationEmail", new EmailViewModel());
+                    "Emails/ResetPasswordConfirmationEmail", new ContactInfoModel());
                 await _emailSender.SendEmailAsync(user.Email, "Пароль изменен", emailBody);
                 return RedirectToPage("./ResetPasswordConfirmation");
             }

@@ -47,7 +47,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
             var email = exporter.CommonExporter!.User!.Email;
             var body = await _partialToStringRenderer.RenderPartialToStringAsync(
                 "Emails/AccountApprovedNotificationEmail",
-                new AccountApproveViewModel
+                new ContactInfoModel
                     {FirstName = exporter.ContactPersonFirstName, LastName = exporter.ContactPersonSecondName});
 
             await _emailSender.SendEmailAsync(email, "Аккаунт одобрен", body);

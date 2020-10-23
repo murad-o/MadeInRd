@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers.Services;
@@ -25,14 +24,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _errorsLocalizer = errorsLocalizer;
             _razorPartialToStringRenderer = razorPartialToStringRenderer;
-        }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "This field is required")]
-            [EmailAddress(ErrorMessage = "Invalid email address")]
-            [Display(Name = "Email", ResourceType = typeof(Resources.Account.Account))]
-            public string Email { get; set; } = "";
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -69,6 +60,6 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 #nullable disable
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public ForgotPasswordViewModel Input { get; set; }
     }
 }

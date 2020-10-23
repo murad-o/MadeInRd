@@ -1,12 +1,11 @@
 ﻿using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers.Services;
+using ExporterWeb.Models.ViewModels;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
@@ -60,21 +59,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
         }
 
 #nullable disable
-        public class InputModel
-        {
-            [Required(ErrorMessage = "This field is required")]
-            [EmailAddress(ErrorMessage = "Invalid email address")]
-            [Display(Name = "Email", ResourceType = typeof(Resources.Account.Account))]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "This field is required")]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password", ResourceType = typeof(Resources.Account.Account))]
-            public string Password { get; set; }
-        }
-
         [BindProperty]
-        public InputModel Input { get; set; }
+        public LoginViewModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
     }

@@ -138,4 +138,10 @@
   <data name="This field must consist 13 or 15 digits" xml:space="preserve">
     <value>This field must consist 13 or 15 digits</value>
   </data>
+  <data name="Invalid password" xml:space="preserve">
+    <value>Invalid password</value>
+  </data>
+  <data name="This e-mail is not registered" xml:space="preserve">
+    <value>This e-mail is not registered</value>
+  </data>
 </root>

@@ -183,4 +183,10 @@
   <data name="This field must consist 13 or 15 digits" xml:space="preserve">
     <value>Необходимо ввести номер, состоящий из 13 или 15 цифр</value>
   </data>
+  <data name="Invalid password" xml:space="preserve">
+    <value>Неправильный пароль</value>
+  </data>
+  <data name="This e-mail is not registered" xml:space="preserve">
+    <value>Данный e-mail не зарегистрирован</value>
+  </data>
 </root>

@@ -110,7 +110,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "This field is required")]
             [Display(Name = "Phone", ResourceType = typeof(AccountResources))]
             [DataType(DataType.PhoneNumber)]
-            [RegularExpression(@"^\+7\s\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}$", ErrorMessage = "Enter a valid phone")]
+            [RegularExpression(@"^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$", ErrorMessage = "Enter a valid phone")]
             public string Phone { get; set; } = "";
 
             [Required]

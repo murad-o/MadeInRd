@@ -14,4 +14,7 @@
     <data name="Select an industry" xml:space="preserve">
         <value>Select an industry</value>
     </data>
+    <data name="Forgot password?" xml:space="preserve">
+        <value>Forgot password?</value>
+    </data>
 </root>

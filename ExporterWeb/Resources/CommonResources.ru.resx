@@ -315,4 +315,7 @@
   <data name="Enter password again" xml:space="preserve">
     <value>Повторите пароль снова</value>
   </data>
+  <data name="Forgot password?" xml:space="preserve">
+    <value>Забыли пароль?</value>
+  </data>
 </root>

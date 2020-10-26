@@ -372,3 +372,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 .idea
+
+*env

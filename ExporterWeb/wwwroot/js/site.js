@@ -93,66 +93,12 @@ function show_hide_password(event, id) {
 }
 
 
+// Маски
+IMask(document.getElementById('Input_INN'), {mask: '000000000000'});
+IMask(document.getElementById('Input_OGRN_IP'), {mask: '000000000000000'});
+IMask(document.getElementById('Input_Phone'), { mask: '+{7} (000) 000-00-00' });
+
+
 $(document).ready(function () {
-
-    $(".phone-mask").inputmask('+7 (999) 999-99-99');
     
-    /*
-    $('form.for-validate .required-input').on('change', function () {
-        let canSubmit = true;
-        $(this).attr('data-changed', true);
-        $(this).parents('form.for-validate').find('.required-input').each(function () {
-            if ($(this).hasClass('phone-mask') || $(this).hasClass('email-mask')) {
-                if (!$(this).inputmask("isComplete")) {
-                    canSubmit = false;
-                    if ($(this).attr('data-changed')) {
-                        $(this).parents('.form-group').find('.input-group.required').addClass('alert-required');
-                    }
-                } else {
-                    $(this).parents('.form-group').find('.input-group.required').removeClass('alert-required')
-                }
-            } else {
-                if ($(this).hasClass('custom-control-input') && $(this).prop('checked') !== true) {
-                    canSubmit = false;
-                } else {
-                    if (!$(this).hasClass('custom-control-input')) {
-                        if (!$(this).val()) {
-                            canSubmit = false;
-                            if ($(this).attr('data-changed')) {
-                                $(this).parents('.form-group').find('.input-group.required').addClass('alert-required');
-                                if ($(this).is('select') || $(this).hasClass('dp')) {
-                                    $(this).next().find('.select2-selection.select2-selection--single').addClass('alert-border');
-                                    $(this).parents('.form-group').css({
-                                        'z-index': 1,
-                                        'position': 'relative',
-                                    })
-                                }
-                                if ($(this).hasClass('dp')) {
-                                    $(this).addClass('alert-border');
-                                }
-                            }
-                        } else {
-                            $(this).parents('.form-group').find('.input-group.required').removeClass('alert-required')
-                        }
-                    }
-                }
-            }
-        });
-
-        if (canSubmit) {
-            $(this).parents('form.for-validate').find('a.form-submit').removeClass('disabled').parent()
-                .removeAttr('data-toggle')
-                .removeAttr('data-placement')
-                .removeAttr('data-title')
-                .tooltip('disable');
-        } else {
-            $(this).parents('form.for-validate').find('a.form-submit').addClass('disabled').parent()
-                .attr('data-toggle', 'tooltip')
-                .attr('data-placement', 'top')
-                .attr('data-title', 'Пожалуйста, заполните все обязательные поля')
-                .tooltip('enable');
-        }
-    });
-     */
-
 });

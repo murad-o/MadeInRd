@@ -30,7 +30,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 .Where(exporter => !exporter.Approved && exporter.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName).ToList();
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             return Page();
         }
@@ -39,7 +39,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
         {
             var exporter = await _context.LanguageExporters
                 .Include(e => e.CommonExporter)
-                .Include(e => e.CommonExporter.User)
+                .Include(e => e.CommonExporter!.User)
                 .FirstOrDefaultAsync(e => e.CommonExporterId == Id && e.Language == Language);
 
             exporter.Approved = true;

@@ -36,7 +36,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
         {
             var exporter = await _context.LanguageExporters
                 .Include(e => e.CommonExporter)
-                .Include(e => e.CommonExporter.User)
+                .Include(e => e.CommonExporter!.User)
                 .FirstOrDefaultAsync(e => e.CommonExporterId == Id && e.Language == Language);
 
             var email = exporter.CommonExporter!.User!.Email;
@@ -51,7 +51,8 @@ namespace ExporterWeb.Pages.Admin.Exporters
             await _emailSender.SendEmailAsync(email, "Аккаунт отклонен", body);
             return RedirectToPage("./Index");
         } 
-        
+
+#nullable disable
         [BindProperty]
         public string Id { get; set; }
         [BindProperty]

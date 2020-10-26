@@ -17,8 +17,8 @@ namespace ExporterWeb.Helpers
         public static string DirectorFullName(this LanguageExporter languageExporter)
         {
             return ConstructFullName(
-                languageExporter.DirectorFirstName,
-                languageExporter.DirectorSecondName,
+                languageExporter.DirectorFirstName!,
+                languageExporter.DirectorSecondName!,
                 languageExporter.DirectorPatronymic);
         }
 

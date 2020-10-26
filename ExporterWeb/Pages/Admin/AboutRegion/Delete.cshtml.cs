@@ -15,9 +15,6 @@ namespace ExporterWeb.Pages.Admin.AboutRegion
             _context = context;
         }
 
-        [BindProperty]
-        public AboutRegionModel AboutRegionModel { get; set; }
-
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
@@ -51,5 +48,9 @@ namespace ExporterWeb.Pages.Admin.AboutRegion
 
             return RedirectToPage("./Index");
         }
+        
+#nullable disable
+        [BindProperty]
+        public AboutRegionModel AboutRegionModel { get; set; }
     }
 }

@@ -15,8 +15,6 @@ namespace ExporterWeb.Pages.Admin.AboutRegion
             _context = context;
         }
 
-        public AboutRegionModel AboutRegionModel { get; set; }
-
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
@@ -32,5 +30,8 @@ namespace ExporterWeb.Pages.Admin.AboutRegion
             }
             return Page();
         }
+
+#nullable disable
+        public AboutRegionModel AboutRegionModel { get; set; }
     }
 }

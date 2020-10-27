@@ -21,8 +21,8 @@ namespace ExporterWeb.Models
         public string OGRN_IP { get; set; } = "";
 
         [Required]
-        public int FieldOfActivityId { get; set; }
-        public FieldOfActivity? FieldOfActivity { get; set; }
+        public int IndustryId { get; set; }
+        public Industry? Industry { get; set; }
     }
 
     // Composite primary key is set through Fluent API

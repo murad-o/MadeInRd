@@ -20,8 +20,8 @@ namespace ExporterWeb.Models
         public LanguageExporter? LanguageExporter { get; set; }
 
         [Required]
-        public int FieldOfActivityId { get; set; }
-        public FieldOfActivity? FieldOfActivity { get; set; }
+        public int IndustryId { get; set; }
+        public Industry? Industry { get; set; }
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;

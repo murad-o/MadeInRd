@@ -24,7 +24,7 @@ namespace ExporterWeb.Pages.Exporters
 
             IQueryable<LanguageExporter> exporters = _context.LanguageExporters
                 .Include(e => e.CommonExporter)
-                .Include(e => e.CommonExporter!.FieldOfActivity);
+                .Include(e => e.CommonExporter!.Industry);
 
             if (!IsAdminOrManager)
                 exporters = exporters.Where(p => p.Approved || p.CommonExporterId == UserId);

@@ -23,7 +23,7 @@ namespace ExporterWeb.Pages.Products
                 return NotFound();
 
             IQueryable<Product> products = _context.Products
-                .Include(p => p.FieldOfActivity)
+                .Include(p => p.Industry)
                 .Include(p => p.LanguageExporter);
 
             if (!IsAdminOrManager)

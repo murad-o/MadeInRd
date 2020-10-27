@@ -23,7 +23,7 @@ namespace ExporterWeb.Pages
         }
 
         public IList<NewsModel>? News { get; private set; }
-        public IList<FieldOfActivity>? FieldsOfActivity { get; private set; }
+        public IList<Industry>? Industries { get; private set; }
         public IList<Event>? Events { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -39,7 +39,7 @@ namespace ExporterWeb.Pages
                 .Take(8)
                 .ToListAsync();
 
-            FieldsOfActivity = await _context.FieldsOfActivity
+            Industries = await _context.Industries
                 .Take(8)
                 .ToListAsync();
 

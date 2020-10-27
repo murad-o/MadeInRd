@@ -39,7 +39,7 @@ namespace ExporterWeb.Pages.Products
                 return NotFound();
 
             Product = await _context.Products
-                .Include(p => p.FieldOfActivity)
+                .Include(p => p.Industry)
                 .Include(p => p.LanguageExporter)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -52,7 +52,7 @@ namespace ExporterWeb.Pages.Products
                 return Forbid();
             }
 
-            ViewData["FieldOfActivityId"] = new SelectList(_context.FieldsOfActivity, "Id", "Name");
+            ViewData["FieldOfActivityId"] = new SelectList(_context.Industries, "Id", "Name");
             ViewData["WhiteListLanguages"] = new SelectList(Languages.WhiteList);
 
             return Page();
@@ -77,7 +77,7 @@ namespace ExporterWeb.Pages.Products
                 product,
                 nameof(Product),
                 p => p.Name, p => p.Description,
-                p => p.Language, p => p.FieldOfActivityId))
+                p => p.Language, p => p.IndustryId))
                 return Page();
             
             try

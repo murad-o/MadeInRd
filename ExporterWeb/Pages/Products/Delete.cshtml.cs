@@ -36,7 +36,7 @@ namespace ExporterWeb.Pages.Products
                 return NotFound();
 
             Product = await _context.Products
-                .Include(p => p.FieldOfActivity)
+                .Include(p => p.Industry)
                 .Include(p => p.LanguageExporter).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Product is null)

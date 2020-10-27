@@ -43,10 +43,6 @@ namespace ExporterWeb.Pages.Products
             var items = await exporters.ToListAsync();
             ViewData["CommonExporterList"] = new SelectList(items, "UserId", "User.Email");
             ViewData["WhiteListLanguages"] = new SelectList(Languages.WhiteList);
-            var localizedFieldsOfActivity = await _context.FieldsOfActivity
-                .Select(f => new { f.Id, Name = f.Name[Language!] })
-                .ToListAsync();
-            ViewData["FieldOfActivityId"] = new SelectList(localizedFieldsOfActivity, "Id", "Name");
 
             return Page();
         }
@@ -70,7 +66,7 @@ namespace ExporterWeb.Pages.Products
                 nameof(Product),
                 p => p.LanguageExporterId, p => p.Name,
                 p => p.Description, p => p.Language,
-                p => p.FieldOfActivityId))
+                p => p.IndustryId))
                 return Page();
             
             await _context.Products!.AddAsync(product);

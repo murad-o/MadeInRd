@@ -26,7 +26,8 @@ namespace ExporterWeb.Models
             base.OnModelCreating(builder);
         }
 
-        public DbSet<FieldOfActivity>? FieldsOfActivity { get; set; }
+        public DbSet<Industry>? Industries { get; set; }
+        public DbSet<IndustryTranslation>? IndustryTranslations { get; set; }
         public DbSet<CommonExporter>? CommonExporters { get; set; }
         public DbSet<LanguageExporter>? LanguageExporters { get; set; }
         public DbSet<Product>? Products { get; set; }

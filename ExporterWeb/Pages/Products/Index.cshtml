@@ -46,9 +46,6 @@
                     <a asp-page="/Exporters/Details" asp-route-id="@item.LanguageExporterId" asp-route-language="@item.Language">@item.LanguageExporter!.Name</a>
                 </td>
                 <td>
-                    @item.FieldOfActivity!.Name[Model.Language!]
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
                 <td>

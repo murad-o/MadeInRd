@@ -44,15 +44,6 @@
 			<div class="title">@Localizer["Branches"]</div>
 			<a class="link" asp-page="/Admin/FieldsOfActivity/Index">@Localizer["All the branches"]</a>
 		</div>
-		<div class="many-items">
-			@foreach (var fieldItem in Model.FieldsOfActivity!)
-			{
-				<a class="item branch" href="#">
-					<img class="item-logo" src="~/img/news-icon.png" />
-					<span class="item-title">@fieldItem.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</span>
-				</a>
-			}
-		</div>
 	</div>
 </div>
 

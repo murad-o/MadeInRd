@@ -20,7 +20,7 @@ namespace ExporterWeb.Pages.Products
         public async Task OnGetAsync(int pageNumber = 1)
         {
             IQueryable<Product> products = _context.Products
-                .Include(p => p.FieldOfActivity)
+                .Include(p => p.Industry)
                 .Include(p => p.LanguageExporter);
 
             if (!IsAdminOrManager)

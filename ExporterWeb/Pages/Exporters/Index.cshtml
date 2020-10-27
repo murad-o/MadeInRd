@@ -36,14 +36,6 @@
                     </svg>
                 </button>
             </div>
-            <ul class="industries__list">
-                @foreach (var industry in Model.Industries)
-                {
-                    <li class="industries__item">
-                        <a asp-route-industry="@industry.Id" class="industries__link">@industry.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</a>
-                    </li>
-                }
-            </ul>
         </aside>
         <div class="items-overlay"></div>
         <main class="items items_position">

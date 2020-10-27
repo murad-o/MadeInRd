@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using AccountResources = ExporterWeb.Resources.Account.Account;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
@@ -38,16 +40,8 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme>? ExternalLogins { get; set; }
 
-        public IList<FieldOfActivity> FieldsOfActivity
-        {
-            get
-            {
-                if (_fieldsOfActivity is null)
-                    _fieldsOfActivity = _context.FieldsOfActivity.ToList();
-                return _fieldsOfActivity;
-            }
-        }
-        private IList<FieldOfActivity>? _fieldsOfActivity;
+        public IEnumerable<IndustryTranslation> Industries => _context.IndustryTranslations!
+            .Where(i => i.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName).ToList();
 
         public class InputModel
         {
@@ -84,7 +78,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "This field is required")]
             [Display(Name = "Industry", ResourceType = typeof(AccountResources))]
-            public int FieldOfActivityId { get; set; }
+            public int IndustryId { get; set; }
 
             // LanguageExporter form
             [Required(ErrorMessage = "This field is required")]
@@ -146,7 +140,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 {
                     INN = Input.INN,
                     OGRN_IP = Input.OGRN_IP,
-                    FieldOfActivityId = Input.FieldOfActivityId
+                    IndustryId = Input.IndustryId
                 },
                 Language = Languages.DefaultLanguage,
                 Name = Input.Name,

@@ -43,15 +43,15 @@
                         <span asp-validation-for="Input.OGRN_IP" class="text-danger"></span>
                     </div>
                     <div id="form-group_select" class="form-group form-group-select">
-                        <label asp-for="Input.FieldOfActivityId"></label>
-                        <select asp-for="Input.FieldOfActivityId" id="custom-select">
+                        <label asp-for="Input.IndustryId"></label>
+                        <select asp-for="Input.IndustryId" id="custom-select">
                             <option data-placeholder="true"></option>
-                            @foreach (var industry in Model.FieldsOfActivity)
+                            @foreach (var industry in Model.Industries)
                             {
-                                <option value="@industry.Id">@industry.Name[CultureInfo.CurrentCulture.TwoLetterISOLanguageName]</option>
+                                <option value="@industry.IndustryId">@industry.Name</option>
                             }
                         </select>
-                        <span id="select-error" asp-validation-for="Input.FieldOfActivityId" class="field-validation-error select-error text-danger"></span>
+                        <span id="select-error" asp-validation-for="Input.IndustryId" class="field-validation-error select-error text-danger"></span>
                     </div>
 
                     <div class="account-header__center">

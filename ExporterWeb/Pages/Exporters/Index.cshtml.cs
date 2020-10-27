@@ -25,7 +25,7 @@ namespace ExporterWeb.Pages.Exporters
             IQueryable<LanguageExporter> exporters = _context.LanguageExporters
                 .Where(e => e.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
                 .Include(l => l.CommonExporter)
-                .Include(l => l.CommonExporter!.FieldOfActivity)
+                .Include(l => l.CommonExporter!.Industry)
                 .Include(l => l.CommonExporter!.User);
 
             if (!IsAdminOrManager)
@@ -42,14 +42,14 @@ namespace ExporterWeb.Pages.Exporters
             }
 
             if (industry is { })
-                exporters = exporters.Where(exporter => exporter.CommonExporter!.FieldOfActivity!.Id == industry);
+                exporters = exporters.Where(exporter => exporter.CommonExporter!.Industry!.Id == industry);
 
             LanguageExporters = await exporters.ToPagedListAsync(pageNumber, pageSize: 16);
             /* temporary */
             FakeExporters = Enumerable.Repeat(exporters, 40).SelectMany(x => x).ToPagedList(pageNumber, 16);
 
 
-            Industries = await _context.FieldsOfActivity.ToListAsync();
+            Industries = await _context.Industries.ToListAsync();
 
         }
 
@@ -59,6 +59,6 @@ namespace ExporterWeb.Pages.Exporters
 #nullable disable
         public IPagedList<LanguageExporter> LanguageExporters { get; set; }
         public IPagedList<LanguageExporter> FakeExporters { get; set; }
-        public IEnumerable<FieldOfActivity> Industries { get; set; }
+        public IEnumerable<Industry> Industries { get; set; }
     }
 }

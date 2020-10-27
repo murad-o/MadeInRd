@@ -73,7 +73,7 @@ namespace ExporterWeb.Helpers
         {
             services.AddRazorPages(options => {
                 options.Conventions.Add(new CultureTemplatePageRouteModelConvention());
-                options.Conventions.AuthorizeFolder("/Admin/Users", RequireAdministratorRole);
+                options.Conventions.AuthorizeFolder("/Admin/", RequireAdministratorRole);
             });
         }
 

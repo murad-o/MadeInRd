@@ -48,7 +48,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
                 protocol: Request.Scheme);
 
             var body = await _partialToStringRenderer.RenderPartialToStringAsync("Emails/RegisterConfirmationEmail",
-                new EmailViewModel { FirstName = user.FirstName, LastName = user.SecondName, Callback = callbackUrl});
+                new EmailConfirmationViewModel { FirstName = user.FirstName, LastName = user.SecondName, Callback = callbackUrl});
 
             await _emailSender.SendEmailAsync(email, "Подтвеждение почты", body);
 

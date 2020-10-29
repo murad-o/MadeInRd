@@ -24,12 +24,24 @@ namespace ExporterWeb.Controllers
             _imageResizer = imageResizeService;
         }
         
-        [HttpPost("uploadFile")]
-        public async Task<IActionResult> UploadFile(IFormFile upload)
+        [HttpPost("upload-about-file")]
+        public async Task<IActionResult> UploadAboutFile(IFormFile upload)
         {
             var fileName = Guid.NewGuid() + Path.GetFileName(upload.FileName);
             var directory = Path.Combine(_env.WebRootPath, "uploads", "about");
             var filePath = Path.Combine("\\uploads", "about", fileName);
+
+            await SaveImage(upload, Path.Combine(directory, fileName));
+            
+            return new JsonResult(new { uploaded = 1, fileName = fileName, url = filePath });
+        }
+        
+        [HttpPost("upload-industry-image")]
+        public async Task<IActionResult> UploadIndustryImage(IFormFile upload)
+        {
+            var fileName = Guid.NewGuid() + Path.GetFileName(upload.FileName);
+            var directory = Path.Combine(_env.WebRootPath, "uploads", "industry");
+            var filePath = Path.Combine("\\uploads", "industry", fileName);
 
             await SaveImage(upload, Path.Combine(directory, fileName));
             

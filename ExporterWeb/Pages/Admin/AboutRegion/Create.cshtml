@@ -45,7 +45,7 @@
     <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'about-content', {
-            filebrowserUploadUrl: '/api/upload/uploadFile'
+            filebrowserUploadUrl: '/api/upload/upload-about-file'
         });
     </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

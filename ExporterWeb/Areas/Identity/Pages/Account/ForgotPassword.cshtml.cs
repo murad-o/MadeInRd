@@ -48,7 +48,7 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
 
             var body = await _razorPartialToStringRenderer.RenderPartialToStringAsync(
                 "Emails/ForgotPasswordConfirmationEmail",
-                new EmailViewModel
+                new EmailConfirmationViewModel
                     {FirstName = user.FirstName, LastName = user.SecondName, Callback = callbackUrl});
             
             await _emailSender.SendEmailAsync(Input.Email, "Сброс пароля",body);

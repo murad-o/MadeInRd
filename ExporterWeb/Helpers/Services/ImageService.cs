@@ -71,6 +71,12 @@ namespace ExporterWeb.Helpers.Services
                 ImageCodec = GetEncoder(ImageFormat.Jpeg),
                 FileName = Guid.NewGuid() + JpegExtension,
             },
+            ImageTypes.IndustryImage => new ImageInfo
+            {
+                Size = new Size(255, 255),
+                ImageCodec = GetEncoder(ImageFormat.Jpeg),
+                FileName = Guid.NewGuid() + JpegExtension,
+            },
             _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
         };
 
@@ -81,6 +87,7 @@ namespace ExporterWeb.Helpers.Services
             ImageTypes.EventLogo => Path.Combine("uploads", "events"),
             ImageTypes.ExporterLogo => Path.Combine("uploads", "exporters"),
             ImageTypes.ProductLogo => Path.Combine("uploads", "products"),
+            ImageTypes.IndustryImage => Path.Combine("uploads", "industry-images"),
             _ => throw new ArgumentException(message: "Invalid ImageType", paramName: nameof(imageType)),
         };
 

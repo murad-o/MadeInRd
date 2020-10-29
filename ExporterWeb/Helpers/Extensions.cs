@@ -59,5 +59,11 @@ namespace ExporterWeb.Helpers
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.ProductLogo),
                 product.Logo).Replace('\\', '/');
         }
+        
+        public static string LogoPath(this IndustryTranslation industry)
+        {
+            return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.IndustryImage),
+                industry.Image!).Replace('\\', '/');
+        }
     }
 }

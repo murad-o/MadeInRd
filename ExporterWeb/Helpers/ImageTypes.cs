@@ -6,5 +6,6 @@
         EventLogo,
         ExporterLogo,
         ProductLogo,
+        IndustryImage
     }
 }

@@ -1,2 +1,10 @@
 ﻿@page
+@using ExporterWeb.Helpers
 @model ExporterWeb.Pages.Admin.Industries.IndexModel
+
+@foreach (var industry in Model.Industry)
+{
+    <div><img src="@industry.LogoPath()"></div>
+    <div>@industry.Name</div>
+    <div>@industry.Description</div>
+}

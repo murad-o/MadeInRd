@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IndustryTranslation.Description" class="control-label"></label>
-                <textarea asp-for="IndustryTranslation.Description" id="about-content"></textarea>
+                <textarea asp-for="IndustryTranslation.Description" id="industry-description"></textarea>
                 <span asp-validation-for="IndustryTranslation.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,7 +38,7 @@
 @section Scripts {
     <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( 'about-content', {
+        CKEDITOR.replace( 'industry-description', {
             filebrowserUploadUrl: '/api/upload/upload-industry-image'
         });
     </script>

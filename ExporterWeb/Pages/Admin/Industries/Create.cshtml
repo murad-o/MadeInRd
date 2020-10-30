@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IndustryTranslation.Description" class="control-label"></label>
-                <input asp-for="IndustryTranslation.Description" class="form-control" />
+                <textarea asp-for="IndustryTranslation.Description" id="about-content"></textarea>
                 <span asp-validation-for="IndustryTranslation.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,4 +34,14 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'about-content', {
+            filebrowserUploadUrl: '/api/upload/upload-industry-image'
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

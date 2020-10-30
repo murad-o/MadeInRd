@@ -62,6 +62,8 @@ namespace ExporterWeb.Helpers
         
         public static string LogoPath(this IndustryTranslation industry)
         {
+            if (industry.Image is null)
+                return "";
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.IndustryImage),
                 industry.Image!).Replace('\\', '/');
         }

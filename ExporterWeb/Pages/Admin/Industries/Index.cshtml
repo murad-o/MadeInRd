@@ -4,7 +4,12 @@
 
 @foreach (var industry in Model.Industry)
 {
-    <div><img src="@industry.LogoPath()"></div>
-    <div>@industry.Name</div>
-    <div>@industry.Description</div>
+    @if (industry.LogoPath() != "")
+    {
+        <div><img src="@industry.LogoPath()"></div>
+    }
+    <div>Название: @industry.Name</div>
+    <div>Описание:</div>
+    <div>@Html.Raw(industry.Description)</div>
+    <hr>
 }

@@ -29,7 +29,7 @@
                         <label asp-for="Input.Password"></label>
                         <input asp-for="Input.Password" class="form-control" placeholder="@Localizer["Enter password"]" />
                         <span asp-validation-for="Input.Password" class="form-control password-input"></span>
-                        <small class="password-control" onclick="show_hide_password(event, 'password-input')">
+                        <small class="password-control" onclick="show_hide_password(event, 'Input_Password')">
                             <svg class="view"><use xlink:href="/img/sprite.svg#password-view"></use></svg>
                             <svg class="hidden"><use xlink:href="/img/sprite.svg#password-hidden"></use></svg>
                         </small>
@@ -45,7 +45,6 @@
         
     </div>
 </main>
-
 
 
 @section Scripts {

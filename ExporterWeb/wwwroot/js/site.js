@@ -93,12 +93,6 @@ function show_hide_password(event, id) {
 }
 
 
-// Маски
-IMask(document.getElementById('Input_INN'), {mask: '000000000000'});
-IMask(document.getElementById('Input_OGRN_IP'), {mask: '000000000000000'});
-IMask(document.getElementById('Input_Phone'), { mask: '+{7} (000) 000-00-00' });
-
-
 $(document).ready(function () {
     
 });

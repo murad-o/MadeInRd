@@ -50,7 +50,7 @@
                         </button>
 
                         <!-- Navbar Brand -->
-                        <a href="/admin" class="navbar-brand ">
+                        <a asp-page="/Index" class="navbar-brand ">
                             <img class="navbar-brand-icon" src="~/admin/images/mid-logo.png" alt="Made In Rd">
                             @* <span>Made In Rd</span> *@
                         </a>
@@ -72,15 +72,16 @@
                                 </a>
                                 <div id="account_menu" class="dropdown-menu dropdown-menu-right">
                                     <div class="dropdown-item-text dropdown-item-text--lh">
-                                        <div><strong>Adrian Demian</strong></div>
-                                        <div>@@adriandemian</div>
+                                        <div><strong>Имя Фамилия</strong></div>
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item active" href="index.html">Панель</a>
                                     <a class="dropdown-item" href="profile.html">Мой профиль</a>
                                     <a class="dropdown-item" href="edit-account.html">Изм. аккаунт</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/logout">Выход</a>
+                                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                        <button class="dropdown-item" id="logout" type="submit">Выход</button>
+                                    </form>                
                                 </div>
                             </li>
                         </ul>
@@ -98,22 +99,7 @@
             <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
         
                 <div class="mdk-drawer-layout__content page">
-        
-                    <div class="container-fluid page__heading-container">
-                        <div class="page__heading d-flex align-items-center">
-                            <div class="flex">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb mb-0">
-                                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Главная</li>
-                                    </ol>
-                                </nav>
-                                <h1 class="m-0">Главная</h1>
-                            </div>
-                            <a href="" class="btn btn-success ml-3">New Report</a>
-                        </div>
-                    </div>
-        
+
                     @RenderBody()
                     
                 </div>
@@ -143,14 +129,16 @@
                                         <a class="dropdown-item" href="profile.html">Профиль</a>
                                         <a class="dropdown-item" href="edit-account.html">Изменить</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="login.html">Выход</a>
+                                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                            <button class="dropdown-item" id="logout" type="submit">Выход</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                             <div class="sidebar-heading sidebar-m-t">Меню</div>
     						<ul class="sidebar-menu">
     							<li class="sidebar-menu-item">
-    								<a class="sidebar-menu-button" href="/admin">
+    								<a class="sidebar-menu-button" asp-page="/Admin/Index">
     									<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">home</i>
     									<span class="sidebar-menu-text">Главная</span>
     								</a>
@@ -161,14 +149,14 @@
                                         <span class="sidebar-menu-text">Отрасли</span>
                                         <span class="ml-auto sidebar-menu-toggle-icon"></span>
                                     </a>
-    								<ul class="sidebar-submenu collapse show " id="otrasli">
-                                        <li class="sidebar-menu-item active">
-                                            <a class="sidebar-menu-button" href="index.html">
+    								<ul class="sidebar-submenu collapse" id="otrasli">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button" asp-page="/Admin/Industries/Index">
                                                 <span class="sidebar-menu-text">Список отраслей</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button" href="dashboard-quick-access.html">
+                                            <a class="sidebar-menu-button" asp-page="/Admin/Industries/Create">
                                                 <span class="sidebar-menu-text">Добавить отрасль</span>
                                             </a>
                                         </li>
@@ -328,16 +316,18 @@
                             
                             <ul class="sidebar-menu">
                                 <li class="sidebar-menu-item">
-                                	<a class="sidebar-menu-button" href="/">
+                                	<a class="sidebar-menu-button" asp-page="/Index">
                                 		<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">home</i>
                                 		<span class="sidebar-menu-text">На сайт</span>
                                 	</a>
                                 </li>
     							<li class="sidebar-menu-item">
-    								<a class="sidebar-menu-button" href="/logout">
-    									<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">power</i>
-    									<span class="sidebar-menu-text">Выход</span>
-    								</a>
+                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                        <button class="sidebar-menu-button" id="logout" type="submit" style="border: none;background: transparent;">
+                                            <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">power</i>
+                                            <span class="sidebar-menu-text">Выход</span>
+                                        </button>
+                                    </form>
     							</li>
                             </ul>
 
@@ -374,5 +364,6 @@
     <!-- Global Settings -->
     <script src="~/admin/js/settings.js"></script>
     
+    @RenderSection("Scripts", false)
 </body>
 </html>

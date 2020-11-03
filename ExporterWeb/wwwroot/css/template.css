@@ -703,8 +703,6 @@ h1.page__title {
 
     .account-card {padding: 55px 95px;margin: 120px auto;}
     .account-header__title {font-size: 25px;}
-    /**** ConfirmEmail.cshtml ****/
-    .link_border-margin {margin-top: 20px;}
 }
 
 
@@ -715,6 +713,8 @@ h1.page__title {
     
     .modal {max-width: 590px;padding: 75px 70px;}
     .account-card {padding: 45px 70px;}
+
+    .link_border-margin {margin-top: 20px;}
 }
 
 @media (max-width: 576px) {
@@ -739,5 +739,5 @@ h1.page__title {
     .account-bottom__text {display: block;margin:20px 0 20px 0;}
     
     /**** ConfirmEmail.cshtml ****/
-    .account-card__btn-primary {width: 100%; text-align: center; margin-right: 0;}  
+    .account-card__btn-primary {width: 100%; text-align: center; margin-right: 0;}
 }

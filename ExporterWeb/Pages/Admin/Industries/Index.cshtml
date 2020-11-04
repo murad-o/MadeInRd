@@ -19,7 +19,14 @@
     <div>Описание:</div>
     <div>@Html.Raw(industry.Description)</div>
     <a asp-page="./Translations" asp-route-id="@industry.IndustryId">Изменить</a>
-    <a asp-page="./Delete" asp-route-id="@industry.IndustryId">Удалить</a>
+     <div>
+         <form method="post" 
+               asp-page-handler="DeleteIndustry" 
+               onsubmit="return confirm('Вы уверены что хотите удалить отрасль @industry.Name? При подтверждении удалится вся информация этой отрасли на всех языках')">
+             <input type="hidden" name="id" value="@industry.IndustryId">
+             <button type="submit">Удалить</button>
+         </form>
+     </div>
     <hr>
 }
 

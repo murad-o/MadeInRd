@@ -29,6 +29,20 @@ namespace ExporterWeb.Pages.Admin.Industries
                 i.Language == Language).ToListAsync();
         }
         
+        public async Task<IActionResult> OnPostDeleteIndustryAsync(int id)
+        {
+            var industry = await _context.Industries!.FirstOrDefaultAsync(i => i.Id == id);
+            
+            if (industry is null)
+            {
+                return NotFound();
+            }
+            
+            _context.Remove(industry);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
+        
         #nullable disable
         public IList<IndustryTranslation> Industry { get; set; }
 

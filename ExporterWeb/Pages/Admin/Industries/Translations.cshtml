@@ -1,0 +1,19 @@
+﻿@page
+@using ExporterWeb.Helpers
+@model ExporterWeb.Pages.Admin.Industries.Translations
+
+@foreach (var translation in @Model.Industry.Translations!)
+{
+    <div>@translation.Name</div>
+    @if (translation.Image is {})
+    {
+        <div><img src="@translation.LogoPath()"></div>
+    }
+    <div>@translation.Language</div>
+    <a asp-page="./Edit" asp-route-id="@translation.Id">Изменить</a>
+    <form method="post" asp-page-handler="DeleteTranslation">
+        <input type="hidden" name="Id" value="@translation.Id">
+        <button type="submit">Удалить</button>
+    </form>
+}
+<a asp-page="./CreateTranslation" asp-route-industryId="@Model.Industry.Id">Добавить перевод</a>

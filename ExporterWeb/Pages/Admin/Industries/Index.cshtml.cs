@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
@@ -24,10 +26,13 @@ namespace ExporterWeb.Pages.Admin.Industries
         public async Task OnGetAsync()
         {
             Industry =  await _context.IndustryTranslations!.Include(i => i.Industry).Where(i =>
-                i.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName).ToListAsync();
+                i.Language == Language).ToListAsync();
         }
         
         #nullable disable
         public IList<IndustryTranslation> Industry { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string Language { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
     }
 }

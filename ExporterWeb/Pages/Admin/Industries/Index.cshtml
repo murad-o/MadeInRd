@@ -2,6 +2,13 @@
 @using ExporterWeb.Helpers
 @model ExporterWeb.Pages.Admin.Industries.IndexModel
 
+<div class="form-group">
+    <form method="get">
+        <label asp-for="Language" class="control-label">Язык</label>
+        <select asp-for="Language" class="form-control" id="language-switcher" asp-items="new SelectList(Languages.WhiteList)"></select>
+    </form>
+</div>
+
 @foreach (var industry in Model.Industry)
 {
     @if (industry.LogoPath() != "")
@@ -11,5 +18,17 @@
     <div>Название: @industry.Name</div>
     <div>Описание:</div>
     <div>@Html.Raw(industry.Description)</div>
+    <a asp-page="./Translations" asp-route-id="@industry.IndustryId">Изменить</a>
+    <a asp-page="./Delete" asp-route-id="@industry.IndustryId">Удалить</a>
     <hr>
+}
+
+@section Scripts {
+    <script>
+        let languageSwitcher = document.getElementById('language-switcher');
+        languageSwitcher.addEventListener('change', function() {
+            let selectedLanguage = languageSwitcher.value;
+            location.search = `?language=${selectedLanguage}`;
+        });
+    </script>
 }

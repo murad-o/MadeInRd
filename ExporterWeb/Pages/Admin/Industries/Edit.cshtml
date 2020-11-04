@@ -1,0 +1,64 @@
+﻿@page
+@using ExporterWeb.Helpers
+@model ExporterWeb.Pages.Admin.Industries.Edit
+
+<h1>Редактирование отрасли</h1>
+
+<h4>Редактирование отрасли</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Industry.Id">
+            <input type="hidden" asp-for="Industry.IndustryId">
+            <div class="form-group">
+                <label asp-for="Industry.Name" class="control-label"></label>
+                <input asp-for="Industry.Name" class="form-control" />
+                <span asp-validation-for="Industry.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Industry.Language" class="control-label"></label>
+                <select asp-for="Industry.Language" class="form-control" asp-items="new SelectList(Languages.WhiteList)"></select>
+                <span asp-validation-for="Industry.Language" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Industry.Description" class="control-label"></label>
+                <textarea asp-for="Industry.Description" id="industry-description"></textarea>
+                <span asp-validation-for="Industry.Description" class="text-danger"></span>
+            </div>
+            <div>
+                <img src="@Model.Industry.LogoPath()" id="edit-img">
+            </div>
+            <div class="form-group">
+                <label>Upload image</label>
+                <input class="form-control-file" type="file" name="Image" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+        @{
+            if (@Model.Industry.Image is {})
+            {
+                <form method="post" id="delete-image-form">
+                    <div class="form-group">
+                        <button type="submit" asp-page-handler="DeleteImage">Удалить текущее изображение</button>
+                    </div>
+                </form>
+            }
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'industry-description', {
+            filebrowserUploadUrl: '/api/upload/upload-industry-image'
+        });
+    </script>
+    <script src="/js/deleteImage.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

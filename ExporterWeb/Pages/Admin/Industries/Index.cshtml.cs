@@ -25,7 +25,7 @@ namespace ExporterWeb.Pages.Admin.Industries
 
         public async Task OnGetAsync()
         {
-            Industry =  await _context.IndustryTranslations!.Include(i => i.Industry).Where(i =>
+            Industries =  await _context.IndustryTranslations!.Include(i => i.Industry).Where(i =>
                 i.Language == Language).ToListAsync();
         }
         
@@ -44,7 +44,7 @@ namespace ExporterWeb.Pages.Admin.Industries
         }
         
         #nullable disable
-        public IList<IndustryTranslation> Industry { get; set; }
+        public IList<IndustryTranslation> Industries { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string Language { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;

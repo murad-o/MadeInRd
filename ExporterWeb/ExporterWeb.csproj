@@ -32,4 +32,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+  </ItemGroup>
+
 </Project>

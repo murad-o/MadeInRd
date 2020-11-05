@@ -1,5 +1,6 @@
 ﻿@page
 @using ExporterWeb.Helpers
+@using Microsoft.EntityFrameworkCore
 @model ExporterWeb.Pages.Admin.Industries.CreateTranslation
 
 @{
@@ -21,7 +22,7 @@
     </div>
 
     <div class="card-header card-header-large bg-white">
-        <h2 class="card-header__title">Добавить Перевод</h2>
+        <h2 class="card-header__title">Добавить перевод</h2>
     </div>
 
     <div class="card card-form">
@@ -41,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Translation.Language" class="control-label">Язык</label>
-                        <select asp-for="Translation.Language" class="form-control" asp-items="new SelectList(Languages.WhiteList)"></select>
+                        <select asp-for="Translation.Language" class="form-control" asp-items="new SelectList(Model.AvailableLanguages)"></select>
                     </div>
                     <div class="form-group">
                         <label>Загрузить изображение</label>

@@ -1,0 +1,40 @@
+version: '3.8'
+
+networks:
+    madeinrd-dev:
+      driver: bridge
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - postgres.env
+    container_name: postgres
+    networks:
+      - madeinrd-dev
+  
+  madeinrd:
+    image: madeinrd
+    depends_on:
+      - "postgres"
+    ports:
+      - "8000:80"
+      - "8001:443"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - madeinrd.env
+    container_name: madeinrd
+    networks:
+      - madeinrd-dev
+
+volumes:
+  postgres_data:
+    
+    

@@ -1,2 +1,27 @@
 ﻿@page
+@using ExporterWeb.Helpers
 @model ExporterWeb.Pages.Industries.DetailsModel
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header__content">
+            <nav class="breadcrumbs" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Index">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Отрасли экспорта</li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.Industry.Name</li>
+                </ol>
+            </nav>
+            <h1 class="page-header__content-title page-header__content-title_small">@Model.Industry.Name</h1>
+        </div>
+    </div>
+    @if (Model.Industry.Image is {})
+    {
+        <img class="" src="@Model.Industry.LogoPath()" alt="">
+    }
+</div>
+<div class="container">
+    <div class="industries-text">
+        @Html.Raw(Model.Industry.Description)
+    </div>
+</div>

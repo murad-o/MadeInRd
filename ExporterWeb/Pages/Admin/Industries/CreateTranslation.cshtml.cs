@@ -34,7 +34,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             Translation.IndustryId = IndustryId;
             await _context.IndustryTranslations!.AddAsync(Translation);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Translations", new{ Id = IndustryId });
         }
         
         #nullable disable

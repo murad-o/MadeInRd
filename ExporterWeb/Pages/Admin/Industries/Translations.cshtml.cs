@@ -57,7 +57,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Translations", new{ Id = industryTranslation.IndustryId });
         }
 
         #nullable disable

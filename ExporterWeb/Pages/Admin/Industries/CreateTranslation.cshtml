@@ -30,17 +30,17 @@
                 <form method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="Translation.Name" class="control-label"></label>
+                        <label asp-for="Translation.Name" class="control-label">Название</label>
                         <input asp-for="Translation.Name" class="form-control"/>
                         <span asp-validation-for="Translation.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Translation.Description" class="control-label"></label>
+                        <label asp-for="Translation.Description" class="control-label">Описание</label>
                         <textarea asp-for="Translation.Description" id="industry-description"></textarea>
                         <span asp-validation-for="Translation.Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Translation.Language" class="control-label"></label>
+                        <label asp-for="Translation.Language" class="control-label">Язык</label>
                         <select asp-for="Translation.Language" class="form-control" asp-items="new SelectList(Languages.WhiteList)"></select>
                     </div>
                     <div class="form-group">
@@ -48,7 +48,7 @@
                         <input class="form-control-file" type="file" name="image"/>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary"/>
+                        <input type="submit" value="Создать" class="btn btn-primary"/>
                     </div>
                 </form>
             </div>

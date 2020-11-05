@@ -46,7 +46,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             if (industryToUpdate is null || !Languages.WhiteList.Contains(Industry.Language))
             {
                 return NotFound();
-            }
+            } 
             
             var oldImage = industryToUpdate.Image;
             if (Image is { })

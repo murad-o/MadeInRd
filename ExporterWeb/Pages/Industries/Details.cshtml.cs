@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ExporterWeb.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,21 @@ namespace ExporterWeb.Pages.Industries
             _context = context;
         }
 
-        public async Task OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Industry = await _context.IndustryTranslations.FirstOrDefaultAsync(i => i.Id == id);
+            if (id is null)
+            {
+                return NotFound();
+            }
+            
+            Industry = await _context.IndustryTranslations!.FirstOrDefaultAsync(i => i.Id == id);
+
+            if (Industry is null)
+            {
+                return NotFound();
+            } 
+
+            return Page();
         }
         
         #nullable disable

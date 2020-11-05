@@ -67,10 +67,10 @@
 					{
 						<img src="https://etnomirkavkaza.ru/wp-content/themes/etnomir/assets/images/no-image.jpg" class="card-img-top">
 					}
-					<a class="" asp-page="Industries/Details" asp-route-id="@translation.IndustryId"></a>
+					<a class="" asp-page="/Industries/Details" asp-route-id="@translation.Id"></a>
 				</div>
 				<div class="card-body">
-					<a class="" asp-page="Industries/Details" asp-route-id="@translation.IndustryId"><h5 class="card-title">@translation.Name</h5></a>
+					<a class="" asp-page="/Industries/Details" asp-route-id="@translation.Id"><h5 class="card-title">@translation.Name</h5></a>
 					<p class="card-text">@Html.Raw(translation.Description)</p>
 					<div class="d-flex align-items-center">
 						<a asp-page="./Edit" asp-route-id="@translation.Id" class="btn btn-outline-info btn-sm mr-1">Ред.</a>

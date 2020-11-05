@@ -8,6 +8,10 @@ namespace ExporterWeb.Helpers
         {
             "ru",
             "en",
+            "az",
+            "tr",
+            "ar",
+            "fa"
         };
 
         public const string DefaultLanguage = "ru";

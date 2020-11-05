@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers;
 using ExporterWeb.Models;
@@ -18,7 +19,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             _context = context;
         }
 
-        public IActionResult OnGet(int? industryId)
+        public async Task<IActionResult> OnGet(int? industryId)
         {
             if (industryId is null)
             {
@@ -26,6 +27,12 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
             
             IndustryId = industryId.Value;
+            AvailableLanguages = Languages.WhiteList.Except((await _context.Industries!
+                .Include(i => i.Translations)
+                .FirstOrDefaultAsync(i => i.Id == IndustryId))
+                .Translations!
+                .Select(t => t.Language));
+            
             return Page();
         }
 
@@ -34,7 +41,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             Translation.IndustryId = IndustryId;
             await _context.IndustryTranslations!.AddAsync(Translation);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Translations", new{ Id = IndustryId });
         }
         
         #nullable disable
@@ -43,5 +50,6 @@ namespace ExporterWeb.Pages.Admin.Industries
 
         [BindProperty]
         public int IndustryId { get; set; }
+        public IEnumerable<string> AvailableLanguages { get; set; }
     }
 }

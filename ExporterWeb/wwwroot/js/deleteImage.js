@@ -10,7 +10,7 @@ deleteImageForm?.addEventListener('submit', async function(e) {
     const result = await fetch(url, {
         method: 'post',
         body: new FormData(this)
-    });
+    })
 
     if (result.ok)
         document.getElementById('edit-img').style.display = 'none';

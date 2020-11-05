@@ -31,7 +31,8 @@ namespace ExporterWeb.Pages.Admin.Industries
             
             if (Image is { })
                 IndustryTranslation.Image = _imageService.Save(ImageTypes.IndustryImage, Image);
-            
+
+            IndustryTranslation.Language = Languages.DefaultLanguage;
             industry.Translations!.Add(IndustryTranslation);
             await _context.Industries!.AddAsync(industry);
             try

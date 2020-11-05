@@ -50,14 +50,13 @@ namespace ExporterWeb.Pages.Admin.Industries
             if (industryTranslation.Industry!.Translations!.Count == 1)
             {
                 _context.Industries!.Remove(industryTranslation.Industry);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            else
-            {
-                _context.IndustryTranslations!.Remove(industryTranslation);
-            }
-
+            
+            _context.IndustryTranslations!.Remove(industryTranslation);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Translations", new{ Id = industryTranslation.IndustryId });
         }
 
         #nullable disable

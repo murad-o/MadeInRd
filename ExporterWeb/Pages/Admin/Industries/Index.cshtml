@@ -5,6 +5,14 @@
     Layout = "_AdminLayout";
 }
 
+@section Styles {
+    <style>
+        .table thead th {
+            font-size: 15px !important;
+        }
+    </style>
+}
+
 <div class="container-fluid page__container">
 
     <div class="page__heading d-flex align-items-center">
@@ -35,10 +43,12 @@
                             <th scope="col">
                                 Название
                             </th>
-                            @foreach (var lang in Model.SecondaryLanguages)
-                            {
-                                <th><img class="language-switcher__flag" src="/img/flags/@(lang).svg" alt="Flag"/></th>
-                            }
+                            <th>
+                                @foreach (var lang in Model.SecondaryLanguages)
+                                {
+                                    <span style="width:70px;" class="mx-1"><img class="language-switcher__flag" src="/img/flags/@(lang).svg" alt="Flag"/></span>
+                                }
+                            </th>
                             <th style="text-align: right">
                                 Действия
                             </th>
@@ -49,19 +59,25 @@
                         {
                             <tr>
                                 <td>@(i + 1).</td>
-                                <td><a asp-page="./Edit" asp-route-id="@Model.IndustryTranslations[i].Id">@Model.IndustryTranslations[i].Name</a></td>
-                                @foreach (var lang in Model.SecondaryLanguages)
-                                {
-                                    if (Model.IndustryTranslations[i].Industry!.Translations!.Any(translation => translation.Language == lang))
+                                <td>
+                                    <a asp-page="./Edit" asp-route-id="@Model.IndustryTranslations[i].Id">@Model.IndustryTranslations[i].Name</a>
+                                </td>
+                                <td>
+                                
+                                    @foreach (var lang in Model.SecondaryLanguages)
                                     {
-                                        var translationId = Model.IndustryTranslations[i].Industry.Translations.FirstOrDefault(t => t.Language == lang)!.Id;
-                                        <td><a asp-page="./Edit" asp-route-id="@translationId"><i class="material-icons">create</i></a></td>
+                                        if (Model.IndustryTranslations[i].Industry!.Translations!.Any(translation => translation.Language == lang))
+                                        {
+                                            var translationId = Model.IndustryTranslations[i].Industry.Translations.FirstOrDefault(t => t.Language == lang)!.Id;
+                                            <span style="width:70px;"><a asp-page="./Edit" asp-route-id="@translationId"><i class="material-icons">create</i></a></span>
+                                        }
+                                        else
+                                        {
+                                            <span style="width:70px;"><a asp-page="./CreateTranslation" asp-route-lang="@lang" asp-route-industryId="@Model.IndustryTranslations[i].IndustryId"><i class="material-icons">add_box</i></a></span>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <td><a asp-page="./CreateTranslation" asp-route-lang="@lang" asp-route-industryId="@Model.IndustryTranslations[i].IndustryId"><i class="material-icons">add_box</i></a></td>
-                                    }
-                                }
+                                
+                                </td>
                                 <td style="text-align:right">
                                     <div class="d-flex align-content-center justify-content-end">
                                         <form id="delete-industry" method="post" asp-page-handler="DeleteIndustry" onsubmit="return confirm('Вы действительно хотите удалить @Model.IndustryTranslations[i].Name? При подтверждении удалится вся информация об этой отрасли на всех языках')">

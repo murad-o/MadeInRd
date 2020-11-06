@@ -30,6 +30,7 @@
             <div class="col-lg-12 card-form__body card-body">
                 <form method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" value="@Model.Language" asp-for="Translation.Language">
                     <div class="form-group">
                         <label asp-for="Translation.Name" class="control-label">Название</label>
                         <input asp-for="Translation.Name" class="form-control"/>
@@ -40,10 +41,7 @@
                         <textarea asp-for="Translation.Description" id="industry-description"></textarea>
                         <span asp-validation-for="Translation.Description" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Translation.Language" class="control-label">Язык</label>
-                        <select asp-for="Translation.Language" class="form-control" asp-items="new SelectList(Model.AvailableLanguages)"></select>
-                    </div>
+                    
                     <div class="form-group">
                         <label>Загрузить изображение</label>
                         <input class="form-control-file" type="file" name="image"/>

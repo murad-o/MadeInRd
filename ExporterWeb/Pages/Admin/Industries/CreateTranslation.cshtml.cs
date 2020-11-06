@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
@@ -19,20 +16,15 @@ namespace ExporterWeb.Pages.Admin.Industries
             _context = context;
         }
 
-        public async Task<IActionResult> OnGet(int? industryId)
+        public IActionResult OnGet(int? industryId, string? lang)
         {
-            if (industryId is null)
+            if (industryId is null || lang is null)
             {
                 return NotFound();
             }
             
             IndustryId = industryId.Value;
-            AvailableLanguages = Languages.WhiteList.Except((await _context.Industries!
-                .Include(i => i.Translations)
-                .FirstOrDefaultAsync(i => i.Id == IndustryId))
-                .Translations!
-                .Select(t => t.Language));
-            
+            Language = lang;
             return Page();
         }
 
@@ -41,7 +33,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             Translation.IndustryId = IndustryId;
             await _context.IndustryTranslations!.AddAsync(Translation);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Translations", new{ Id = IndustryId });
+            return RedirectToPage("./Index");
         }
         
         #nullable disable
@@ -50,6 +42,8 @@ namespace ExporterWeb.Pages.Admin.Industries
 
         [BindProperty]
         public int IndustryId { get; set; }
-        public IEnumerable<string> AvailableLanguages { get; set; }
+
+        [BindProperty] 
+        public string Language { get; set; }
     }
 }

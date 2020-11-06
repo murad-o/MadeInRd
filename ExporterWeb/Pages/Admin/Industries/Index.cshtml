@@ -54,7 +54,7 @@
                                 {
                                     if (Model.IndustryTranslations[i].Industry!.Translations!.Any(translation => translation.Language == lang))
                                     {
-                                        var translationId = @Model.IndustryTranslations[i].Industry.Translations.FirstOrDefault(t => t.Language == lang)!.Id;
+                                        var translationId = Model.IndustryTranslations[i].Industry.Translations.FirstOrDefault(t => t.Language == lang)!.Id;
                                         <td><a asp-page="./Edit" asp-route-id="@translationId"><i class="material-icons">create</i></a></td>
                                     }
                                     else

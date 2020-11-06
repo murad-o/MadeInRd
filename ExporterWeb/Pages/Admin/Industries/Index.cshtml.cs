@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
@@ -23,10 +22,18 @@ namespace ExporterWeb.Pages.Admin.Industries
             _context = context;
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Industries =  await _context.IndustryTranslations!.Include(i => i.Industry).Where(i =>
-                i.Language == Language).ToListAsync();
+            SecondaryLanguages = Languages.WhiteList;
+            SecondaryLanguages.Remove(Languages.DefaultLanguage);
+
+            IndustryTranslations =  await _context.IndustryTranslations!
+                .Include(i => i.Industry)
+                .ThenInclude(i => i!.Translations)
+                .Where(i =>
+                i.Language == Languages.DefaultLanguage).ToListAsync();
+
+            return Page();
         }
         
         public async Task<IActionResult> OnPostDeleteIndustryAsync(int id)
@@ -44,9 +51,8 @@ namespace ExporterWeb.Pages.Admin.Industries
         }
         
         #nullable disable
-        public IList<IndustryTranslation> Industries { get; set; }
+        public IList<IndustryTranslation> IndustryTranslations { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string Language { get; set; } = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+        public HashSet<string> SecondaryLanguages { get; private set; }
     }
 }

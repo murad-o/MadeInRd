@@ -55,10 +55,14 @@ namespace ExporterWeb.Pages.Admin.Industries
                 .Include(i => i.Industry)
                 .ThenInclude(i => i!.Translations)
                 .FirstOrDefaultAsync(i => i.Id == id);
-            
             if (industryTranslation is null)
             {
                 return NotFound();
+            }
+
+            if (industryTranslation.Language == Languages.DefaultLanguage)
+            {
+                return BadRequest();
             }
         
             if (industryTranslation.Industry!.Translations!.Count == 1)

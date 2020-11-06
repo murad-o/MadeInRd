@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
@@ -45,6 +45,31 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
             
             _context.Remove(industry);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
+        
+        public async Task<IActionResult> OnPostDeleteTranslationAsync(int id)
+        {
+            var industryTranslation = await _context.IndustryTranslations!
+                .Include(i => i.Industry)
+                .ThenInclude(i => i!.Translations)
+                .FirstOrDefaultAsync(i => i.Id == id);
+            
+            if (industryTranslation is null)
+            {
+                return NotFound();
+            }
+        
+            if (industryTranslation.Industry!.Translations!.Count == 1)
+            {
+                _context.Industries!.Remove(industryTranslation.Industry);
+            }
+            else
+            {
+                _context.IndustryTranslations!.Remove(industryTranslation);
+            }
+        
             await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }

@@ -35,30 +35,6 @@ namespace ExporterWeb.Pages.Admin.Industries
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDeleteTranslationAsync(int id)
-        {
-            var industryTranslation = await _context.IndustryTranslations!
-                .Include(i => i.Industry)
-                .ThenInclude(i => i.Translations)
-                .FirstOrDefaultAsync(i => i.Id == id);
-            
-            if (industryTranslation is null)
-            {
-                return NotFound();
-            }
-        
-            if (industryTranslation.Industry!.Translations!.Count == 1)
-            {
-                _context.Industries!.Remove(industryTranslation.Industry);
-                await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
-            }
-            
-            _context.IndustryTranslations!.Remove(industryTranslation);
-            await _context.SaveChangesAsync();
-            return RedirectToPage("./Translations", new{ Id = industryTranslation.IndustryId });
-        }
-
         #nullable disable
         public Industry Industry { get; set; }
     }

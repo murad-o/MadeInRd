@@ -1,0 +1,3 @@
+FROM postgres
+COPY ExporterWeb/Migrations/migration-script.sql /root/
+ENTRYPOINT ["psql", "-U postgres", "-f migration-script.sql"]

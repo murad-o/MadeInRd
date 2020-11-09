@@ -38,9 +38,9 @@
             <div class="col-lg-12 card-form__body card-body">
 
                 <form method="post" id="delete-image-form">
-                    <label class="control-label">Изображение отрасли</label>
                     @if (Model.Industry.Image is {})
                     {
+                        <label class="control-label">Изображение отрасли</label>
                         <div id="current-image-row" class="form-group mb-2">
                             <img src="@Model.Industry.LogoPath()" id="edit-img">
                         </div>
@@ -66,6 +66,7 @@
 
                     <div class="form-group upload-img-block mb-4">
                         <div id="upload-image-row" class="form-group mt-2">
+                            <label class="control-label">Загрузите изображение</label>
                             <input class="form-control-file" type="file" name="Image"/>
                         </div>
                     </div>

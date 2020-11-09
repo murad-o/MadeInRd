@@ -12,7 +12,7 @@
         <div class="flex">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/Admin/Index">Главная</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Отрасли</li>
                 </ol>
             </nav>
@@ -29,7 +29,7 @@
                     <input type="hidden" asp-for="IndustryTranslation.Language" value="@Languages.DefaultLanguage">
 
                     <div class="form-group mb-4">
-                        <label class="control-label">Загрузите отрасль</label>
+                        <label class="control-label">Загрузите изображение</label>
                         <input asp-for="Image" class="form-control-file" type="file"/>
                     </div>
                     

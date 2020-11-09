@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,10 +12,12 @@ namespace ExporterWeb.Pages.Admin.Industries
     public class CreateTranslation : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ImageService _imageService;
 
-        public CreateTranslation(ApplicationDbContext context)
+        public CreateTranslation(ApplicationDbContext context, ImageService imageService)
         {
             _context = context;
+            _imageService = imageService;
         }
 
         public IActionResult OnGet(int? industryId, string? lang)
@@ -31,8 +35,26 @@ namespace ExporterWeb.Pages.Admin.Industries
         public async Task<IActionResult> OnPostAsync()
         {
             Translation.IndustryId = IndustryId;
+
+            if (Image is {})
+            {
+                Translation.Image = _imageService.Save(ImageTypes.IndustryImage, Image);
+            }
+
             await _context.IndustryTranslations!.AddAsync(Translation);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                if (Image is {})
+                {
+                    _imageService.Delete(ImageTypes.IndustryImage, Translation.Image!);
+                }
+                throw;
+            }
             return RedirectToPage("./Index");
         }
         
@@ -43,7 +65,10 @@ namespace ExporterWeb.Pages.Admin.Industries
         [BindProperty]
         public int IndustryId { get; set; }
 
-        [BindProperty] 
+        [BindProperty]
         public string Language { get; set; }
+        
+        [BindProperty]
+        public IFormFile Image { get; set; }
     }
 }

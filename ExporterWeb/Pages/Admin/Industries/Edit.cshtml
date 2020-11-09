@@ -48,6 +48,12 @@
                         <div id="delete-image-row" class="form-group mb-4">
                             <button id="del-image-button" class="btn btn-danger" type="submit" asp-page-handler="DeleteImage">Удалить текущее изображение</button>
                         </div>
+
+                        <style>
+                            .upload-img-block {
+                                display: none;
+                            }
+                        </style>
                     }
                 </form>
                 
@@ -57,15 +63,6 @@
                     <input type="hidden" asp-for="Industry.Id">
                     <input type="hidden" asp-for="Industry.IndustryId">
                     <input type="hidden" asp-for="Industry.Language">
-
-                    @if (Model.Industry.Image is {})
-                    {
-                        <style>
-                            .upload-img-block {
-                                display: none;
-                            }
-                        </style>
-                    }
 
                     <div class="form-group upload-img-block mb-4">
                         <div id="upload-image-row" class="form-group mt-2">

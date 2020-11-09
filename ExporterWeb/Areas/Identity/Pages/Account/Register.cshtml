@@ -131,7 +131,7 @@
 
                     <div class="form-group d-flex flex-sm-row flex-column flex-wrap align-items-baseline mb-0">
                         <button class="btn btn-big btn-primary account-card__btn-primary go__register" type="submit">@Localizer["Sign up"]</button>
-                        <a class="link link_border link_border-margin" href="#">@Localizer["Log in"]</a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="link link_border link_border-margin">@Localizer["Log in"]</a>
                     </div>
                 </form>
 

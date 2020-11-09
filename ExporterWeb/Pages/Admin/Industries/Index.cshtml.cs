@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
+using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace ExporterWeb.Pages.Admin.Industries
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ImageService _imageService;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context, ImageService imageService)
         {
             _context = context;
+            _imageService = imageService;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -37,7 +40,9 @@ namespace ExporterWeb.Pages.Admin.Industries
         
         public async Task<IActionResult> OnPostDeleteIndustryAsync(int id)
         {
-            var industry = await _context.Industries!.FirstOrDefaultAsync(i => i.Id == id);
+            var industry = await _context.Industries!
+                .Include(i => i.Translations)
+                .FirstOrDefaultAsync(i => i.Id == id);
             
             if (industry is null)
             {
@@ -46,6 +51,12 @@ namespace ExporterWeb.Pages.Admin.Industries
             
             _context.Remove(industry);
             await _context.SaveChangesAsync();
+            
+            industry.Translations!
+                .Where(t => t.Image is { })
+                .ToList()
+                .ForEach(t => _imageService.Delete(ImageTypes.IndustryImage, t.Image!)); 
+
             return RedirectToPage("./Index");
         }
         
@@ -55,6 +66,7 @@ namespace ExporterWeb.Pages.Admin.Industries
                 .Include(i => i.Industry)
                 .ThenInclude(i => i!.Translations)
                 .FirstOrDefaultAsync(i => i.Id == id);
+            
             if (industryTranslation is null)
             {
                 return NotFound();
@@ -73,8 +85,14 @@ namespace ExporterWeb.Pages.Admin.Industries
             {
                 _context.IndustryTranslations!.Remove(industryTranslation);
             }
-        
+            
             await _context.SaveChangesAsync();
+
+            if (industryTranslation.Image is { })
+            {
+                _imageService.Delete(ImageTypes.IndustryImage, industryTranslation.Image);
+            }
+            
             return RedirectToPage("./Index");
         }
         

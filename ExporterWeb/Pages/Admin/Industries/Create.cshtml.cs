@@ -28,9 +28,11 @@ namespace ExporterWeb.Pages.Admin.Industries
         public async Task<IActionResult> OnPostAsync()
         {
             Industry industry = new Industry();
-            
+
             if (Image is { })
+            {
                 IndustryTranslation.Image = _imageService.Save(ImageTypes.IndustryImage, Image);
+            }
 
             IndustryTranslation.Language = Languages.DefaultLanguage;
             industry.Translations!.Add(IndustryTranslation);

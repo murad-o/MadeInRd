@@ -32,8 +32,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             IndustryTranslations =  await _context.IndustryTranslations!
                 .Include(i => i.Industry)
                 .ThenInclude(i => i!.Translations)
-                .Where(i =>
-                i.Language == Languages.DefaultLanguage).ToListAsync();
+                .Where(i => i.Language == Languages.DefaultLanguage).ToListAsync();
 
             return Page();
         }
@@ -55,7 +54,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             industry.Translations!
                 .Where(t => t.Image is { })
                 .ToList()
-                .ForEach(t => _imageService.Delete(ImageTypes.IndustryImage, t.Image!)); 
+                .ForEach(t => _imageService.Delete(ImageTypes.IndustryImage, t.Image!));
 
             return RedirectToPage("./Index");
         }

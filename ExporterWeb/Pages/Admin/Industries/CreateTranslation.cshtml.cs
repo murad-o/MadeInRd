@@ -36,7 +36,7 @@ namespace ExporterWeb.Pages.Admin.Industries
         {
             Translation.IndustryId = IndustryId;
 
-            if (Image is {})
+            if (Image is { })
             {
                 Translation.Image = _imageService.Save(ImageTypes.IndustryImage, Image);
             }
@@ -49,7 +49,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
             catch
             {
-                if (Image is {})
+                if (Image is { })
                 {
                     _imageService.Delete(ImageTypes.IndustryImage, Translation.Image!);
                 }

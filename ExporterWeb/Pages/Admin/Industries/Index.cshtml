@@ -1,4 +1,5 @@
 ﻿@page
+@using ExporterWeb.Helpers
 @model ExporterWeb.Pages.Admin.Industries.IndexModel
 
 @{
@@ -46,7 +47,7 @@
                             <th>
                                 @foreach (var lang in Model.SecondaryLanguages)
                                 {
-                                    <span style="width:70px;" class="mx-1"><img class="language-switcher__flag" src="/img/flags/@(lang).svg" alt="Flag"/></span>
+                                    <span style="width:70px;" class="mx-1"><img title="@Languages.ToRussian(lang)" class="language-switcher__flag" src="/img/flags/@(lang).svg" alt="Флаг"/></span>
                                 }
                             </th>
                             <th style="text-align: right">

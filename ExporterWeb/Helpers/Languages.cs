@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExporterWeb.Helpers
 {
@@ -15,5 +16,16 @@ namespace ExporterWeb.Helpers
         };
 
         public const string DefaultLanguage = "ru";
+
+        public static string ToRussian(string language) => language switch
+        {
+            "ru" => "русский",
+            "en" => "английский",
+            "az" => "азербайджанский",
+            "tr" => "турецкий",
+            "ar" => "арабский",
+            "fa" => "персидский",
+            _ => throw new ArgumentException("Несуществующий язык")
+        };
     }
 }

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
-    [ValidateModel]
     public class CreateTranslation : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -28,12 +27,16 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
             
             IndustryId = industryId.Value;
-            Language = lang;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            
             Translation.IndustryId = IndustryId;
 
             if (Image is { })
@@ -65,7 +68,7 @@ namespace ExporterWeb.Pages.Admin.Industries
         [BindProperty]
         public int IndustryId { get; set; }
 
-        [BindProperty]
+        [BindProperty(Name = "lang", SupportsGet = true)]
         public string Language { get; set; }
         
         [BindProperty]

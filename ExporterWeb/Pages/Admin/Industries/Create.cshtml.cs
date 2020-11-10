@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
-    [ValidateModel]
     public class Create : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -27,6 +26,11 @@ namespace ExporterWeb.Pages.Admin.Industries
         
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             Industry industry = new Industry();
 
             if (Image is { })

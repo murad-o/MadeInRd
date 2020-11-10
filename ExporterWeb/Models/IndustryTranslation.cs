@@ -8,10 +8,10 @@ namespace ExporterWeb.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Это обязательное поле")]
         public string Name { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessage = "Это обязательное поле")]
         public string Description { get; set; } = "";
 
         public string? Image { get; set; }

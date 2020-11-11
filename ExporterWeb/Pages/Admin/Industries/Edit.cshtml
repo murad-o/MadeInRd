@@ -59,13 +59,14 @@
                         }
                     </style>
                 }
-                
+
                 <form method="post" enctype="multipart/form-data">
                     
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Industry.Id">
                     <input type="hidden" asp-for="Industry.IndustryId">
                     <input type="hidden" asp-for="Industry.Language">
+                    <input type="hidden" asp-for="Industry.Image" value="@Model.Industry.Image"/>
 
                     <div class="form-group upload-img-block mb-4">
                         <div id="upload-image-row" class="form-group mt-2">

@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
-    [ValidateModel]
     public class Edit : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -40,13 +39,18 @@ namespace ExporterWeb.Pages.Admin.Industries
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             var industryToUpdate = await _context.IndustryTranslations!.FirstOrDefaultAsync(i => i.Id == id);
 
-            if (industryToUpdate is null || !Languages.WhiteList.Contains(Industry.Language))
+            if (industryToUpdate is null)
             {
                 return NotFound();
-            } 
-            
+            }
+
             var oldImage = industryToUpdate.Image;
             if (Image is { })
             {
@@ -56,7 +60,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             if (!await TryUpdateModelAsync(
                 industryToUpdate,
                 "Industry",
-                i => i.Name, i => i.Description, i => i.Language))
+                i => i.Name, i => i.Description))
             {
                 return RedirectToPage("./Index");
             }

@@ -82,9 +82,9 @@ namespace ExporterWeb.Pages.Admin.Industries
 
         public async Task<IActionResult> OnPostDeleteImage(int id)
         {
-            var industry = await _context.IndustryTranslations!.FindAsync(id);
-            _imageService.Delete(ImageTypes.IndustryImage, industry.Image!);
-            industry.Image = null;
+            Industry = await _context.IndustryTranslations!.FindAsync(id);
+            _imageService.Delete(ImageTypes.IndustryImage, Industry.Image!);
+            Industry.Image = null;
             await _context.SaveChangesAsync();
             return StatusCode(StatusCodes.Status204NoContent);
         }

@@ -49,11 +49,11 @@
         <div>
             <img id="edit-img" src="@Model.NewsItem.LogoPath()" />
         </div>
-        @* <form method="post" id="delete-image-form"> *@
+        <form method="post" id="delete-image-form">
             <div class="form-group">
                 <button type="submit" asp-page-handler="DeleteImage">Удалить текущее изображение</button>
             </div>
-        @* </form> *@
+        </form>
         <script>
             document.getElementById("delete-image-form").addEventListener("submit", async function (e) {
                 e.preventDefault();

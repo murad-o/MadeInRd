@@ -11,11 +11,6 @@ deleteImageForm?.addEventListener('submit', async function(e) {
         body: new FormData(this)
     })
 
-    if (result.ok) {
-        document.getElementById('edit-img').style.display = 'none';
-        document.getElementById('delete-image-row').style.display = 'none';
-        document.querySelector('.upload-img-block').style.display = "block";
-    } else {
-        alert('Неизвестная ошибка: ' + result.statusText);
-    }
+    document.getElementById('current-image-row').style.display = 'none';
+    document.querySelector('.upload-img-block').style.display = "block";
 });

@@ -28,9 +28,6 @@ namespace ExporterWeb.Pages.Exporters
                 .Include(l => l.CommonExporter!.Industry)
                 .Include(l => l.CommonExporter!.User);
 
-            if (!IsAdminOrManager)
-                exporters = exporters.Where(e => e.Approved || e.CommonExporterId == UserId);
-
             if (!string.IsNullOrWhiteSpace(search))
             {
                 search = search.ToLower();

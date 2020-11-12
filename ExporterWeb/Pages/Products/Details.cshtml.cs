@@ -26,9 +26,6 @@ namespace ExporterWeb.Pages.Products
                 .Include(p => p.Industry)
                 .Include(p => p.LanguageExporter);
 
-            if (!IsAdminOrManager)
-                products = products.Where(p => p.LanguageExporter!.Approved || p.LanguageExporterId == UserId);
-
             Product = await products
                 .FirstOrDefaultAsync(m => m.Id == id);
 

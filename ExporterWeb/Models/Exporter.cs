@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ExporterWeb.Helpers;
 
 namespace ExporterWeb.Models
 {
@@ -23,6 +24,10 @@ namespace ExporterWeb.Models
         [Required]
         public int IndustryId { get; set; }
         public Industry? Industry { get; set; }
+        [Required]
+        public string Status { get; set; } = ExporterStatus.OnModeration.ToString();
+        [Required]
+        public bool IsShowedOnIndustryPage { get; set; } = false;
     }
 
     // Composite primary key is set through Fluent API
@@ -62,9 +67,6 @@ namespace ExporterWeb.Models
         public string? Website { get; set; }
 
         public string? Logo { get; set; }
-
-        [Required]
-        public bool Approved { get; set; }
 
         public virtual ICollection<Product>? Products { get; set; }
     }

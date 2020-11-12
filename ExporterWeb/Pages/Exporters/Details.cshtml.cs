@@ -26,9 +26,6 @@ namespace ExporterWeb.Pages.Exporters
                 .Include(e => e.CommonExporter)
                 .Include(e => e.CommonExporter!.Industry);
 
-            if (!IsAdminOrManager)
-                exporters = exporters.Where(p => p.Approved || p.CommonExporterId == UserId);
-
             LanguageExporter = await exporters
                 .FirstOrDefaultAsync(m => m.CommonExporterId == id && m.Language == Language);
 

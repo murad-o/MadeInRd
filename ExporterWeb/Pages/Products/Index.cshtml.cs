@@ -23,9 +23,6 @@ namespace ExporterWeb.Pages.Products
                 .Include(p => p.Industry)
                 .Include(p => p.LanguageExporter);
 
-            if (!IsAdminOrManager)
-                products = products.Where(p => p.LanguageExporter!.Approved || p.LanguageExporterId == UserId);
-
             Products = await products.ToPagedListAsync(pageNumber, pageSize: 8);
         }
 

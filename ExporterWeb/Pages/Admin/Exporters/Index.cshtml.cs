@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
+using ExporterWeb.Helpers;
 using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using ExporterWeb.Models.ViewModels;
@@ -27,7 +28,9 @@ namespace ExporterWeb.Pages.Admin.Exporters
             _emailSender = emailSender;
             _partialToStringRenderer = partialToStringRenderer;
             Exporters = _context.LanguageExporters!
-                .Where(exporter => !exporter.Approved && exporter.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName).ToList();
+                .Where(exporter => exporter.CommonExporter!.Status != ExporterStatus.Approved.ToString() && 
+                                   exporter.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
+                .ToList();
         }
 
         public IActionResult OnGet()
@@ -37,12 +40,12 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var exporter = await _context.LanguageExporters
+            var exporter = await _context.LanguageExporters!
                 .Include(e => e.CommonExporter)
                 .Include(e => e.CommonExporter!.User)
                 .FirstOrDefaultAsync(e => e.CommonExporterId == Id && e.Language == Language);
 
-            exporter.Approved = true;
+            exporter.CommonExporter!.Status = ExporterStatus.Approved.ToString();
             await _context.SaveChangesAsync();
             var email = exporter.CommonExporter!.User!.Email;
             var body = await _partialToStringRenderer.RenderPartialToStringAsync(

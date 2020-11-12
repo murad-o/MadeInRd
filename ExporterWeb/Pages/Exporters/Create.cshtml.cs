@@ -61,12 +61,8 @@ namespace ExporterWeb.Pages.Exporters
                 l => l.CommonExporterId, l => l.Language, l => l.Name, l => l.Description,
                 l => l.ContactPersonFirstName, l => l.ContactPersonSecondName, l => l.ContactPersonPatronymic,
                 l => l.DirectorFirstName, l => l.DirectorSecondName, l => l.DirectorPatronymic,
-                l => l.WorkingTime, l => l.Address, l => l.Website, l => l.Approved))
+                l => l.WorkingTime, l => l.Address, l => l.Website))
                 return Page();
-            
-            // If the user is a regular person, mark it as pending
-            if (!IsAdminOrManager)
-                languageExporter.Approved = false;
 
             await _context.LanguageExporters!.AddAsync(languageExporter);
             try

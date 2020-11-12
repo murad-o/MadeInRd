@@ -570,3 +570,32 @@ BEGIN
     VALUES ('20201027153456_SetIndustryImagePropertyNullable', '3.1.9');
     END IF;
 END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201112121840_AddStatusForExporter') THEN
+    ALTER TABLE "LanguageExporters" DROP COLUMN "Approved";
+    END IF;
+END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201112121840_AddStatusForExporter') THEN
+    ALTER TABLE "CommonExporters" ADD "IsShowedOnIndustryPage" boolean NOT NULL DEFAULT FALSE;
+    END IF;
+END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201112121840_AddStatusForExporter') THEN
+    ALTER TABLE "CommonExporters" ADD "Status" text NOT NULL DEFAULT '';
+    END IF;
+END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201112121840_AddStatusForExporter') THEN
+    INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+    VALUES ('20201112121840_AddStatusForExporter', '3.1.9');
+    END IF;
+END $$;

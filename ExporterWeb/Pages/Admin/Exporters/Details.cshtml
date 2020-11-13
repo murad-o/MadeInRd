@@ -1,6 +1,25 @@
 ﻿@page
-@model ExporterWeb.Pages.Admin.Exporters.Edit
+@using ExporterWeb.Helpers
+@model ExporterWeb.Pages.Admin.Exporters.Details
 
 @{
     Layout = "_AdminLayout";
 }
+
+<div>
+    <p>ИНН: @Model.LanguageExporter!.CommonExporter!.INN</p>
+    <p>ОГРНИП: @Model.LanguageExporter.CommonExporter.OGRN_IP</p>
+    <p>Название: @Model.LanguageExporter.Name</p>
+    <p>Статус: @Model.LanguageExporter.CommonExporter.Status</p>
+</div>
+
+<form method="post">
+    Одобрить
+    <input type="radio" asp-for="Status" value="@ExporterStatus.Approved">
+    Отказать
+    <input type="radio" asp-for="Status" value="@ExporterStatus.Refused">
+    На модерацию
+    <input type="radio" asp-for="Status" value="@ExporterStatus.OnModeration">
+
+    <button type="submit">Сохранить</button>
+</form>

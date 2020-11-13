@@ -27,14 +27,15 @@ namespace ExporterWeb.Pages.Admin.Exporters
             _context = context;
             _emailSender = emailSender;
             _partialToStringRenderer = partialToStringRenderer;
-            Exporters = _context.LanguageExporters!
-                .Where(exporter => exporter.CommonExporter!.Status != ExporterStatus.Approved.ToString() && 
-                                   exporter.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
-                .ToList();
+            
         }
 
         public IActionResult OnGet()
         {
+            Exporters = _context.LanguageExporters!
+                .Include(e => e.CommonExporter)
+                .Where(exporter => exporter.Language == Languages.DefaultLanguage)
+                .ToList();
             return Page();
         }
 
@@ -64,7 +65,5 @@ namespace ExporterWeb.Pages.Admin.Exporters
         public string Id { get; set; }
         [BindProperty]
         public string Language { get; set; }
-        [BindProperty]
-        public string RejectionReason { get; set; }
     }
 }

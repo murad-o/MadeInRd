@@ -131,7 +131,15 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 }
             }
 
-            //TODO: send email notification to the exporter
+            var body = await _partialToStringRenderer.RenderPartialToStringAsync(
+                "Emails/AccountDeletedEmailNotification",
+                new ContactInfoModel
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.SecondName,
+                });
+            await _emailSender.SendEmailAsync(user.Email, "Ваша учетная запись удалена", body);
+            
             return RedirectToPage("./Index");
         }
         

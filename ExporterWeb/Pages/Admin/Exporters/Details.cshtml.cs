@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers;
 using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using ExporterWeb.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,12 +17,14 @@ namespace ExporterWeb.Pages.Admin.Exporters
         private readonly ApplicationDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly RazorPartialToStringRenderer _partialToStringRenderer;
+        private readonly UserManager<User> _userManager;
 
-        public Details(ApplicationDbContext context, IEmailSender emailSender, RazorPartialToStringRenderer partialToStringRenderer)
+        public Details(ApplicationDbContext context, IEmailSender emailSender, RazorPartialToStringRenderer partialToStringRenderer, UserManager<User> userManager)
         {
             _context = context;
             _emailSender = emailSender;
             _partialToStringRenderer = partialToStringRenderer;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync(string? id)
@@ -33,8 +36,13 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
             LanguageExporter = await _context.LanguageExporters!
                 .Include(e => e.CommonExporter)
+                .ThenInclude(e => e!.User)
+                .Include(e => e.CommonExporter!.Industry!.Translations)
                 .FirstOrDefaultAsync(e => e.CommonExporterId == id && e.Language == Languages.DefaultLanguage);
 
+            IndustryName = LanguageExporter.CommonExporter!.Industry!.Translations!.FirstOrDefault(e =>
+                    e.Language == Languages.DefaultLanguage)!.Name;
+            
             return Page();
         }
 
@@ -62,7 +70,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
             
             LanguageExporter!.CommonExporter!.Status = Status.ToString();
             await _context.SaveChangesAsync();
-            await SendStatusChangedMessage(LanguageExporter);   
+            await SendStatusChangedMessage(LanguageExporter);
 
             return RedirectToPage("./Index");
         }
@@ -103,10 +111,35 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 });
             await _emailSender.SendEmailAsync(email, "Аккаунт отклонен", body);
         }
-        
+
+        public async Task<IActionResult> OnPostDeleteExporterAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            
+            if (user is null)
+            {
+                return NotFound();
+            }
+            
+            var result = await _userManager.DeleteAsync(user);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description); 
+                }
+            }
+            
+            //TODO: send email notification to the exporter
+            
+            return RedirectToPage("./Index");
+        }
 
 #nullable disable
         public LanguageExporter LanguageExporter { get; set; }
+
+        public string IndustryName { get; set; }
         
         [BindProperty]
         public ExporterStatus Status { get; set; }

@@ -1,3 +1,14 @@
 ﻿.page__heading .language-switcher__flag {
     width: 36px;
 }
+
+
+
+
+
+
+/* ЭКСПОРТЕРЫ */
+
+/* Стр. экспортера */
+.exp-textarea {max-width: 60%;min-height: 120px;}
+.exporter-item {margin: 5px 0;}

@@ -6,20 +6,132 @@
     Layout = "_AdminLayout";
 }
 
-<div>
-    <p>ИНН: @Model.LanguageExporter!.CommonExporter!.INN</p>
-    <p>ОГРНИП: @Model.LanguageExporter.CommonExporter.OGRN_IP</p>
-    <p>Название: @Model.LanguageExporter.Name</p>
-    <p>Статус: @Model.LanguageExporter.CommonExporter.Status</p>
+<div class="container-fluid page__heading-container">
+    <div class="page__heading d-flex align-items-center">
+	    <div class="flex">
+		    <nav aria-label="breadcrumb">
+			    <ol class="breadcrumb mb-0">
+				    <li class="breadcrumb-item"><a href="#">Главная</a></li>
+				    <li class="breadcrumb-item active" aria-current="page">Экспортеры</li>
+			    </ol>
+		    </nav>
+		    <h1 class="m-0">@Model.LanguageExporter.Name</h1>
+	    </div>
+	    <a href="" class="btn btn-primary ml-3">К товарам</a>
+	    <form asp-page-handler="DeleteExporter" 
+	          method="post" 
+	          asp-page="./Details" 
+	          onsubmit="return confirm('Вы уверены что хотите удалить этого пользователя? При подтверждении удалятся все данные, связанные сэтим аккаунтом')">
+		    <input type="hidden" name="id" value="@Model.LanguageExporter.CommonExporterId">
+		    <button class="btn btn-danger ml-2" type="submit">Удалить</button>
+	    </form>
+    </div>
 </div>
 
-<form method="post">
-    Одобрить
-    <input type="radio" asp-for="Status" value="@ExporterStatus.Approved">
-    Отказать
-    <input type="radio" asp-for="Status" value="@ExporterStatus.Refused">
-    На модерацию
-    <input type="radio" asp-for="Status" value="@ExporterStatus.OnModeration">
+<div class="container-fluid page__container">
+	<div class="row">
+	
+		<div class="col-md-9">
+		
+			<div class="row">
+				<div class="col-md-12 card-form__body card-body bg-white">
+					
+					<div class="exporter-profile">
+						<div class="row">
+							<div class="col-md-4">
+							<p><strong>Информация о компании</strong></p>
+								<div class="exporter-item"><span>Название компании: @Model.LanguageExporter.Name</span></div>
+	                            <div class="exporter-item"><span>ИНН: @Model.LanguageExporter.CommonExporter!.INN</span></div>
+	                            <div class="exporter-item"><span>ОГРНИП: @Model.LanguageExporter.CommonExporter!.OGRN_IP</span></div>
+	                            <div class="exporter-item"><span>Отрасль: @Model.IndustryName</span></div>
+							</div>
+							<div class="col-md-6">
+								<p><strong>Данные контактного лица организации</strong></p>
+								<div class="exporter-item"><span>Полное имя директора: @Model.LanguageExporter.DirectorFullName()</span></div>
+								<div class="exporter-item">
+									<span>Контактное лицо: @Model.LanguageExporter.ContactPersonSecondName
+										@Model.LanguageExporter.ContactPersonFirstName @Model.LanguageExporter.ContactPersonPatronymic
+									</span>
+								</div>
+								<div class="exporter-item"><span>Должность: @Model.LanguageExporter.Position</span></div>
+	                            <div class="exporter-item"><span>Email: @Model.LanguageExporter.CommonExporter!.User!.Email</span></div>
+	                            <div class="exporter-item"><span>Номер телефона: @Model.LanguageExporter.Phone</span></div>
+							</div>
+						</div>
+					</div>
 
-    <button type="submit">Сохранить</button>
-</form>
+				</div>
+			</div>
+			
+			<hr>
+			
+			<div class="row">
+
+				<div class="col-md-12 card-form__body card-body bg-white">
+					<p><strong>Статус экспортера @Model.LanguageExporter.CommonExporter.Status</strong></p>
+
+					<form id="exp-form" method="post">
+						<div class="form-check custom-control custom-radio mb-2">
+                    		<input class="form-check-input custom-control-input exp-status" type="radio" asp-for="Status" id="exp-moderation" value="@ExporterStatus.OnModeration">
+                    		<label class="form-check-label custom-control-label" for="exp-moderation">
+                    			На модерации
+                    		</label>
+                    	</div>
+						<div class="form-check custom-control custom-radio mb-2">
+							<input class="form-check-input custom-control-input exp-status" type="radio" asp-for="Status" id="exp-approved" value="@ExporterStatus.Approved">
+							<label class="form-check-label custom-control-label" for="exp-approved">
+								Одобрен
+							</label>
+						</div>
+						<div class="form-check custom-control custom-radio mb-2">
+							<input class="form-check-input custom-control-input exp-status" type="radio" asp-for="Status" id="exp-not-approved" value="@ExporterStatus.Refused">
+							<label class="form-check-label custom-control-label" for="exp-not-approved">
+								Отказано
+							</label>
+						</div>
+
+						<div class="form-group form-group-textarea mt-3 d-none" id="textBlock">
+							<label for="desc">Причина отказа</label>
+						</div>
+						
+						<button class="btn btn-success mt-3" type="submit">Сохранить</button>
+					</form>
+				</div>
+
+			</div>
+			
+		</div>
+			
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		let expForm = document.getElementById('exp-form')
+		let expNotApproved = document.getElementById('exp-not-approved');
+		let expAddTextarea = document.createElement('textarea');
+		let expTextareaRow = document.querySelector('.form-group-textarea')
+		expAddTextarea.classList.add('form-control', 'exp-textarea');
+		expAddTextarea.id = 'exp-textarea';
+		expAddTextarea.setAttribute('name', 'RejectionReason');
+		expAddTextarea.placeholder = 'Введите причину отказа';
+		expAddTextarea.required = true;
+
+		expForm.onchange = function () {
+			if (expNotApproved.checked) {
+				expTextareaRow.classList.remove('d-none');
+				expTextareaRow.append(expAddTextarea)
+			} else {
+				expTextareaRow.classList.add('d-none');
+				expAddTextarea.remove();
+			}
+		}
+		
+		let radioButtons = document.querySelectorAll('.exp-status');
+		radioButtons.forEach(function (item) {
+			if (item.value === '@Model.LanguageExporter.CommonExporter.Status') {
+				item.checked = true;
+			}	
+		});
+	</script>
+}

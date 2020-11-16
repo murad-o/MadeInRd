@@ -39,23 +39,52 @@
 					<div class="exporter-profile">
 						<div class="row">
 							<div class="col-md-4">
-							<p><strong>Информация о компании</strong></p>
-								<div class="exporter-item"><span>Название компании: @Model.LanguageExporter.Name</span></div>
-	                            <div class="exporter-item"><span>ИНН: @Model.LanguageExporter.CommonExporter!.INN</span></div>
-	                            <div class="exporter-item"><span>ОГРНИП: @Model.LanguageExporter.CommonExporter!.OGRN_IP</span></div>
-	                            <div class="exporter-item"><span>Отрасль: @Model.IndustryName</span></div>
+								<p><strong>Информация о компании</strong></p>
+								
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Название компании:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.Name</span>
+								</div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">ИНН:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.CommonExporter!.INN</span>
+								</div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">ОГРН или ОГРНИП:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.CommonExporter!.OGRN_IP</span>
+								</div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Отрасль:</span>
+									<span class="exporter-item__value mt-1">@Model.IndustryName</span>
+								</div>
 							</div>
 							<div class="col-md-6">
 								<p><strong>Данные контактного лица организации</strong></p>
-								<div class="exporter-item"><span>Полное имя директора: @Model.LanguageExporter.DirectorFullName()</span></div>
-								<div class="exporter-item">
-									<span>Контактное лицо: @Model.LanguageExporter.ContactPersonSecondName
-										@Model.LanguageExporter.ContactPersonFirstName @Model.LanguageExporter.ContactPersonPatronymic
+								
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Полное имя директора:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.DirectorFullName()</span>
+								</div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Контактное лицо:</span>
+									<span class="exporter-item__value mt-1">
+										@Model.LanguageExporter.ContactPersonSecondName
+										@Model.LanguageExporter.ContactPersonFirstName
+										@Model.LanguageExporter.ContactPersonPatronymic
 									</span>
 								</div>
-								<div class="exporter-item"><span>Должность: @Model.LanguageExporter.Position</span></div>
-	                            <div class="exporter-item"><span>Email: @Model.LanguageExporter.CommonExporter!.User!.Email</span></div>
-	                            <div class="exporter-item"><span>Номер телефона: @Model.LanguageExporter.Phone</span></div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Должность:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.Position</span>
+								</div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Email:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.CommonExporter!.User!.Email</span>
+								</div>
+								<div class="exporter-item d-flex flex-column my-3">
+									<span class="font-weight-bold exporter-item__title">Номер телефона:</span>
+									<span class="exporter-item__value mt-1">@Model.LanguageExporter.Phone</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -68,7 +97,7 @@
 			<div class="row">
 
 				<div class="col-md-12 card-form__body card-body bg-white">
-					<p><strong>Статус экспортера @Model.LanguageExporter.CommonExporter.Status</strong></p>
+					<p><strong>Статус экспортера</strong></p>
 
 					<form id="exp-form" method="post">
 						<div class="form-check custom-control custom-radio mb-2">

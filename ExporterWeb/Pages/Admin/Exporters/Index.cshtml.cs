@@ -58,6 +58,11 @@ namespace ExporterWeb.Pages.Admin.Exporters
             return Page();
         }
 
+        public List<LanguageExporter> GetExportersByStatus(ExporterStatus status)
+        {
+            return Exporters.Where(e => e.CommonExporter!.Status == status.ToString()).ToList();
+        }
+
 
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }

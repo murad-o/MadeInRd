@@ -1,8 +1,13 @@
 ﻿@page
+@using ExporterWeb.Helpers
 @model ExporterWeb.Pages.Admin.Exporters.Index
 
 @{
     Layout = "_AdminLayout";
+
+    var approvedExporters = Model.GetExportersByStatus(ExporterStatus.Approved);
+    var onModerationExporters = Model.GetExportersByStatus(ExporterStatus.OnModeration);
+    var refusedExporters = Model.GetExportersByStatus(ExporterStatus.Refused);
 }
 
 <div class="container-fluid page__heading-container">
@@ -26,19 +31,19 @@
             <li class="nav-item">
                 <a href="#expModeration" class="nav-link d-flex align-items-center flex-row active" data-toggle="tab" role="tab" aria-controls="expModeration" aria-selected="true">
                     На модерации
-                    <span class="ml-2">(03)</span>
+                    <span class="ml-2">@onModerationExporters.Count</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#expApproved" class="nav-link d-flex align-items-center flex-row" data-toggle="tab" role="tab" aria-selected="false">
                     Одобреные
-                    <span class="ml-2">(06)</span>
+                    <span class="ml-2">@approvedExporters.Count</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#expNotApproved" class="nav-link d-flex align-items-center flex-row" data-toggle="tab" role="tab" aria-selected="false">
-                    Не одобреные
-                    <span class="ml-2">(05)</span>
+                    Отказано
+                    <span class="ml-2">@refusedExporters.Count</span>
                 </a>
             </li>
         </ul>
@@ -58,7 +63,7 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="staff02">
-                            @for (var i = 0; i < Model.Exporters.Count; i++)
+                            @for (var i = 0; i < onModerationExporters.Count; i++)
                             {
                                 <tr>
                                     <td>
@@ -67,8 +72,8 @@
                                     <td>
                                         <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
                                     </td>
-                                    <td>Фамилия Имя Отчество</td>
-                                    <td>+7 (989) 669-55-33</td>
+                                    <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
+                                    <td>@Model.Exporters[i].Phone</td>
                                     <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a></td>
                                 </tr>
                             }
@@ -89,7 +94,7 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="staff02">
-                            @for (var i = 0; i < Model.Exporters.Count; i++)
+                            @for (var i = 0; i < approvedExporters.Count; i++)
                             {
                                 <tr>
                                     <td>
@@ -98,8 +103,8 @@
                                     <td>
                                         <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
                                     </td>
-                                    <td>Фамилия Имя Отчество</td>
-                                    <td>+7 (989) 669-55-33</td>
+                                    <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
+                                    <td>@Model.Exporters[i].Phone</td>
                                     <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a></td>
                                 </tr>
                             }
@@ -120,7 +125,7 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="staff02">
-                            @for (var i = 0; i < Model.Exporters.Count; i++)
+                            @for (var i = 0; i < refusedExporters.Count; i++)
                             {
                                 <tr>
                                     <td>
@@ -129,8 +134,8 @@
                                     <td>
                                         <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
                                     </td>
-                                    <td>Фамилия Имя Отчество</td>
-                                    <td>+7 (989) 669-55-33</td>
+                                    <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
+                                    <td>@Model.Exporters[i].Phone</td>
                                     <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a></td>
                                 </tr>
                             }
@@ -143,3 +148,59 @@
     </div>
     
 </div>
+
+<style>
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+</style>
+
+<script>
+function changeList(evt, status) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(status).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+</script>

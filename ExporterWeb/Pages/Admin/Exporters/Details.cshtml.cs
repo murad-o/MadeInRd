@@ -111,7 +111,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 });
             await _emailSender.SendEmailAsync(email, "Аккаунт отклонен", body);
         }
-
+        
         public async Task<IActionResult> OnPostDeleteExporterAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -120,21 +120,21 @@ namespace ExporterWeb.Pages.Admin.Exporters
             {
                 return NotFound();
             }
-            
+
             var result = await _userManager.DeleteAsync(user);
 
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description); 
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            
+
             //TODO: send email notification to the exporter
-            
             return RedirectToPage("./Index");
         }
+        
 
 #nullable disable
         public LanguageExporter LanguageExporter { get; set; }

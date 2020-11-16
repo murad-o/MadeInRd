@@ -34,7 +34,8 @@
 
                     <div class="form-group mb-4">
                         <label class="control-label">Загрузите изображение</label>
-                        <input class="form-control-file" type="file" name="image"/>
+                        <input class="form-control-file" id="file-input" type="file" name="Image" accept=".jpg,.png,.jpeg" placeholder="Выбрать файл" />
+                        <small id="passwordHelpInline" class="text-muted">Допустимые форматы: jpg, jpeg, png</small>
                     </div>
                     
                     <div class="form-group mb-4">
@@ -62,6 +63,7 @@
 
 
 @section Scripts {
+    <script src="~/js/custom.js"></script>
     <script src="//cdn.ckeditor.com/4.15.1/full/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'industry-description', {

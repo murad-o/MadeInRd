@@ -17,8 +17,7 @@
                 </ol>
             </nav>
             <h1 class="m-0">Добавление отрасли
-                <img data-toggle="tooltip" data-placement="top" title="@Languages.ToRussian(Languages.DefaultLanguage)"
-                     class="language-switcher__flag" src="/img/flags/@(Languages.DefaultLanguage).svg" alt="Флаг">
+                <img data-toggle="tooltip" data-placement="top" title="@Languages.ToRussian(Languages.DefaultLanguage)" class="language-switcher__flag" src="/img/flags/@(Languages.DefaultLanguage).svg" alt="Флаг">
             </h1>
         </div>
     </div>
@@ -27,13 +26,14 @@
         <div class="row no-gutters">
             <div class="col-lg-12 card-form__body card-body">
                 
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" onsubmit="return Validate(this);" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="IndustryTranslation.Language" value="@Languages.DefaultLanguage">
 
                     <div class="form-group mb-4">
                         <label class="control-label">Загрузите изображение</label>
-                        <input asp-for="Image" class="form-control-file" type="file"/>
+                        <input asp-for="Image" class="form-control-file" id="file-input" type="file" accept=".jpg,.png,.jpeg" placeholder="Выбрать файл"/>
+                        <small id="passwordHelpInline" class="text-muted">Допустимые форматы: jpg, jpeg, png</small>
                     </div>
                     
                     <div class="form-group mb-4">
@@ -59,6 +59,7 @@
 
 
 @section Scripts {
+    <script src="~/js/custom.js"></script>
     <script src="//cdn.ckeditor.com/4.15.1/full/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'industry-description', {

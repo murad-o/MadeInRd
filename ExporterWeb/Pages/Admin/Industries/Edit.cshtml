@@ -68,11 +68,10 @@
                     <input type="hidden" asp-for="Industry.Language">
                     <input type="hidden" asp-for="Industry.Image" value="@Model.Industry.Image"/>
 
-                    <div class="form-group upload-img-block mb-4">
-                        <div id="upload-image-row" class="form-group mt-2">
-                            <label class="control-label">Загрузите изображение</label>
-                            <input class="form-control-file" type="file" name="Image"/>
-                        </div>
+                    <div class="form-group mb-4 upload-img-block">
+                        <label class="control-label">Загрузите изображение</label>
+                        <input class="form-control-file" id="file-input" type="file" name="Image" accept=".jpg,.png,.jpeg" placeholder="Выбрать файл" />
+                        <small id="passwordHelpInline" class="text-muted">Допустимые форматы: jpg, jpeg, png</small>
                     </div>
 
                     <div class="form-group mb-4">
@@ -100,6 +99,7 @@
 
 
 @section Scripts {
+    <script src="~/js/custom.js"></script>
     <script src="//cdn.ckeditor.com/4.15.1/full/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'industry-description', {

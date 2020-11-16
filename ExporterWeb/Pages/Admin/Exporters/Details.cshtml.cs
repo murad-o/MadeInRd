@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Helpers;
 using ExporterWeb.Helpers.Services;
@@ -77,14 +78,31 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
         private async Task SendStatusChangedMessage(LanguageExporter exporter)
         {
-            if (Status == ExporterStatus.Approved)
+            switch (Status)
             {
-                await SendApprovedStatusMessage(LanguageExporter);
+                case ExporterStatus.Approved:
+                    await SendApprovedStatusMessage(LanguageExporter);
+                    break;
+                case ExporterStatus.Refused:
+                    await SendRefusedStatusMessage(LanguageExporter);
+                    break;
+                case ExporterStatus.OnModeration:
+                    await SendOnModerationStatusMessage(LanguageExporter);
+                    break;
+                default:
+                    throw new ArgumentException("Несуществующий статус");
             }
-            else if (Status == ExporterStatus.Refused) 
-            {
-                await SendRefusedStatusMessage(LanguageExporter);
-            }
+        }
+        
+        private async Task SendOnModerationStatusMessage(LanguageExporter exporter)
+        {
+            var email = exporter.CommonExporter!.User!.Email;
+            var body =  await _partialToStringRenderer.RenderPartialToStringAsync(
+                "Emails/AccountOnModerationEmailNotification",
+                new ContactInfoModel
+                    { FirstName = exporter.ContactPersonFirstName, LastName = exporter.ContactPersonSecondName });
+
+            await _emailSender.SendEmailAsync(email, "Ваша учетная запись отправлена на модерацию", body);
         }
 
         private async Task SendApprovedStatusMessage(LanguageExporter exporter)

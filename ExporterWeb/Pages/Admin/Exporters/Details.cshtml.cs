@@ -55,6 +55,11 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 return NotFound();
             }
 
+            if (LanguageExporter.CommonExporter!.Status == Status.ToString())
+            {
+                return Page();
+            }
+            
             LanguageExporter!.CommonExporter!.Status = Status.ToString();
             await _context.SaveChangesAsync();
             await SendStatusChangedMessage(LanguageExporter);   

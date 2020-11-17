@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
@@ -66,6 +65,10 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }
+        public List<LanguageExporter> ApprovedExporters => GetExportersByStatus(ExporterStatus.Approved);
+        public List<LanguageExporter> RefusedExporters => GetExportersByStatus(ExporterStatus.Refused);
+        public List<LanguageExporter> OnModerationExporters => GetExportersByStatus(ExporterStatus.OnModeration);
+        
         [BindProperty]
         public string Id { get; set; }
         [BindProperty]

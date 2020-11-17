@@ -62,8 +62,17 @@
 								<p><strong>Данные контактного лица организации</strong></p>
 								
 								<div class="exporter-item d-flex flex-column my-3">
-									<span class="font-weight-bold exporter-item__title">Полное имя директора:</span>
-									<span class="exporter-item__value mt-1">@Model.LanguageExporter.DirectorFullName()</span>
+									<span class="font-weight-bold exporter-item__title">Директор:</span>
+									@if (Model.LanguageExporter.DirectorFirstName is null
+                                         && Model.LanguageExporter.DirectorSecondName is null
+                                         && Model.LanguageExporter.DirectorPatronymic is null)
+                                    {
+	                                    <span class="exporter-item__value mt-1">Нет данных</span>
+                                    }
+									else
+									{
+										<span class="exporter-item__value mt-1">@Model.LanguageExporter.DirectorFullName()</span>										
+									}
 								</div>
 								<div class="exporter-item d-flex flex-column my-3">
 									<span class="font-weight-bold exporter-item__title">Контактное лицо:</span>

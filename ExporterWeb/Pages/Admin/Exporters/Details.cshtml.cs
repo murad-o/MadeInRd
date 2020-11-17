@@ -66,7 +66,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
             if (LanguageExporter.CommonExporter!.Status == Status.ToString())
             {
-                return Page();
+                return RedirectToPage("./Index");
             }
             
             LanguageExporter!.CommonExporter!.Status = Status.ToString();

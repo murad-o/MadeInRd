@@ -6,9 +6,5 @@
 .exp-textarea {max-width: 60%;min-height: 120px;}
 .exporter-item {margin: 5px 0;}
 
-.exporter-item__title {
-    font-size: 14px;
-}
-.exporter-item__value {
-    font-size: 18px;
-}
+.exporter-item__title {font-size: 14px;}
+.exporter-item__value {font-size: 18px;}

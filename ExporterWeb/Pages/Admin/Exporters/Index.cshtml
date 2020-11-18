@@ -20,126 +20,39 @@
 </div>
 
 <div class="container-fluid page__container">
-    
-    <div class="z-0">
-        <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
-            <li class="nav-item">
-                <a href="#expModeration" class="nav-link d-flex align-items-center flex-row active" data-toggle="tab" role="tab" aria-controls="expModeration" aria-selected="true">
-                    На модерации
-                    <span class="ml-2">@Model.OnModerationExporters.Count</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#expApproved" class="nav-link d-flex align-items-center flex-row" data-toggle="tab" role="tab" aria-selected="false">
-                    Одобреные
-                    <span class="ml-2">@Model.ApprovedExporters.Count</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#expNotApproved" class="nav-link d-flex align-items-center flex-row" data-toggle="tab" role="tab" aria-selected="false">
-                    Отказано
-                    <span class="ml-2">@Model.RefusedExporters.Count</span>
-                </a>
-            </li>
-        </ul>
-        
-        <div class="card">
-            <div class="card-body tab-content">
-                <div class="tab-pane active show fade" id="expModeration">
-                    <div class="table-responsive mt-1 mb-4 container-fluid" data-toggle="lists" data-lists-values="[&quot;js-lists-values-employee-name&quot;]">
-                        <table class="table table-striped table-hover mb-0 thead-border-top-0">
-                            <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>Наименование</th>
-                                    <th>ФИО</th>
-                                    <th>Телефон</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @for (var i = 0; i < Model.OnModerationExporters.Count; i++)
-                            {
-                                <tr>
-                                    <td>
-                                        @(i + 1)
-                                    </td>
-                                    <td>
-                                        <span class="js-lists-values-employee-name">@Model.OnModerationExporters[i].Name</span>
-                                    </td>
-                                    <td>@Model.OnModerationExporters[i].ContactPersonSecondName @Model.OnModerationExporters[i].ContactPersonFirstName @Model.OnModerationExporters[i].ContactPersonPatronymic</td>
-                                    <td>@Model.OnModerationExporters[i].Phone</td>
-                                    <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.OnModerationExporters[i].CommonExporterId">Подробнее</a></td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane show fade" id="expApproved">
-                    <div class="table-responsive mt-1 mb-4 container-fluid" data-toggle="lists" data-lists-values="[&quot;js-lists-values-employee-name&quot;]">
-                        <table class="table table-striped table-hover mb-0 thead-border-top-0">
-                            <thead>
-                            <tr>
-                                <th>№</th>
-                                <th>Наименование</th>
-                                <th>ФИО</th>
-                                <th>Телефон</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @for (var i = 0; i < Model.ApprovedExporters.Count; i++)
-                            {
-                                <tr>
-                                    <td>
-                                        @(i + 1)
-                                    </td>
-                                    <td>
-                                        <span class="js-lists-values-employee-name">@Model.ApprovedExporters[i].Name</span>
-                                    </td>
-                                    <td>@Model.ApprovedExporters[i].ContactPersonSecondName @Model.ApprovedExporters[i].ContactPersonFirstName @Model.ApprovedExporters[i].ContactPersonPatronymic</td>
-                                    <td>@Model.ApprovedExporters[i].Phone</td>
-                                    <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.ApprovedExporters[i].CommonExporterId">Подробнее</a></td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane show fade" id="expNotApproved">
-                    <div class="table-responsive mt-1 mb-4 container-fluid" data-toggle="lists" data-lists-values="[&quot;js-lists-values-employee-name&quot;]">
-                        <table class="table table-striped table-hover mb-0 thead-border-top-0">
-                            <thead>
-                            <tr>
-                                <th>№</th>
-                                <th>Наименование</th>
-                                <th>ФИО</th>
-                                <th>Телефон</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @for (var i = 0; i < Model.RefusedExporters.Count; i++)
-                            {
-                                <tr>
-                                    <td>
-                                        @(i + 1)
-                                    </td>
-                                    <td>
-                                        <span class="js-lists-values-employee-name">@Model.RefusedExporters[i].Name</span>
-                                    </td>
-                                    <td>@Model.RefusedExporters[i].ContactPersonSecondName @Model.RefusedExporters[i].ContactPersonFirstName @Model.RefusedExporters[i].ContactPersonPatronymic</td>
-                                    <td>@Model.RefusedExporters[i].Phone</td>
-                                    <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.RefusedExporters[i].CommonExporterId">Подробнее</a></td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
+    <div class="card">
+            
+        <div class="table-responsive mt-1 mb-4 container-fluid" data-toggle="lists" data-lists-values="[&quot;js-lists-values-employee-name&quot;]">
+            <table class="table table-striped table-hover mb-0 thead-border-top-0">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Наименование</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.OnModerationExporters.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @(i + 1)
+                        </td>
+                        <td>
+                            <span class="js-lists-values-employee-name">@Model.OnModerationExporters[i].Name</span>
+                        </td>
+                        <td>@Model.OnModerationExporters[i].ContactPersonSecondName @Model.OnModerationExporters[i].ContactPersonFirstName @Model.OnModerationExporters[i].ContactPersonPatronymic</td>
+                        <td>@Model.OnModerationExporters[i].Phone</td>
+                        <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.OnModerationExporters[i].CommonExporterId">Подробнее</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
         </div>
-    </div>
     
+    </div>
+
 </div>

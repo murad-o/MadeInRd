@@ -152,11 +152,30 @@
     									<span class="sidebar-menu-text">Отрасли</span>
     								</a>
     							</li>
-    							<li class="sidebar-menu-item">
-                                    <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index">
-                                    	<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">pages</i>
-                                    	<span class="sidebar-menu-text">Экспортеры</span>
+                                <li class="sidebar-menu-item open">
+                                    <a class="sidebar-menu-button" data-toggle="collapse" href="#exporters">
+                                        <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_box</i>
+                                        <span class="sidebar-menu-text">Экспортеры</span>
+                                        <span class="ml-auto sidebar-menu-toggle-icon"></span>
                                     </a>
+                                    <ul class="sidebar-submenu collapse show" id="exporters">
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="OnModeration">
+                                                <span class="sidebar-menu-text">На модерации</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="Approved">
+                                                <span class="sidebar-menu-text">Одобреные</span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-menu-item">
+                                            <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="Refused">
+                                                <span class="sidebar-menu-text">Отказаные</span>
+                                            </a>
+                                        </li>
+                                       
+                                    </ul>
                                 </li>
                             </ul>
                             

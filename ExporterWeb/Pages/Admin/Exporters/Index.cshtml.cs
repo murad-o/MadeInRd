@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
 using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
-using ExporterWeb.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -26,48 +26,25 @@ namespace ExporterWeb.Pages.Admin.Exporters
             _context = context;
             _emailSender = emailSender;
             _partialToStringRenderer = partialToStringRenderer;
-            
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync(string? status)
         {
-            Exporters = _context.LanguageExporters!
+            if (status is null || !Enum.IsDefined(typeof(ExporterStatus), status))
+            {
+                return NotFound();
+            }
+
+            Exporters = await _context.LanguageExporters!
                 .Include(e => e.CommonExporter)
-                .Where(exporter => exporter.Language == Languages.DefaultLanguage)
-                .ToList();
+                .Where(exporter => exporter.Language == Languages.DefaultLanguage && exporter.CommonExporter!.Status == status)
+                .ToListAsync();
+
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            var exporter = await _context.LanguageExporters!
-                .Include(e => e.CommonExporter)
-                .Include(e => e.CommonExporter!.User)
-                .FirstOrDefaultAsync(e => e.CommonExporterId == Id && e.Language == Language);
-
-            exporter.CommonExporter!.Status = ExporterStatus.Approved.ToString();
-            await _context.SaveChangesAsync();
-            var email = exporter.CommonExporter!.User!.Email;
-            var body = await _partialToStringRenderer.RenderPartialToStringAsync(
-                "Emails/AccountApprovedNotificationEmail",
-                new ContactInfoModel
-                    {FirstName = exporter.ContactPersonFirstName, LastName = exporter.ContactPersonSecondName});
-
-            await _emailSender.SendEmailAsync(email, "Аккаунт одобрен", body);
-            return Page();
-        }
-
-        public List<LanguageExporter> GetExportersByStatus(ExporterStatus status)
-        {
-            return Exporters.Where(e => e.CommonExporter!.Status == status.ToString()).ToList();
-        }
-
 
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }
-        public List<LanguageExporter> ApprovedExporters => GetExportersByStatus(ExporterStatus.Approved);
-        public List<LanguageExporter> RefusedExporters => GetExportersByStatus(ExporterStatus.Refused);
-        public List<LanguageExporter> OnModerationExporters => GetExportersByStatus(ExporterStatus.OnModeration);
         
         [BindProperty]
         public string Id { get; set; }

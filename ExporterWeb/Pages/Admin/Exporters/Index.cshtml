@@ -35,18 +35,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for (var i = 0; i < Model.OnModerationExporters.Count; i++)
+                @for (var i = 0; i < Model.Exporters.Count; i++)
                 {
                     <tr>
                         <td>
                             @(i + 1)
                         </td>
                         <td>
-                            <span class="js-lists-values-employee-name">@Model.OnModerationExporters[i].Name</span>
+                            <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
                         </td>
-                        <td>@Model.OnModerationExporters[i].ContactPersonSecondName @Model.OnModerationExporters[i].ContactPersonFirstName @Model.OnModerationExporters[i].ContactPersonPatronymic</td>
-                        <td>@Model.OnModerationExporters[i].Phone</td>
-                        <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.OnModerationExporters[i].CommonExporterId">Подробнее</a></td>
+                        <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
+                        <td>@Model.Exporters[i].Phone</td>
+                        <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a></td>
                     </tr>
                 }
                 </tbody>

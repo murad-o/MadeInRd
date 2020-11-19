@@ -64,16 +64,18 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 return NotFound();
             }
 
-            if (LanguageExporter.CommonExporter!.Status == Status.ToString())
+            var currentStatus = LanguageExporter.CommonExporter!.Status;
+
+            if (currentStatus == Status.ToString())
             {
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index", new { Status = currentStatus });
             }
             
             LanguageExporter!.CommonExporter!.Status = Status.ToString();
             await _context.SaveChangesAsync();
             await SendStatusChangedMessage(LanguageExporter);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { Status = currentStatus });
         }
 
         private async Task SendStatusChangedMessage(LanguageExporter exporter)

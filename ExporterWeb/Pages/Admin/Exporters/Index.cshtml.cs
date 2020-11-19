@@ -4,41 +4,53 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExporterWeb.Areas.Identity.Authorization;
 using ExporterWeb.Helpers;
-using ExporterWeb.Helpers.Services;
 using ExporterWeb.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExporterWeb.Pages.Admin.Exporters
 {
-    [Authorize(Roles = Constants.AdministratorsRole)]
     public class Index : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IEmailSender _emailSender;
-        private readonly RazorPartialToStringRenderer _partialToStringRenderer;
 
-        public Index(ApplicationDbContext context, IEmailSender emailSender, RazorPartialToStringRenderer partialToStringRenderer)
+        public Index(ApplicationDbContext context)
         {
             _context = context;
-            _emailSender = emailSender;
-            _partialToStringRenderer = partialToStringRenderer;
         }
 
-        public async Task<IActionResult> OnGetAsync(string? status)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (status is null || !Enum.IsDefined(typeof(ExporterStatus), status))
+            if (Enum.GetNames(typeof(ExporterStatus)).All(x => x.ToLower() != Status))
             {
                 return NotFound();
             }
 
-            Exporters = await _context.LanguageExporters!
+            var exporters = _context.LanguageExporters!
                 .Include(e => e.CommonExporter)
-                .Where(exporter => exporter.Language == Languages.DefaultLanguage && exporter.CommonExporter!.Status == status)
-                .ToListAsync();
+                .Where(exporter => exporter.Language == Languages.DefaultLanguage &&
+                                   exporter.CommonExporter!.Status.ToLower() == Status);
+
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                exporters = exporters.Where(e =>
+                    e.Name.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.CommonExporter!.INN.Contains(SearchString) ||
+                    e.CommonExporter.OGRN_IP.Contains(SearchString) ||
+                    e.ContactPersonSecondName.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.ContactPersonFirstName.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.ContactPersonPatronymic!.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.DirectorSecondName!.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.DirectorFirstName!.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.DirectorPatronymic!.ToUpper().Contains(SearchString.ToUpper()) ||
+                    e.CommonExporter.Industry!.Translations!
+                            .FirstOrDefault(t => t.Language == Languages.DefaultLanguage)!
+                        .Name.ToUpper().Contains(SearchString.ToUpper()));
+            }
+
+            Exporters = await exporters.ToListAsync();
 
             return Page();
         }
@@ -46,9 +58,9 @@ namespace ExporterWeb.Pages.Admin.Exporters
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }
         
-        [BindProperty]
-        public string Id { get; set; }
-        [BindProperty]
-        public string Language { get; set; }
+        [BindProperty(Name = "status", SupportsGet = true)]
+        public string Status { get; set; } = ExporterStatus.OnModeration.ToString();
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
     }
 }

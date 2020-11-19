@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{status?}"
 @model ExporterWeb.Pages.Admin.Exporters.Index
 
 @{
@@ -24,38 +24,47 @@
     <div class="card">
 
         <form class="search-form search-form--light m-3" method="get">
-            <input type="text" class="form-control search" placeholder="Поиск по экспортерам">
+            <input name="SearchString" type="text" class="form-control search" placeholder="Поиск по экспортерам" value="@Model.SearchString">
             <button class="btn" type="submit" role="button"><i class="material-icons">search</i></button>
         </form>
 
         <div class="table-responsive mt-1 mb-4 container-fluid" data-toggle="lists" data-lists-values="[&quot;js-lists-values-employee-name&quot;]">
-            <table class="table table-striped table-hover mb-0 thead-border-top-0">
-                <thead>
-                <tr>
-                    <th>№</th>
-                    <th>Наименование</th>
-                    <th>ФИО</th>
-                    <th>Телефон</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @for (var i = 0; i < Model.Exporters.Count; i++)
-                {
+            @if (!string.IsNullOrEmpty(Model.SearchString) && Model.Exporters.Count == 0)
+            {
+                <p>Ничего не найдено</p>
+            }
+            else
+            {
+                <table class="table table-striped table-hover mb-0 thead-border-top-0">
+                    <thead>
                     <tr>
-                        <td>
-                            @(i + 1)
-                        </td>
-                        <td>
-                            <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
-                        </td>
-                        <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
-                        <td>@Model.Exporters[i].Phone</td>
-                        <td align="right"><a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a></td>
+                        <th>№</th>
+                        <th>Наименование</th>
+                        <th>ФИО</th>
+                        <th>Телефон</th>
+                        <th></th>
                     </tr>
-                }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @for (var i = 0; i < Model.Exporters.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @(i + 1)
+                            </td>
+                            <td>
+                                <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
+                            </td>
+                            <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
+                            <td>@Model.Exporters[i].Phone</td>
+                            <td align="right">
+                                <a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
         </div>
 
     </div>

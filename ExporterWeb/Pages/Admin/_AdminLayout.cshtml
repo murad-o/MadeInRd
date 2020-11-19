@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@using ExporterWeb.Helpers
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+
+@{
+    var exporters = await DbContext.LanguageExporters!
+        .Include(e => e.CommonExporter)
+        .Where(e => e.Language == Languages.DefaultLanguage).ToListAsync();
+    var onModerationExportersCount = exporters.Count(e => e.CommonExporter!.Status == ExporterStatus.OnModeration.ToString());
+    var approvedExportersCount = exporters.Count(e => e.CommonExporter!.Status == ExporterStatus.Approved.ToString());
+    var refusedExportersCount = exporters.Count(e => e.CommonExporter!.Status == ExporterStatus.Refused.ToString());
+}
+
+
+<!DOCTYPE html>
 <html lang="ru" dir="ltr">
 
 <head>
@@ -161,17 +175,17 @@
                                     <ul class="sidebar-submenu collapse show" id="exporters">
                                         <li class="sidebar-menu-item">
                                             <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="OnModeration">
-                                                <span class="sidebar-menu-text">На модерации</span>
+                                                <span class="sidebar-menu-text">На модерации @onModerationExportersCount</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
                                             <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="Approved">
-                                                <span class="sidebar-menu-text">Одобреные</span>
+                                                <span class="sidebar-menu-text">Одобреные @approvedExportersCount</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
                                             <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="Refused">
-                                                <span class="sidebar-menu-text">Отказаные</span>
+                                                <span class="sidebar-menu-text">Отказаные @refusedExportersCount</span>
                                             </a>
                                         </li>
                                        

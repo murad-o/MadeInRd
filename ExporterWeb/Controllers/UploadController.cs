@@ -40,8 +40,8 @@ namespace ExporterWeb.Controllers
         public async Task<IActionResult> UploadIndustryImage(IFormFile upload)
         {
             var fileName = Guid.NewGuid() + Path.GetFileName(upload.FileName);
-            var directory = Path.Combine(_env.WebRootPath, "uploads", "industry");
-            var filePath = Path.Combine("\\uploads", "industry", fileName);
+            var directory = Path.Combine(_env.WebRootPath, "uploads", "industries");
+            var filePath = Path.Combine("\\uploads", "industries", fileName);
 
             await SaveImage(upload, Path.Combine(directory, fileName));
             

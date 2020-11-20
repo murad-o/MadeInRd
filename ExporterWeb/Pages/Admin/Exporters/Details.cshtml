@@ -20,9 +20,10 @@
 	    <a href="" class="btn btn-primary ml-3">К товарам</a>
 	    <form asp-page-handler="DeleteExporter" 
 	          method="post" 
-	          asp-page="./Details" 
+	          asp-page="./Details",
+	          asp-route-id="@Model.LanguageExporter.CommonExporterId"
+	          asp-route-status="@Model.LanguageExporter.CommonExporter!.Status"
 	          onsubmit="return confirm('Вы уверены что хотите удалить этого пользователя? При подтверждении удалятся все данные, связанные с этим аккаунтом')">
-		    <input type="hidden" name="id" value="@Model.LanguageExporter.CommonExporterId">
 		    <button class="btn btn-danger ml-2" type="submit">Удалить</button>
 	    </form>
     </div>

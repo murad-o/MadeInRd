@@ -159,8 +159,8 @@ namespace ExporterWeb.Pages.Admin.Exporters
                     LastName = user.SecondName,
                 });
             await _emailSender.SendEmailAsync(user.Email, "Ваша учетная запись удалена", body);
-            
-            return RedirectToPage("./Index");
+
+            return RedirectToPage("./Index", new {Status});
         }
         
 

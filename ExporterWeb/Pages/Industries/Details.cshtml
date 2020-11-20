@@ -15,10 +15,7 @@
             <h1 class="page-header__content-title page-header__content-title_small">@Model.Industry.Name</h1>
         </div>
     </div>
-    @if (Model.Industry.Image is {})
-    {
-        <img class="" src="@Model.Industry.LogoPath()" alt="">
-    }
+    <img src="@Model.Industry.LogoPath()" alt="@Model.Industry.Name">
 </div>
 <div class="container">
     <div class="industries-text">

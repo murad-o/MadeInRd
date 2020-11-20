@@ -174,17 +174,17 @@
                                     </a>
                                     <ul class="sidebar-submenu collapse show" id="exporters">
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="OnModeration">
+                                            <a class="sidebar-menu-button exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="OnModeration">
                                                 <span class="sidebar-menu-text">На модерации @onModerationExportersCount</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="Approved">
+                                            <a class="sidebar-menu-button exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="Approved">
                                                 <span class="sidebar-menu-text">Одобреные @approvedExportersCount</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button" asp-page="/Admin/Exporters/Index" asp-route-status="Refused">
+                                            <a class="sidebar-menu-button exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="Refused">
                                                 <span class="sidebar-menu-text">Отказаные @refusedExportersCount</span>
                                             </a>
                                         </li>
@@ -231,17 +231,21 @@
     <script src="~/admin/vendor/simplebar.min.js"></script>
     <script src="~/admin/vendor/dom-factory.js"></script>
     <script src="~/admin/vendor/material-design-kit.js"></script>
+
     <!-- App -->
     <script src="~/admin/js/toggle-check-all.js"></script>
     <script src="~/admin/js/check-selected-row.js"></script>
     <script src="~/admin/js/dropdown.js"></script>
     <script src="~/admin/js/sidebar-mini.js"></script>
     <script src="~/admin/js/app.js"></script>
+
     <!-- Flatpickr -->
     <script src="~/admin/vendor/flatpickr/flatpickr.min.js"></script>
     <script src="~/admin/js/flatpickr.js"></script>
-    <!-- Global Settings -->
 
-@RenderSection("Scripts", false)
+    <!-- Global Settings -->
+    <script src="~/admin/js/custom.js"></script>
+
+    @RenderSection("Scripts", false)
 </body>
 </html>

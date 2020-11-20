@@ -15,15 +15,12 @@
             <h1 class="page-header__content-title">Отрасли экспорта</h1>
         </div>
     </div>
-
     <img class="" src="~/img/DXL6km_zypU.jpg" alt="">
 </div>
 
 <div class="container">
-
     <div class="row mb-5">
-
-        @foreach (var industry in Model.Industries)
+        @foreach (var industry in Model.IndustryTranslations)
         {
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">
@@ -37,7 +34,5 @@
                 </div>
             </div>
         }
-
     </div>
-    
 </div>

@@ -22,9 +22,9 @@ namespace ExporterWeb.Pages.Industries
                 return NotFound();
             }
             
-            Industry = await _context.IndustryTranslations!.FirstOrDefaultAsync(i => i.Id == id);
+            IndustryTranslation = await _context.IndustryTranslations!.FirstOrDefaultAsync(i => i.Id == id);
 
-            if (Industry is null)
+            if (IndustryTranslation is null)
             {
                 return NotFound();
             } 
@@ -33,6 +33,6 @@ namespace ExporterWeb.Pages.Industries
         }
         
         #nullable disable
-        public IndustryTranslation Industry { get; set; }
+        public IndustryTranslation IndustryTranslation { get; set; }
     }
 }

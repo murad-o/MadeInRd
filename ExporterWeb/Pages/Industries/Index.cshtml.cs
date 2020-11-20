@@ -20,13 +20,13 @@ namespace ExporterWeb.Pages.Industries
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Industries = await _context.IndustryTranslations!.Where(i =>
+            IndustryTranslations = await _context.IndustryTranslations!.Where(i =>
                 i.Language == CultureInfo.CurrentCulture.TwoLetterISOLanguageName).ToListAsync();
 
             return Page();
         }
 
         #nullable disable
-        public IEnumerable<IndustryTranslation> Industries { get; set; }
+        public IEnumerable<IndustryTranslation> IndustryTranslations { get; set; }
     }
 }

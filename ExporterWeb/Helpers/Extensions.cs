@@ -33,21 +33,27 @@ namespace ExporterWeb.Helpers
         public static string LogoPath(this NewsModel news)
         {
             if (news.Logo is null)
+            {
                 return "/img/news-icon.png";
+            }
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.NewsLogo), news.Logo).Replace('\\', '/');
         }
 
         public static string LogoPath(this Event @event)
         {
             if (@event.Logo is null)
+            {
                 return "/img/news-icon.png";
+            }
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.EventLogo), @event.Logo).Replace('\\', '/');
         }
 
         public static string LogoPath(this LanguageExporter exporter)
         {
             if (exporter.Logo is null)
+            {
                 return "/img/news-icon.png";
+            }
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.ExporterLogo),
                 exporter.Logo).Replace('\\', '/');
         }
@@ -55,7 +61,9 @@ namespace ExporterWeb.Helpers
         public static string LogoPath(this Product product)
         {
             if (product.Logo is null)
+            {
                 return "/img/news-icon.png";
+            }
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.ProductLogo),
                 product.Logo).Replace('\\', '/');
         }
@@ -63,7 +71,9 @@ namespace ExporterWeb.Helpers
         public static string LogoPath(this IndustryTranslation industry)
         {
             if (industry.Image is null)
+            {
                 return "/img/no-image-industry.png";
+            }
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.IndustryImage),
                 industry.Image!).Replace('\\', '/');
         }

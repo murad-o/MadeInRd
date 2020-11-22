@@ -72,7 +72,7 @@ namespace ExporterWeb.Helpers
         {
             if (industry.Image is null)
             {
-                return "/img/no-image-industry.png";
+                return "/img/no-industry-image.svg";
             }
             return Path.Combine("/", ImageService.GetWebRelativePath(ImageTypes.IndustryImage),
                 industry.Image!).Replace('\\', '/');

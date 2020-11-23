@@ -18,6 +18,7 @@ namespace ExporterWeb.Models
 
         [Required]
         public string Language { get; set; } = "";
+        public int Order { get; set; }
 
         public int IndustryId { get; set; }
         public Industry? Industry { get; set; }

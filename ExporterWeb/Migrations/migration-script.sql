@@ -599,3 +599,18 @@ BEGIN
     VALUES ('20201112121840_AddStatusForExporter', '3.1.9');
     END IF;
 END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201123115056_AddOrderFieldToIndustryTranslation') THEN
+    ALTER TABLE "IndustryTranslations" ADD "Order" integer NOT NULL DEFAULT 0;
+    END IF;
+END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201123115056_AddOrderFieldToIndustryTranslation') THEN
+    INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+    VALUES ('20201123115056_AddOrderFieldToIndustryTranslation', '3.1.9');
+    END IF;
+END $$;

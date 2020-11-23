@@ -5,6 +5,7 @@ using ExporterWeb.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExporterWeb.Pages.Admin.Industries
 {
@@ -32,7 +33,9 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
 
             Industry industry = new Industry();
-
+            var maxOrder = await _context.Industries!.MaxAsync(x => x.Order);
+            industry.Order = maxOrder + 1;
+            
             if (Image is { })
             {
                 IndustryTranslation.Image = _imageService.Save(ImageTypes.IndustryImage, Image);

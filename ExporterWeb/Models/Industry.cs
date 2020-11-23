@@ -9,6 +9,7 @@ namespace ExporterWeb.Models
             Translations = new List<IndustryTranslation>();
         }
         public int Id { get; set; }
+        public int Order { get; set; }
         public ICollection<IndustryTranslation>? Translations { get; set; }
     }
 }

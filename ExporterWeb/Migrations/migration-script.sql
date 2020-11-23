@@ -614,3 +614,25 @@ BEGIN
     VALUES ('20201123115056_AddOrderFieldToIndustryTranslation', '3.1.9');
     END IF;
 END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201123123303_AddOrderFieldToIndustry') THEN
+    ALTER TABLE "IndustryTranslations" DROP COLUMN "Order";
+    END IF;
+END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201123123303_AddOrderFieldToIndustry') THEN
+    ALTER TABLE "Industries" ADD "Order" integer NOT NULL DEFAULT 0;
+    END IF;
+END $$;
+
+DO $$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20201123123303_AddOrderFieldToIndustry') THEN
+    INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+    VALUES ('20201123123303_AddOrderFieldToIndustry', '3.1.9');
+    END IF;
+END $$;

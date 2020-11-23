@@ -9,19 +9,21 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace ExporterWeb.Pages.Admin.Exporters
 {
     public class Index : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private const int PageSize = 4;
 
         public Index(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int pageNumber = 1)
         {
             if (Enum.GetNames(typeof(ExporterStatus)).All(x => x.ToLower() != Status))
             {
@@ -51,12 +53,23 @@ namespace ExporterWeb.Pages.Admin.Exporters
             }
 
             Exporters = await exporters.ToListAsync();
+            FakeExporters = await Enumerable.Repeat(Exporters, 43).SelectMany(x => x).ToListAsync(); // temporary
+
+            Exporters = await FakeExporters.Skip((pageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+            PagingInfo = new PagingInfo
+            {
+                PageNumber = pageNumber,
+                PageSize = PageSize,
+                TotalItems = FakeExporters.Count
+            };
 
             return Page();
         }
 
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }
+        public List<LanguageExporter> FakeExporters { get; set; }
+        public PagingInfo PagingInfo { get; set; }
         
         [BindProperty(Name = "status", SupportsGet = true)]
         public string Status { get; set; } = ExporterStatus.OnModeration.ToString();

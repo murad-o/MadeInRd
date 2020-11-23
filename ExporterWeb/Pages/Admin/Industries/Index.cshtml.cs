@@ -32,7 +32,9 @@ namespace ExporterWeb.Pages.Admin.Industries
             IndustryTranslations =  await _context.IndustryTranslations!
                 .Include(i => i.Industry)
                 .ThenInclude(i => i!.Translations)
-                .Where(i => i.Language == Languages.DefaultLanguage).ToListAsync();
+                .Where(i => i.Language == Languages.DefaultLanguage)
+                .OrderBy(x => x.Industry!.Order)
+                .ToListAsync();
 
             return Page();
         }

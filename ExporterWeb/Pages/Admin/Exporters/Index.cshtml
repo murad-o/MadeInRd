@@ -46,73 +46,29 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @for (var i = 0; i < Model.Exporters.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                @(i + 1)
-                            </td>
-                            <td>
-                                <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
-                            </td>
-                            <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
-                            <td>@Model.Exporters[i].Phone</td>
-                            <td align="right">
-                                <a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a>
-                            </td>
-                        </tr>
-                    }
+                        @for (var i = 0; i < Model.Exporters.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @(i + 1)
+                                </td>
+                                <td>
+                                    <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
+                                </td>
+                                <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
+                                <td>@Model.Exporters[i].Phone</td>
+                                <td align="right">
+                                    <a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             }
         </div>
 
     </div>
-    
-     <ul class="pagination "> 
-         <li class="page-item disabled"> 
-             <a class="page-link" href="#" aria-label="Previous"> 
-                 <span aria-hidden="true" class="material-icons">first_page</span> 
-                 <span class="sr-only">В начало</span> 
-             </a> 
-         </li> 
-         <li class="page-item disabled"> 
-             <a class="page-link" href="#" aria-label="Previous"> 
-                 <span aria-hidden="true" class="material-icons">chevron_left</span> 
-                 <span class="sr-only">Пред.</span> 
-             </a> 
-         </li> 
-         <li class="page-item active"> 
-             <a class="page-link" href="#" aria-label="1"> 
-                 <span>1</span> 
-             </a> 
-         </li> 
-         <li class="page-item"> 
-             <a class="page-link" href="#" aria-label="2"> 
-                 <span>2</span> 
-             </a> 
-         </li> 
-         <li class="page-item"> 
-             <a class="page-link" href="#" aria-label="3"> 
-                 <span>3</span> 
-             </a> 
-         </li> 
-         <li class="page-item"> 
-             <a class="page-link" href="#" aria-label="Next"> 
-                 <span class="sr-only">След.</span> 
-                 <span aria-hidden="true" class="material-icons">chevron_right</span> 
-             </a> 
-         </li> 
-         <li class="page-item"> 
-             <a class="page-link" href="#" aria-label="Next"> 
-                 <span class="sr-only">Последняя</span> 
-                 <span aria-hidden="true" class="material-icons">last_page</span> 
-             </a> 
-         </li> 
-     </ul> 
-    
 
     <div page-model="@Model.PagingInfo"></div>
-   
 
 </div>

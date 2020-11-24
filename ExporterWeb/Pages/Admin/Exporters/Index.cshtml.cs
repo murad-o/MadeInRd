@@ -23,7 +23,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(int pageNumber = 1)
+        public async Task<IActionResult> OnGetAsync(int p = 1)
         {
             if (Enum.GetNames(typeof(ExporterStatus)).All(x => x.ToLower() != Status))
             {
@@ -52,15 +52,13 @@ namespace ExporterWeb.Pages.Admin.Exporters
                         .Name.ToUpper().Contains(SearchString.ToUpper()));
             }
 
-            Exporters = await exporters.ToListAsync();
-            FakeExporters = await Enumerable.Repeat(Exporters, 43).SelectMany(x => x).ToListAsync(); // temporary
+            Exporters = await exporters.Skip((p - 1) * PageSize).Take(PageSize).ToListAsync();
 
-            Exporters = await FakeExporters.Skip((pageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
             PagingInfo = new PagingInfo
             {
-                PageNumber = pageNumber,
+                PageNumber = p,
                 PageSize = PageSize,
-                TotalItems = FakeExporters.Count
+                TotalItems = Exporters.Count
             };
 
             return Page();
@@ -68,7 +66,6 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }
-        public List<LanguageExporter> FakeExporters { get; set; }
         public PagingInfo PagingInfo { get; set; }
         
         [BindProperty(Name = "status", SupportsGet = true)]

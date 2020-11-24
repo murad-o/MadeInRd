@@ -27,12 +27,15 @@ namespace ExporterWeb.Helpers.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            TagBuilder result = new TagBuilder("div");
-            List<int> pages = new List<int>();
+            TagBuilder result = new TagBuilder("ul");
+            TagBuilder list = new TagBuilder("ul");
+            TagBuilder page;
+            List<int> pageNumbers = new List<int>();
 
             if (PageModel.HasPreviousPage)
             {
-                CreatePageTag(PageModel.PageNumber - 1, "Назад", result);
+                page = CreatePageItem(PageModel.PageNumber - 1, "Previous", "chevron_left");
+                list.InnerHtml.AppendHtml(page);
             }
 
             const int delta = 2;
@@ -43,64 +46,105 @@ namespace ExporterWeb.Helpers.TagHelpers
             {
                 if (i == 1 || (i >= left && i <= right) || i == PageModel.TotalPages)
                 {
-                    pages.Add(i);
+                    pageNumbers.Add(i);
                 }
             }
 
             int? previousPage = null;
-            foreach (var i in pages)
+            foreach (var pageNumber in pageNumbers)
             {
-                if (previousPage is {})
+                if (previousPage is { })
                 {
-                    if (i - previousPage == 2)
+                    if (pageNumber - previousPage == 2)
                     {
-                        CreatePageTag(previousPage.Value + 1, result);
+                        page = CreatePageItem(previousPage.Value + 1);
+                        list.InnerHtml.AppendHtml(page);
                     }
-                    else if (i - previousPage != 1)
+                    else if (pageNumber - previousPage != 1)
                     {
-                        CreatePoint(result);
+                        var point = CreateDots();
+                        list.InnerHtml.AppendHtml(point);
                     }
                 }
+                previousPage = pageNumber;
+                page = CreatePageItem(pageNumber);
 
-                previousPage = i;
-                CreatePageTag(i, result);
+                if (pageNumber == PageModel.PageNumber)
+                {
+                    page.AddCssClass("active");                  
+                }
+                list.InnerHtml.AppendHtml(page);
             }
 
             if (PageModel.HasNextPage)
             {
-                CreatePageTag(PageModel.PageNumber + 1, "Вперед", result);
+                page = CreatePageItem(PageModel.PageNumber + 1, "Next", "chevron_right");
+                list.InnerHtml.AppendHtml(page);
             }
 
+            list.AddCssClass("pagination");
+            result.InnerHtml.AppendHtml(list);
             output.Content.AppendHtml(result.InnerHtml);
         }
 
-        private void CreatePoint(TagBuilder result)
+        private TagBuilder CreateDots()
         {
-            var tag = new TagBuilder("a");
-            tag.InnerHtml.Append("...");
-            result.InnerHtml.AppendHtml(tag);
+            var link = CreateLinkTag();
+            link.InnerHtml.Append("...");
+
+            var li = CreateListItemTag(link);
+
+            return li;
         }
 
-        private TagBuilder CreateBasePageTag(object page, TagBuilder result)
+        private TagBuilder CreatePageItem(object page)
         {
-            var tag = new TagBuilder("a");
+            var link = CreateLinkTag(page, page.ToString()!);
+            link.InnerHtml.Append(page.ToString());
+
+            var li = CreateListItemTag(link);
+
+            return li;
+        }
+
+        private TagBuilder CreatePageItem(object page, string ariaLabel, string value)
+        {
+            var span = new TagBuilder("span");
+            span.Attributes.Add("aria-hidden", "true");
+            span.AddCssClass("material-icons");
+            span.InnerHtml.Append(value);
+
+            var link = CreateLinkTag(page, ariaLabel);
+            link.InnerHtml.AppendHtml(span);
+
+            var li = CreateListItemTag(link);
+
+            return li;
+        }
+
+        private TagBuilder CreateLinkTag(object page, string ariaLabel)
+        {
             IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
-            tag.Attributes["href"] = urlHelper.Action(PageAction, new { pageNumber = page });
-            return tag;
+            var link = CreateLinkTag();
+            link.Attributes.Add("aria-label", ariaLabel);
+            link.Attributes["href"] = urlHelper.Action(PageAction, new { p = page });
+
+            return link;
         }
 
-        private void CreatePageTag(object page, TagBuilder result)
+        private TagBuilder CreateLinkTag()
         {
-            var tag = CreateBasePageTag(page, result);
-            tag.InnerHtml.Append(page.ToString());
-            result.InnerHtml.AppendHtml(tag);
+            var link = new TagBuilder("a");
+            link.AddCssClass("page-link");
+            return link;
         }
 
-        private void CreatePageTag(object page, string value, TagBuilder result)
+        private TagBuilder CreateListItemTag(TagBuilder link)
         {
-            var tag = CreateBasePageTag(page, result);
-            tag.InnerHtml.Append(value);
-            result.InnerHtml.AppendHtml(tag);
+            var li = new TagBuilder("li");
+            li.AddCssClass("page-item");
+            li.InnerHtml.AppendHtml(link);
+            return li;
         }
     }
 }

@@ -14,3 +14,8 @@
 
 .exporter-item__title {font-size: 14px;}
 .exporter-item__value {font-size: 18px;}
+
+/* Пагинация */
+.page-item.active {
+    pointer-events: none;
+}

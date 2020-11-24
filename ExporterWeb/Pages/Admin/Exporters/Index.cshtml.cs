@@ -16,7 +16,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
     public class Index : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private const int PageSize = 4;
+        private const int PageSize = 20;
 
         public Index(ApplicationDbContext context)
         {
@@ -52,13 +52,14 @@ namespace ExporterWeb.Pages.Admin.Exporters
                         .Name.ToUpper().Contains(SearchString.ToUpper()));
             }
 
-            Exporters = await exporters.Skip((p - 1) * PageSize).Take(PageSize).ToListAsync();
+            FakeExporters = await Enumerable.Repeat(exporters, 200).SelectMany(x => x).ToListAsync();
+            Exporters = await FakeExporters.Skip((p - 1) * PageSize).Take(PageSize).ToListAsync();
 
             PagingInfo = new PagingInfo
             {
                 PageNumber = p,
                 PageSize = PageSize,
-                TotalItems = Exporters.Count
+                TotalItems = FakeExporters.Count
             };
 
             return Page();
@@ -66,6 +67,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
 
 #nullable disable
         public List<LanguageExporter> Exporters { get; set; }
+        public List<LanguageExporter> FakeExporters { get; set; }
         public PagingInfo PagingInfo { get; set; }
         
         [BindProperty(Name = "status", SupportsGet = true)]

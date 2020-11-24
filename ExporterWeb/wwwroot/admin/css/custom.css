@@ -2,7 +2,11 @@
     width: 36px;
 }
 
+
 /* Сайдбар */
+.sidebar-menu_between {display: flex;justify-content: space-between;}
+.sidebar-quanitity {font-size: 16px;}
+
 .exporters-link.active span {
     color: #000;
     font-weight: 700;

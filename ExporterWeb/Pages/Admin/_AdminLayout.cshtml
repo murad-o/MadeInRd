@@ -174,18 +174,21 @@
                                     </a>
                                     <ul class="sidebar-submenu collapse show" id="exporters">
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="OnModeration">
-                                                <span class="sidebar-menu-text">На модерации @onModerationExportersCount</span>
+                                            <a class="sidebar-menu-button sidebar-menu_between exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="OnModeration">
+                                                <span class="sidebar-menu-text">На модерации</span>
+                                                <span class="sidebar-quanitity">@onModerationExportersCount</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="Approved">
-                                                <span class="sidebar-menu-text">Одобреные @approvedExportersCount</span>
+                                            <a class="sidebar-menu-button sidebar-menu_between exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="Approved">
+                                                <span class="sidebar-menu-text">Одобренные</span>
+                                                <span class="sidebar-quanitity">@approvedExportersCount</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="Refused">
-                                                <span class="sidebar-menu-text">Отказаные @refusedExportersCount</span>
+                                            <a class="sidebar-menu-button sidebar-menu_between exporters-link" asp-page="/Admin/Exporters/Index" asp-route-status="Refused">
+                                                <span class="sidebar-menu-text">Отказанные</span>
+                                                <span class="sidebar-quanitity">@refusedExportersCount</span>
                                             </a>
                                         </li>
                                        

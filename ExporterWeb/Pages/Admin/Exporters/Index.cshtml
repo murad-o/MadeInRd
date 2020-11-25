@@ -46,19 +46,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @for (var i = 0; i < Model.Exporters.Count; i++)
+                        @foreach (var exporter in Model.Exporters)
                         {
                             <tr>
                                 <td>
-                                    @(Model.IndexStart)
+                                    @Model.IndexStart
                                 </td>
                                 <td>
-                                    <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
+                                    <span class="js-lists-values-employee-name">@exporter.Name</span>
                                 </td>
-                                <td>@Model.Exporters[i].ContactPersonSecondName @Model.Exporters[i].ContactPersonFirstName @Model.Exporters[i].ContactPersonPatronymic</td>
-                                <td>@Model.Exporters[i].Phone</td>
+                                <td>@exporter.ContactPersonSecondName @exporter.ContactPersonFirstName @exporter.ContactPersonPatronymic</td>
+                                <td>@exporter.Phone</td>
                                 <td align="right">
-                                    <a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a>
+                                    <a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@exporter.CommonExporterId">Подробнее</a>
                                 </td>
                             </tr>
                             Model.IndexStart++;

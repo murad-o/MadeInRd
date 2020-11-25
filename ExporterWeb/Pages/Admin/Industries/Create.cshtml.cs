@@ -33,7 +33,7 @@ namespace ExporterWeb.Pages.Admin.Industries
             }
 
             Industry industry = new Industry();
-            var maxOrder = await _context.Industries!.MaxAsync(x => x.Order);
+            var maxOrder = (await _context.Industries!.MaxAsync(x => (int?)x.Order)) ?? 0;
             industry.Order = maxOrder + 1;
             
             if (Image is { })

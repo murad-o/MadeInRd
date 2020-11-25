@@ -50,7 +50,7 @@
                         {
                             <tr>
                                 <td>
-                                    @(i + 1)
+                                    @(Model.IndexStart)
                                 </td>
                                 <td>
                                     <span class="js-lists-values-employee-name">@Model.Exporters[i].Name</span>
@@ -61,6 +61,7 @@
                                     <a class="btn btn-rounded btn-primary btn-sm" asp-page="/Admin/Exporters/Details" asp-route-id="@Model.Exporters[i].CommonExporterId">Подробнее</a>
                                 </td>
                             </tr>
+                            Model.IndexStart++;
                         }
                     </tbody>
                 </table>

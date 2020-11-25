@@ -62,6 +62,7 @@ namespace ExporterWeb.Pages.Admin.Exporters
                 TotalItems = FakeExporters.Count
             };
 
+            IndexStart = (p - 1) * PageSize + 1;
             return Page();
         }
 
@@ -74,5 +75,6 @@ namespace ExporterWeb.Pages.Admin.Exporters
         public string Status { get; set; } = ExporterStatus.OnModeration.ToString();
         [BindProperty(SupportsGet = true)]
         public string SearchString { get; set; }
+        public int IndexStart { get; set; } // required for right displaying list
     }
 }

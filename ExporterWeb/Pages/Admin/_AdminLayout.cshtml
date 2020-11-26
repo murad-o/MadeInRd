@@ -146,7 +146,7 @@
                                         <a class="dropdown-item" href="#">Профиль</a>
                                         <a class="dropdown-item" href="#">Изменить</a>
                                         <div class="dropdown-divider"></div>
-                                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-page-handler="Logout">
                                             <button class="dropdown-item" id="logout" type="submit">Выход</button>
                                         </form>
                                     </div>
@@ -206,7 +206,7 @@
                                 	</a>
                                 </li>
     							<li class="sidebar-menu-item">
-                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Login" asp-page-handler="Logout">
                                         <button class="sidebar-menu-button" id="logout" type="submit" style="border: none;background: transparent;">
                                             <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">power</i>
                                             <span class="sidebar-menu-text">Выход</span>

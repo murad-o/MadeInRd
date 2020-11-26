@@ -9,6 +9,7 @@ using ExporterWeb.Models.ViewModels;
 
 namespace ExporterWeb.Areas.Identity.Pages.Account
 {
+    [ValidateAntiForgeryToken]
     public class LoginModel : PageModel
     {
         private readonly UserManager<User> _userManager;
@@ -56,6 +57,12 @@ namespace ExporterWeb.Areas.Identity.Pages.Account
             }
 
             return LocalRedirect(returnUrl);
+        }
+
+        public async Task<IActionResult> OnPostLogout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToPage("/Index");
         }
 
 #nullable disable

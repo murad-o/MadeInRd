@@ -28,11 +28,15 @@ namespace ExporterWeb.Helpers
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddDefaultIdentity<User>(options =>
-                    options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
                 .AddErrorDescriber<MultiLanguageIdentityErrorDescriber>();
+
+            services.ConfigureApplicationCookie(o => o.LoginPath = "/Identity/Account/Login");
         }
 
         public static void ConfigureRequestLocalizationOptions(this IServiceCollection services)

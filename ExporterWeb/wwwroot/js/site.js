@@ -31,8 +31,8 @@ document.querySelectorAll('.language-switcher__possible-item').forEach(item => {
 
 let burger = document.querySelector('.upper-header__burger');
 let overlay = document.querySelector('.overlay');
-burger.addEventListener('click', toggleMobileMenu);
-overlay.addEventListener('click', toggleMobileMenu);
+burger?.addEventListener('click', toggleMobileMenu);
+overlay?.addEventListener('click', toggleMobileMenu);
 
 function toggleMobileMenu() {
     document.querySelector('body').classList.toggle('lock');
